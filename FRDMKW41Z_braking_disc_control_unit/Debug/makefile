@@ -43,6 +43,7 @@ RM := rm -rf
 -include board/subdir.mk
 -include bluetooth/profiles/heart_rate/subdir.mk
 -include bluetooth/profiles/device_info/subdir.mk
+-include bluetooth/profiles/bike_simulator/subdir.mk
 -include bluetooth/profiles/battery/subdir.mk
 -include bluetooth/host/config/subdir.mk
 -include bluetooth/hci_transport/source/subdir.mk

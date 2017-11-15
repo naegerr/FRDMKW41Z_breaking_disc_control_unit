@@ -2315,6 +2315,20 @@ Discarded input sections
  .debug_frame   0x00000000      0x170 ./bluetooth/profiles/device_info/device_info_service.o
  .ARM.attributes
                 0x00000000       0x32 ./bluetooth/profiles/device_info/device_info_service.o
+ .text          0x00000000        0x0 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .data          0x00000000        0x0 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .bss           0x00000000        0x0 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .bss.mBs_SubscribedClientId
+                0x00000000        0x1 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_info    0x00000000       0xfc ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_abbrev  0x00000000       0x78 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_aranges
+                0x00000000       0x18 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_line    0x00000000      0x149 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_str     0x00000000      0x33c ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .comment       0x00000000       0x6f ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .ARM.attributes
+                0x00000000       0x32 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
  .text          0x00000000        0x0 ./bluetooth/profiles/battery/battery_service.o
  .data          0x00000000        0x0 ./bluetooth/profiles/battery/battery_service.o
  .bss           0x00000000        0x0 ./bluetooth/profiles/battery/battery_service.o
@@ -3131,6 +3145,7 @@ LOAD ./board/gpio_pins.o
 LOAD ./board/pin_mux.o
 LOAD ./bluetooth/profiles/heart_rate/heart_rate_service.o
 LOAD ./bluetooth/profiles/device_info/device_info_service.o
+LOAD ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
 LOAD ./bluetooth/profiles/battery/battery_service.o
 LOAD ./bluetooth/host/config/ble_globals.o
 LOAD ./bluetooth/hci_transport/source/hcit_serial_interface.o
@@ -6928,13 +6943,13 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
                 0x1fff9ec8       0x10 ./source/common/gatt_db/gatt_database.o
                 0x1fff9ec8                service_bike_simulator_valueArray
  .bss.value_bike_notifiy_valueArray
-                0x1fff9ed8        0x1 ./source/common/gatt_db/gatt_database.o
+                0x1fff9ed8        0x2 ./source/common/gatt_db/gatt_database.o
                 0x1fff9ed8                value_bike_notifiy_valueArray
- *fill*         0x1fff9ed9        0x3 
+ *fill*         0x1fff9eda        0x2 
  .bss.value_bike_write_valueArray
-                0x1fff9edc        0x1 ./source/common/gatt_db/gatt_database.o
+                0x1fff9edc        0x2 ./source/common/gatt_db/gatt_database.o
                 0x1fff9edc                value_bike_write_valueArray
- *fill*         0x1fff9edd        0x3 
+ *fill*         0x1fff9ede        0x2 
  .bss.value_service_changed_valueArray
                 0x1fff9ee0        0x4 ./source/common/gatt_db/gatt_database.o
                 0x1fff9ee0                value_service_changed_valueArray

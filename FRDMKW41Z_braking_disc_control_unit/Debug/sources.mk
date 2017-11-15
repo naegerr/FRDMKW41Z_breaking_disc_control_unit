@@ -18,6 +18,7 @@ CMSIS \
 bluetooth/hci_transport/source \
 bluetooth/host/config \
 bluetooth/profiles/battery \
+bluetooth/profiles/bike_simulator \
 bluetooth/profiles/device_info \
 bluetooth/profiles/heart_rate \
 board \
