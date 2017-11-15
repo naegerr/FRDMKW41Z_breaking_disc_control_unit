@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;frdmkw41z_wireless_examples_bluetooth_heart_rate_sensor_freertos&apos; to &apos;FRDMKW41Z_braking_disc_control_unit&apos;" description="Rename resource &apos;frdmkw41z_wireless_examples_bluetooth_heart_rate_sensor_freertos&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/frdmkw41z_wireless_examples_bluetooth_heart_rate_sensor_freertos" name="FRDMKW41Z_braking_disc_control_unit" stamp="1510744349424" updateReferences="true"/>
+</session>
