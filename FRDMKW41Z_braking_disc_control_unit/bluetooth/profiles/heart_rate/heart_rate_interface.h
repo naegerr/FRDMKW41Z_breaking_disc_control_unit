@@ -153,7 +153,6 @@ enum
     gAttErrCodeCtrlPointValueNotSupported_c = 0x80
 };
 
-
 /*! Heart Rate Client - Configuration */
 typedef struct hrcConfig_tag
 {

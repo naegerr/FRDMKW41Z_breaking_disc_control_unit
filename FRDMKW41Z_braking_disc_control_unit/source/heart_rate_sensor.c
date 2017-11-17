@@ -66,6 +66,7 @@
 #include "battery_interface.h"
 #include "device_info_interface.h"
 #include "heart_rate_interface.h"
+//#include "bike_simulator_interface.h"
 
 /* Connection Manager */
 #include "ble_conn_manager.h"
@@ -604,6 +605,53 @@ static void BatteryMeasurementTimerCallback(void * pParam)
 {
     basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
     Bas_RecordBatteryMeasurement(basServiceConfig.serviceHandle, basServiceConfig.batteryLevel);
+}
+
+/*! *********************************************************************************
+* \brief        Copied from manual from NXP community
+*
+* \param[in]    pData        Calback parameters.
+********************************************************************************** */
+static bool_t CheckScanEvent(gapScannedDevice_t* pData)
+{
+ uint8_t index = 0;
+ uint8_t name[10];
+ uint8_t nameLength;
+ bool_t foundMatch = FALSE;
+
+ while (index < pData->dataLength)
+ {
+        gapAdStructure_t adElement;
+
+        adElement.length = pData->data[index];
+        adElement.adType = (gapAdType_t)pData->data[index + 1];
+        adElement.aData = &pData->data[index + 2];
+
+        //  Search for Humidity Custom Service
+        if ((adElement.adType == gAdIncomplete128bitServiceList_c) || (adElement.adType == gAdComplete128bitServiceList_c))
+        {
+            foundMatch = MatchDataInAdvElementList(&adElement, &uuid_service_bike_simulator, 16);
+        }
+
+        if ((adElement.adType == gAdShortenedLocalName_c) || (adElement.adType == gAdCompleteLocalName_c))
+        {
+            nameLength = MIN(adElement.length, 10);
+            FLib_MemCpy(name, adElement.aData, nameLength);
+        }
+
+        // Move on to the next AD elemnt type
+        index += adElement.length + sizeof(uint8_t);
+ }
+
+ if (foundMatch)
+ {
+        // UI
+        shell_write("\r\nFound device: \r\n");
+        shell_writeN((char*)name, nameLength-1);
+        SHELL_NEWLINE();
+        shell_writeHex(pData->aAddress, 6);
+ }
+ return foundMatch;
 }
 
 /*! *********************************************************************************

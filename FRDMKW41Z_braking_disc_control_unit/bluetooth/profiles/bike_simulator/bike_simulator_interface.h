@@ -19,7 +19,7 @@
 * Public constants & macros
 *************************************************************************************
 ************************************************************************************/
-
+typedef double	double_t;
 
 /************************************************************************************
 *************************************************************************************
@@ -27,25 +27,36 @@
 *************************************************************************************
 ************************************************************************************/
 
-/*! Bike simulator Service - Configuration */
-typedef struct bsConfig_tag
+/*! Bike simulator Client - Configuration */
+typedef struct bscConfig_tag
+{
+    uint16_t     bService;                 /*!<Service Handle */
+    double_t     bBrakingPower;			 /*! Braking power */
+    double_t	 bSpeed;				 /*! Bicycle speed */
+} bscConfig_t;
+
+/*! Bike simulator Service - Configuration -> Server */
+typedef struct bssConfig_tag
 {
     uint16_t    serviceHandle;                 /*!<Service handle */
-    uint16_t     writeValue;            /*!<Input report field */
-    uint16_t     notifyValue;            /*!<Input report field */
-} bsConfig_t;
+    double_t	initialPower;            /*!<Input report field */
+    double_t	initialSpeed;		            /*!<Input report field */
+} bssConfig_t;
+
+
+static bool_t CheckScanEvent(gapScannedDevice_t* pData);
+
 
 
 /*! Start and stop service functions */
-bleResult_t Bs_Start(bsConfig_t *bServiceConfig);
-bleResult_t Bs_Stop(bsConfig_t *bServiceConfig);
+bleResult_t Bss_Start(bssConfig_t *bServiceConfig);
+bleResult_t Bss_Stop(bssConfig_t *bServiceConfig);
 
 /*! Subscribe and unsubscribe functions */
-bleResult_t Bs_Subscribe(deviceId_t clientDeviceId);
-bleResult_t Bs_Unsubscribe();
+bleResult_t Bss_Subscribe(deviceId_t clientDeviceId);
+bleResult_t Bss_Unsubscribe();
 
 /*! Functions for read, write, update characteristics */
-bleResult_t Bs_SendBrakingPower(uint16_t serviceHandle, uint16_t newBrakingValue);
-bleResult_t Bs_ReceiveBrakingPower(uint16_t serviceHandle); // TODO: change Return data type
-
+bleResult_t Bss_SendBrakingPower(uint16_t serviceHandle, uint16_t newBrakingValue);
+bleResult_t Bss_ReceiveBrakingPower(uint16_t serviceHandle); // TODO: change Return data type
 #endif /* _BIKE_SIMULATOR_INTERFACE_H_ */
