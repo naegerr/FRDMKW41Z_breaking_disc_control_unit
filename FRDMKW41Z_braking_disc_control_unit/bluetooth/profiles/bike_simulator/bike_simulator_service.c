@@ -41,7 +41,7 @@ bleResult_t Bss_Start(bssConfig_t *pServiceConfig)
 {
 	mBs_SubscribedClientId = gInvalidDeviceId_c;
 
-	return Bs_ReceiveBrakingPower(pServiceConfig->serviceHandle);
+	return Bss_ReceiveBrakingPower(pServiceConfig->serviceHandle);
 }
 
 
@@ -51,8 +51,8 @@ bleResult_t Bss_ReceiveBrakingPower(uint16_t serviceHandle)
 {
     uint16_t  hValueHrMeasurement;
     bleResult_t result;
-    bleUuid_t uuid = UuidArray(uuid_service_bike_simulator);
-    //bleUuid_t uuid = Uuid16(gBleSig_HrMeasurement_d);
+    //UUID von braking
+        //bleUuid_t uuid = Uuid16(gBleSig_HrMeasurement_d);
 
     /* Get handle of Heart Rate Measurement characteristic */
     result = GattDb_FindCharValueHandleInService(serviceHandle,
