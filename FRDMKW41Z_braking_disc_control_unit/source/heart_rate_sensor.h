@@ -58,7 +58,7 @@
 #if gAppUseBonding_d
 #define gFastConnWhiteListAdvTime_c     10 /* s */
 #else
-#define gFastConnWhiteListAdvTime_c     0+++
+#define gFastConnWhiteListAdvTime_c     0
 #endif
 
 /************************************************************************************

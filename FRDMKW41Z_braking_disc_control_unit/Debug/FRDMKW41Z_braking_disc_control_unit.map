@@ -2323,17 +2323,23 @@ Discarded input sections
  .bss           0x00000000        0x0 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
  .bss.mBs_SubscribedClientId
                 0x00000000        0x1 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .text.Bsc_Start
+ .text.Bss_Start
                 0x00000000       0x28 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_info    0x00000000      0x636 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_abbrev  0x00000000       0xe6 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .text.Bss_ReceiveData
+                0x00000000       0x30 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .text.Bsc_Subscribe
+                0x00000000       0x24 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .text.Bsc_Unsubscribe
+                0x00000000       0x18 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_info    0x00000000      0x717 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_abbrev  0x00000000      0x155 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
  .debug_aranges
-                0x00000000       0x20 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_ranges  0x00000000       0x10 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_line    0x00000000      0x179 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_str     0x00000000     0x1655 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+                0x00000000       0x38 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_ranges  0x00000000       0x28 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_line    0x00000000      0x1b7 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_str     0x00000000     0x16c9 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
  .comment       0x00000000       0x6f ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_frame   0x00000000       0x30 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_frame   0x00000000       0x8c ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
  .ARM.attributes
                 0x00000000       0x32 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
  .text          0x00000000        0x0 ./bluetooth/profiles/battery/battery_service.o
