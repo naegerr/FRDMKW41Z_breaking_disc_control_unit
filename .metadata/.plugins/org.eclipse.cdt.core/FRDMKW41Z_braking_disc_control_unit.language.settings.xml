@@ -137,6 +137,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -284,6 +287,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -435,6 +441,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -582,6 +591,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -733,6 +745,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -880,6 +895,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -1031,6 +1049,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -1178,6 +1199,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -1329,6 +1353,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -1476,6 +1503,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -1627,6 +1657,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -1774,6 +1807,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -1925,6 +1961,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -2072,6 +2111,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -2223,6 +2265,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -2370,6 +2415,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -2521,6 +2569,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -2668,6 +2719,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -2819,6 +2873,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -2966,6 +3023,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -3117,6 +3177,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -3264,6 +3327,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -3415,6 +3481,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -3562,6 +3631,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -3713,6 +3785,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -3860,6 +3935,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -4011,6 +4089,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -4158,6 +4239,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -4309,6 +4393,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -4456,6 +4543,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -4607,6 +4697,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -4754,6 +4847,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -4905,6 +5001,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -5052,6 +5151,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -5203,6 +5305,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -5350,6 +5455,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -5501,6 +5609,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -5648,6 +5759,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -5799,6 +5913,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -5946,6 +6063,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -6097,6 +6217,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -6244,6 +6367,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -6395,6 +6521,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -6542,6 +6671,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -6693,6 +6825,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -6840,6 +6975,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -6991,6 +7129,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -7138,6 +7279,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -7289,6 +7433,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -7436,6 +7583,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -7587,6 +7737,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -7734,6 +7887,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -7885,6 +8041,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -8032,6 +8191,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -8183,6 +8345,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -8330,6 +8495,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -8630,6 +8798,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -8777,6 +8948,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -8928,6 +9102,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -9075,6 +9252,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -9226,6 +9406,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -9373,6 +9556,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -9524,6 +9710,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -9671,6 +9860,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -9822,6 +10014,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -9969,6 +10164,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -10120,6 +10318,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -10267,6 +10468,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -10418,6 +10622,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -10565,6 +10772,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -10716,6 +10926,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -10863,6 +11076,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -11014,6 +11230,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -11161,6 +11380,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -11312,6 +11534,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -11459,6 +11684,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -11610,6 +11838,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -11757,6 +11988,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -11908,6 +12142,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -12055,6 +12292,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -12206,6 +12446,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -12353,6 +12596,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -12504,6 +12750,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -12651,6 +12900,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -12802,6 +13054,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -12949,6 +13204,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -13100,6 +13358,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -13247,6 +13508,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -13398,6 +13662,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -13545,6 +13812,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -13696,6 +13966,9 @@
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4_cm0plus" value=""/>
 						<entry kind="macro" name="CR_INTEGER_PRINTF" value=""/>
@@ -13843,6 +14116,9 @@
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
+							<flag value="VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>

@@ -30,9 +30,10 @@ typedef double	double_t;
 /*! Bike simulator Client - Configuration */
 typedef struct bscConfig_tag
 {
-    uint16_t     bsService;           /*!<Service Handle */
-    double_t     bBrakingPower;			 /*! Braking power */
-    double_t	 bSpeed;				 /*! Bicycle speed */
+    uint16_t    bsService;           /*!<Service Handle */
+    double_t    bsBrakingPower;			 /*! Braking power */
+    double_t	bsSpeed;				 /*! Bicycle speed */
+    uint16_t	bsCharacteristic;	/* Characteristic of Service */
 } bscConfig_t;
 
 /*! Data structure of bike_simulator according to BDA mobile app */

@@ -66,7 +66,7 @@
 #include "battery_interface.h"
 #include "device_info_interface.h"
 #include "heart_rate_interface.h"
-//#include "bike_simulator_interface.h"
+#include "bike_simulator_interface.h"
 
 /* Connection Manager */
 #include "ble_conn_manager.h"
@@ -90,6 +90,22 @@
 * Private type definitions
 *************************************************************************************
 ************************************************************************************/
+typedef enum appEvent_tag{
+    mAppEvt_PeerConnected_c,
+    mAppEvt_PairingComplete_c,
+    mAppEvt_GattProcComplete_c,
+    mAppEvt_GattProcError_c
+}appEvent_t;
+
+typedef enum appState_tag{
+    mAppIdle_c,
+    mAppExchangeMtu_c,
+    mAppPrimaryServiceDisc_c,
+    mAppCharServiceDisc_c,
+    mAppDescriptorSetup_c,
+    mAppRunning_c,
+}appState_t;
+
 typedef enum
 {
 #if gAppUseBonding_d
@@ -103,6 +119,21 @@ typedef struct advState_tag{
     bool_t      advOn;
     advType_t   advType;
 }advState_t;
+
+// Persistent information for client
+typedef struct appCustomInfo_tag
+{
+    bscConfig_t     bsClientConfig;
+    /* Add persistent information here */
+}appCustomInfo_t;
+
+typedef struct appPeerInfo_tag
+{
+    deviceId_t      deviceId;
+    appCustomInfo_t customInfo;
+    bool_t          isBonded;
+    appState_t      appState;
+}appPeerInfo_t;
 
 /************************************************************************************
 *************************************************************************************
@@ -119,8 +150,8 @@ static deviceId_t  mPeerDeviceId = gInvalidDeviceId_c;
 /* Service Data*/
 static basConfig_t      basServiceConfig = {service_battery, 0};
 static hrsUserData_t    hrsUserData;
-static hrsConfig_t hrsServiceConfig = {service_heart_rate, TRUE, TRUE, TRUE, gHrs_BodySensorLocChest_c, &hrsUserData};
-static uint16_t cpHandles[1] = { value_hr_ctrl_point };
+static hrsConfig_t 		hrsServiceConfig = {service_heart_rate, TRUE, TRUE, TRUE, gHrs_BodySensorLocChest_c, &hrsUserData};
+static uint16_t 		cpHandles[1] = { value_hr_ctrl_point };
 
 /* Application specific data*/
 static bool_t mToggle16BitHeartRate = FALSE;
@@ -129,12 +160,12 @@ static tmrTimerID_t mAdvTimerId;
 static tmrTimerID_t mMeasurementTimerId;
 static tmrTimerID_t mBatteryMeasurementTimerId;
 
+static gapPairingParameters_t * gPairingparameter;
 /************************************************************************************
 *************************************************************************************
 * Private functions prototypes
 *************************************************************************************
 ************************************************************************************/
-
 /* Gatt and Att callbacks */
 static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent);
 static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent);
@@ -142,9 +173,9 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
 static void BleApp_Config();
 
 /* Timer Callbacks */
-static void AdvertisingTimerCallback (void *);
-static void TimerMeasurementCallback (void *);
-static void BatteryMeasurementTimerCallback (void *);
+static void AdvertisingTimerCallback(void *);
+static void TimerMeasurementCallback(void *);
+static void BatteryMeasurementTimerCallback(void *);
 
 static void BleApp_Advertise(void);
 
@@ -153,6 +184,96 @@ static void BleApp_Advertise(void);
 * Public functions
 *************************************************************************************
 ************************************************************************************/
+
+/*! *********************************************************************************
+* \brief    Stores handles for the specified service and characteristic
+*
+********************************************************************************** */
+
+static void BleApp_StoreServiceHandles(gattService_t *pService)
+{
+    uint8_t i;
+    // Checks if it is bike simulator service
+    if ((pService->uuidType == gBleUuidType128_c) && FLib_MemCmp(pService->uuid.uuid128, uuid_service_bike_simulator, 16))
+    {
+        /* Store bike simulator service handle */
+        //mPeerInformation.customInfo.humClientConfig.hService = pService->startHandle;
+
+        // Check all characteristics
+        for (i = 0; i < pService->cNumCharacteristics; i++)
+        {
+            if ((pService->aCharacteristics[i].value.uuidType == gBleUuidType128_c) &&
+                (pService->aCharacteristics[i].value.uuid.uuid128 == uuid_characteristic_bike_notify))
+            {
+            	/* Store Bike notify Characteristic */
+                //mPeerInformation.customInfo.humClientConfig.hHumidity = pService->aCharacteristics[i].value.handle;
+            }
+            if ((pService->aCharacteristics[i].value.uuidType == gBleUuidType128_c) &&
+            	(pService->aCharacteristics[i].value.uuid.uuid128 == uuid_characteristic_bike_write))
+            {
+                /* Store Bike write Characteristic */
+                //mPeerInformation.customInfo.humClientConfig.hHumidity = pService->aCharacteristics[i].value.handle;
+            }
+        }
+    }
+}
+
+/*! *********************************************************************************
+* \brief    Stores handles for the descriptors
+*
+********************************************************************************** */
+
+static void BleApp_StoreCharHandles(gattCharacteristic_t *pChar)
+{
+#if DESCRIPTORS_ENABLE
+    uint8_t i;
+
+    // No desriptors anyway
+    if ((pChar->value.uuidType == gBleUuidType128_c) &&
+        (pChar->value.uuid.uuid128 == gBleSig_Humidity_d))
+    {
+        for (i = 0; i < pChar->cNumDescriptors; i++)
+        {
+            if (pChar->aDescriptors[i].uuidType == gBleUuidType16_c)
+            {
+                switch (pChar->aDescriptors[i].uuid.uuid16)
+                {
+                    case gBleSig_CharPresFormatDescriptor_d:
+                    {
+                        //mPeerInformation.customInfo.humClientConfig.hHumDesc = pChar->aDescriptors[i].handle;
+                        break;
+                    }
+                    case gBleSig_CCCD_d:
+                    {
+                        //mPeerInformation.customInfo.humClientConfig.hHumCccd = pChar->aDescriptors[i].handle;
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+#endif
+}
+/*! *********************************************************************************
+* \brief    Stores the values for the descriptors
+*
+********************************************************************************** */
+
+static void BleApp_StoreDescValues(gattAttribute_t *pDesc)
+{
+#if DESCRIPTORS_ENABLE
+    if (pDesc->handle == mPeerInformation.customInfo.humClientConfig.hHumDesc)
+    {
+        /* Store Humidity format*/
+        FLib_MemCpy(&mPeerInformation.customInfo.humClientConfig.humFormat,
+                    pDesc->paValue,
+                    pDesc->valueLength);
+    }
+#endif
+
+}
 
 /*! *********************************************************************************
 * \brief    Initializes application specific functionality before the BLE stack init.
@@ -181,7 +302,7 @@ void BleApp_Start(void)
         else
         {
 #endif
-            mAdvState.advType = fastAdvState_c;
+        mAdvState.advType = fastAdvState_c;
 #if gAppUseBonding_d
         }
 #endif
@@ -260,7 +381,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
         break;         
 
         default: 
-            break;
+        break;
     }
 }
 
@@ -280,7 +401,7 @@ static void BleApp_Config()
     /* Configure as GAP peripheral */
     BleConnManager_GapPeripheralConfig();
 
-    /* Register for callbacks*/
+    /* Register for callbacks */
     GattServer_RegisterHandlesForWriteNotifications(NumberOfElements(cpHandles), cpHandles);
     App_RegisterGattServerCallback(BleApp_GattServerCallback);
 
@@ -292,10 +413,10 @@ static void BleApp_Config()
     hrsServiceConfig.pUserData->pStoredRrIntervals = MEM_BufferAlloc(sizeof(uint16_t) * gHrs_NumOfRRIntervalsRecorded_c);
 #endif    
     Hrs_Start(&hrsServiceConfig);
-    
+
     basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
     Bas_Start(&basServiceConfig);
-    
+
     /* Allocate application timers */
     mAdvTimerId = TMR_AllocateTimer();
     mMeasurementTimerId = TMR_AllocateTimer();
@@ -308,7 +429,7 @@ static void BleApp_Config()
 }
 
 /*! *********************************************************************************
-* \brief        Configures GAP Advertise parameters. Advertise will satrt after
+* \brief        Configures GAP Advertise parameters. Advertise will start after
 *               the parameters are set.
 *
 ********************************************************************************** */
@@ -345,7 +466,7 @@ static void BleApp_Advertise(void)
         break;
     }
 
-    /* Set advertising parameters*/
+    /* Set advertising parameters and start advertising*/
     Gap_SetAdvertisingParameters(&gAdvParams);
 }
 
@@ -402,6 +523,10 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 #endif 
         }
         break;
+        case gAdvertisingDataSetupComplete_c:
+        {
+        	break;
+        }
 
         case gAdvertisingCommandFailed_c:
         {
@@ -415,7 +540,8 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 }
 
 /*! *********************************************************************************
-* \brief        Handles BLE Connection callback from host stack.
+* \brief        Handles BLE Connection callback from host stack. Only when connection
+* 				established during advertising.
 *
 * \param[in]    peerDeviceId        Peer device ID.
 * \param[in]    pConnectionEvent    Pointer to gapConnectionEvent_t.
@@ -434,7 +560,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             /* Advertising stops when connected */
             mAdvState.advOn = FALSE;            
         
-            /* Subscribe client*/
+            /* Subscribe client */
             Bas_Subscribe(peerDeviceId);        
             Hrs_Subscribe(peerDeviceId);
                                     
@@ -495,6 +621,18 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 BleApp_Start();
             }
 #endif			
+        }
+        case gConnEvtLongTermKeyRequest_c:
+        {
+        	// When already connected once.
+
+
+        }
+        case gConnEvtPairingRequest_c:
+        {
+        	// Accept Pairing with own  parameters
+        	Gap_AcceptPairingRequest(peerDeviceId, )
+        	break;
         }
         break;
     default:
@@ -581,7 +719,7 @@ static void TimerMeasurementCallback(void * pParam)
 
 #if gHrs_EnableRRIntervalMeasurements_d    
     Hrs_RecordRRInterval(&hrsUserData, (hr & 0x0F));
-    Hrs_RecordRRInterval(&hrsUserData,(hr & 0xF0));
+    Hrs_RecordRRInterval(&hrsUserData, (hr & 0xF0));
 #endif
     
     if (mToggle16BitHeartRate)
@@ -607,52 +745,6 @@ static void BatteryMeasurementTimerCallback(void * pParam)
     Bas_RecordBatteryMeasurement(basServiceConfig.serviceHandle, basServiceConfig.batteryLevel);
 }
 
-/*! *********************************************************************************
-* \brief        Copied from manual from NXP community
-*
-* \param[in]    pData        Calback parameters.
-********************************************************************************** */
-static bool_t CheckScanEvent(gapScannedDevice_t* pData)
-{
- uint8_t index = 0;
- uint8_t name[10];
- uint8_t nameLength;
- bool_t foundMatch = FALSE;
-
- while (index < pData->dataLength)
- {
-        gapAdStructure_t adElement;
-
-        adElement.length = pData->data[index];
-        adElement.adType = (gapAdType_t)pData->data[index + 1];
-        adElement.aData = &pData->data[index + 2];
-
-        //  Search for Humidity Custom Service
-        if ((adElement.adType == gAdIncomplete128bitServiceList_c) || (adElement.adType == gAdComplete128bitServiceList_c))
-        {
-            foundMatch = MatchDataInAdvElementList(&adElement, &uuid_service_bike_simulator, 16);
-        }
-
-        if ((adElement.adType == gAdShortenedLocalName_c) || (adElement.adType == gAdCompleteLocalName_c))
-        {
-            nameLength = MIN(adElement.length, 10);
-            FLib_MemCpy(name, adElement.aData, nameLength);
-        }
-
-        // Move on to the next AD elemnt type
-        index += adElement.length + sizeof(uint8_t);
- }
-
- if (foundMatch)
- {
-        // UI
-        shell_write("\r\nFound device: \r\n");
-        shell_writeN((char*)name, nameLength-1);
-        SHELL_NEWLINE();
-        shell_writeHex(pData->aAddress, 6);
- }
- return foundMatch;
-}
 
 /*! *********************************************************************************
 * @}

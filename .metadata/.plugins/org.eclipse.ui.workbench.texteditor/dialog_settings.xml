@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="DiscoverPrim" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="DiscoverPrim"/>
-			<item value="gGattProc"/>
-			<item value="MTU"/>
-			<item value="gattCl"/>
-			<item value="gattC"/>
-			<item value="Gap_Upd"/>
-			<item value="Reject"/>
-			<item value="Gap_SetL"/>
+			<item value="gapPairingParameters"/>
+			<item value="gapPairingParameters_t"/>
+			<item value="Gap_StartAdvertising"/>
+			<item value="gAdvertisingDataSetupComplete_c"/>
+			<item value="BleApp_Advertise"/>
+			<item value="Gap_SetAdvertisingParameters"/>
+			<item value="Ble_Host"/>
+			<item value="Ble"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -59,7 +59,8 @@ static bool_t CheckScanEvent(gapScannedDevice_t* pData)
         if ((adElement.adType == gAdIncomplete128bitServiceList_c) ||
           (adElement.adType == gAdComplete128bitServiceList_c))
         {
-            foundMatch = MatchDataInAdvElementList(&adElement, &uuid_service_bike_simulator, 16);
+        	// verification of same uuid as bike simulator
+            //foundMatch = MatchDataInAdvElementList(&adElement, &uuid_service_bike_simulator, 16);
         }
 
         if ((adElement.adType == gAdShortenedLocalName_c) ||

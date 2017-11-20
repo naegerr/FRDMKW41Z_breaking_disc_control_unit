@@ -51,6 +51,7 @@ source/heart_rate_sensor.o source/heart_rate_sensor.d: \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\battery/battery_interface.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\device_info/device_info_interface.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\heart_rate/heart_rate_interface.h \
+ C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\bike_simulator/bike_simulator_interface.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\source\common/ble_conn_manager.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\host\interface/gap_types.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\source\common/ApplMain.h \
@@ -159,6 +160,8 @@ C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW4
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\device_info/device_info_interface.h:
 
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\heart_rate/heart_rate_interface.h:
+
+C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\bluetooth\profiles\bike_simulator/bike_simulator_interface.h:
 
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\FRDMKW41Z_braking_disc_control_unit\source\common/ble_conn_manager.h:
 
