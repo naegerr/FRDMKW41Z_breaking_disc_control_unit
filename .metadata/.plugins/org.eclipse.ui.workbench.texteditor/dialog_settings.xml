@@ -6,12 +6,13 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="gBleDefaultTxOctets" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="gBleDefaultTxOctets"/>
 			<item value="gapPairingParameters"/>
 			<item value="gapPairingParameters_t"/>
 			<item value="Gap_StartAdvertising"/>
@@ -19,7 +20,6 @@
 			<item value="BleApp_Advertise"/>
 			<item value="Gap_SetAdvertisingParameters"/>
 			<item value="Ble_Host"/>
-			<item value="Ble"/>
 		</list>
 		<list key="replacehistory">
 		</list>

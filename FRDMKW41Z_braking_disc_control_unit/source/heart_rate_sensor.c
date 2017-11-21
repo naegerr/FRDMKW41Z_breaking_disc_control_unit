@@ -523,11 +523,6 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 #endif 
         }
         break;
-        case gAdvertisingDataSetupComplete_c:
-        {
-        	break;
-        }
-
         case gAdvertisingCommandFailed_c:
         {
             panic(0,0,0,0);
@@ -563,6 +558,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             /* Subscribe client */
             Bas_Subscribe(peerDeviceId);        
             Hrs_Subscribe(peerDeviceId);
+            //Bss_Subscribe(peerDeviceId);
                                     
 #if (!cPWR_UsePowerDownMode)  
             /* UI */            
@@ -595,6 +591,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             /* Unsubscribe client */
             Bas_Unsubscribe();
             Hrs_Unsubscribe();
+            //Bss_Unsubscribe();
 
             mPeerDeviceId = gInvalidDeviceId_c;
             
@@ -622,19 +619,24 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             }
 #endif			
         }
+        break;
         case gConnEvtLongTermKeyRequest_c:
         {
         	// When already connected once.
+        	// Not implemented on mobile app
 
-
-        }
-        case gConnEvtPairingRequest_c:
-        {
-        	// Accept Pairing with own  parameters
-        	Gap_AcceptPairingRequest(peerDeviceId, )
-        	break;
         }
         break;
+        case gConnEvtPairingRequest_c:
+        {
+        	// Accept Pairing with own parameters, SMP not implemented
+        	// Gap_AcceptPairingRequest(peerDeviceId, )
+        }
+        break;
+        case gConnEvtLeDataLengthChanged_c:
+        {
+        	// Data length has changed
+        }
     default:
         break;
     }

@@ -36,16 +36,36 @@ typedef struct bscConfig_tag
     uint16_t	bsCharacteristic;	/* Characteristic of Service */
 } bscConfig_t;
 
+/*! message types according to Mobile App */
+typedef enum bssMessageType_tag
+{
+	connectionTest = 0x00,
+	connectionTestResponse,
+	start,
+	stop,
+	pause,
+	brake,				// integer in [W]
+	acceleration,
+	bicycleSpeed,		// [m/s]
+	windSpeed,			// [m/s]
+	windDirection,		// 0 front, 1/2PI right, PI back, 3/2PI left
+	inclination,		// [grade]
+	airDensity,			// [kg/m^3]
+	temperature,		// [°C]
+	gpsLatitude,		// DecDeg Format
+	gpsLongitude,		// DecDeg Format
+	gpsAltitude,		// [m] above Referenzellipsoid WGS 84
+} bssMessageType;
+
 /*! Data structure of bike_simulator according to BDA mobile app */
 typedef struct bssData_tag
 {
-	int16_t		messageType;
-	double_t	messageData;
+	uint16_t			startSign;		// [
+	bssMessageType		messageType;
+	uint16_t			delimeter;		// ,
+	double_t			messageData;
+	uint16_t			endSign;		// ]
 }bssData;
-
-// TODO: tabelle 12 p. 34 in mobile app als enum einfügen
-
-
 
 /************************************************************************************
 *************************************************************************************
