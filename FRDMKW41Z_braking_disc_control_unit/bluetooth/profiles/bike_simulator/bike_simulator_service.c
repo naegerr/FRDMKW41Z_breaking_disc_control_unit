@@ -26,6 +26,7 @@
 ************************************************************************************/
 /*! Bike simulator Service - Subscribed Client */
 static deviceId_t mBs_SubscribedClientId;
+static uint16_t	counter = 0;
 
 /************************************************************************************
 *************************************************************************************
@@ -48,7 +49,7 @@ bleResult_t Bss_Start(bssConfig_t *pServiceConfig)
 
 
 
-/*! Read braking power and speed value -> maybe adapt parameter */
+/*! Read data packet from client and store into data base */
 bleResult_t Bss_ReadData(uint16_t serviceHandle,
 		uint8_t* dataNotify, uint8_t* dataWrite)
 {
@@ -57,9 +58,9 @@ bleResult_t Bss_ReadData(uint16_t serviceHandle,
     bleUuid_t* 	uuidBikeCharacteristicWrite;
     uint16_t	characteristicNotifyhandle;
     uint16_t	characteristicWritehandle;
-    //uuidBikeCharacteristicNotify->uuid128 = { 0 };
-    //uuidBikeCharacteristicWrite->uuid128 = { 0 };
-
+    uuidBikeCharacteristicNotify->uuid128 = characteristic_bike_notify;
+    uuidBikeCharacteristicWrite->uuid128 = uuid_characteristic_bike_write;
+    counter++;
     /* Get handle of bike_simulator_Notify characteristic */
     result 	= GattDb_FindCharValueHandleInService(serviceHandle, gBleUuidType128_c,
     			uuidBikeCharacteristicNotify, &characteristicNotifyhandle);
@@ -82,7 +83,7 @@ bleResult_t Bss_ReadData(uint16_t serviceHandle,
     Bss_SendNotificiation(characteristicNotifyhandle);
     return gBleSuccess_c;
 }
-/*! Write Data */
+/*! Write Data to client */
 bleResult_t Bss_WriteData(uint16_t serviceHandle, double_t newBrakingValue, double_t newSpeedValue)
 {
 	// send data back

@@ -153,7 +153,7 @@ static hrsUserData_t    hrsUserData;
 static hrsConfig_t 		hrsServiceConfig = {service_heart_rate, TRUE, TRUE, TRUE, gHrs_BodySensorLocChest_c, &hrsUserData};
 static uint16_t 		cpHandles[1] = { value_hr_ctrl_point };
 static bssConfig_t		bssServiceConfig = {service_bike_simulator, 0, 0};
-static uint16_t			cbHandles[2] = { value_bike_notifiy, value_bike_write};
+static uint16_t			cbHandles[2] = { value_bike_notify, value_bike_write};
 
 /* Application specific data*/
 static bool_t mToggle16BitHeartRate = FALSE;
@@ -328,6 +328,7 @@ void BleApp_HandleKeys(key_event_t events)
         {
             if (mPeerDeviceId == gInvalidDeviceId_c)
             {
+            	/* start advertising */
                 BleApp_Start();
             }
             break;
@@ -407,6 +408,8 @@ static void BleApp_Config()
     /* Register for callbacks */
     GattServer_RegisterHandlesForWriteNotifications(NumberOfElements(cpHandles), cpHandles);
     GattServer_RegisterHandlesForWriteNotifications(NumberOfElements(cbHandles), cbHandles);
+
+    /* Callback, when client makes a request */
     App_RegisterGattServerCallback(BleApp_GattServerCallback);
 
     mAdvState.advOn = FALSE;
@@ -597,10 +600,9 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         case gConnEvtDisconnected_c:
         {
             /* Unsubscribe client */
-        	Bss_Unsubscribe();
+        	//Bss_Unsubscribe();
             Bas_Unsubscribe();
             Hrs_Unsubscribe();
-
 
             mPeerDeviceId = gInvalidDeviceId_c;
             
@@ -681,46 +683,66 @@ static void BleApp_SendAttWriteResponse(deviceId_t* pDeviceId, gattServerEvent_t
 ********************************************************************************** */
 static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* pServerEvent)
 {
-    uint16_t handle;
-    uint8_t status;
-    
+	uint8_t handle;
     switch (pServerEvent->eventType)
     {
+    	/* Write request */
         case gEvtAttributeWritten_c:
         {
         	/*
         		Attribute write handler: Create a case for your registered attribute and
         	    execute callback action accordingly
         	*/
-            handle = pServerEvent->eventData.attributeWrittenEvent.handle;
-            status = gAttErrCodeNoError_c;
+        	handle = pServerEvent->eventData.attributeWrittenEvent.handle;
+        	/* Store value in GATT data base */
+    		GattDb_WriteAttribute(pServerEvent->eventData.attributeWrittenEvent.handle,
+    							  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
+								  pServerEvent->eventData.attributeWrittenEvent.aValue);
             switch(handle)
             {
-            	case value_bike_notifiy:
+            	case value_bike_notify:
             	{
-            		// When attribute notify written
-            		bleResult_t result;
-            		/* Get written value */
-            		uint8_t* pAttWrittenValue = pServerEvent->eventData.attributeWrittenEvent.aValue;
-
-            		BleApp_SendAttWriteResponse(&deviceId, pServerEvent, &result);
+            		GattServer_SendAttributeWrittenStatus(deviceId, value_bike_notify, gAttErrCodeNoError_c);
             	}
             	break;
             	case value_bike_write:
             	{
-
+            		GattServer_SendAttributeWrittenStatus(deviceId, value_bike_write, gAttErrCodeNoError_c);
             	}
             	break;
             }
-            if (handle == value_hr_ctrl_point)
+
+            // For heart measurement!
+            if (pServerEvent->eventData.attributeWrittenEvent.handle == value_hr_ctrl_point)
             {
-                status = Hrs_ControlPointHandler(&hrsUserData, pServerEvent->eventData.attributeWrittenEvent.aValue[0]);
+                Hrs_ControlPointHandler(&hrsUserData, pServerEvent->eventData.attributeWrittenEvent.aValue[0]);
             }
-            
-            GattServer_SendAttributeWrittenStatus(deviceId, handle, status);
+            GattServer_SendAttributeWrittenStatus(deviceId, handle, gAttErrCodeNoError_c);
         }
         break;
 
+        /* Attribute was read */
+        case gEvtAttributeRead_c:
+        {
+        	/*
+				Attribute read handler: Create a case for your registered attribute and
+				execute callback action accordingly
+			*/
+			handle = pServerEvent->eventData.attributeWrittenEvent.handle;
+        	switch(handle)
+        	{
+				case value_bike_notify:
+				{
+					GattServer_SendAttributeReadStatus(deviceId, value_bike_notify, gAttErrCodeNoError_c);
+				}
+				break;
+				case value_bike_write:
+				{
+					GattServer_SendAttributeReadStatus(deviceId, value_bike_write, gAttErrCodeNoError_c);
+				}
+				break;
+			}
+        }
         /* Any CCCD is changed */
         case gEvtCharacteristicCccdWritten_c:
         {
@@ -796,6 +818,7 @@ static void AdvertisingTimerCallback(void * pParam)
 ********************************************************************************** */
 static void TimerMeasurementCallback(void * pParam)
 {
+
     uint16_t hr = BOARD_GetPotentiometerLevel();
     hr = (hr * mHeartRateRange_c) >> 12;
 
@@ -803,7 +826,10 @@ static void TimerMeasurementCallback(void * pParam)
     Hrs_RecordRRInterval(&hrsUserData, (hr & 0x0F));
     Hrs_RecordRRInterval(&hrsUserData, (hr & 0xF0));
 #endif
-    
+
+    // REceive data from client
+    //Bss_ReadData(bssServiceConfig.serviceHandle, bssServiceConfig.valueBikeNotify, bssServiceConfig.valueBikeWrite);
+
     if (mToggle16BitHeartRate)
     {
         Hrs_RecordHeartRateMeasurement(service_heart_rate, 0x0100 + (hr & 0xFF), &hrsUserData);
@@ -826,7 +852,6 @@ static void BatteryMeasurementTimerCallback(void * pParam)
     basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
     Bas_RecordBatteryMeasurement(basServiceConfig.serviceHandle, basServiceConfig.batteryLevel);
 }
-
 
 /*! *********************************************************************************
 * @}
