@@ -64,6 +64,15 @@
 /* Supporting Parameters */
 #define	DESCRIPTORS_ENABLE				FALSE
 
+/* these types require callback action */
+typedef enum notifiableHandle_tag
+{
+	handleNotify,
+	handleWrite
+}notifiableHandle_t;
+
+uint16_t notfiableHandleArray[] = {handleNotify, handleWrite};
+
 /************************************************************************************
 *************************************************************************************
 * Public memory declarations

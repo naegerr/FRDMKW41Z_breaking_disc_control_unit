@@ -1,0 +1,88 @@
+/*!
+ * This file is the c file for the Bike simulator service.
+ *
+ * Author:		Robert Näger
+ * Date:		15. Nov. 2017
+ */
+
+/************************************************************************************
+*************************************************************************************
+* Include
+*************************************************************************************
+************************************************************************************/
+#include "FunctionLib.h"
+
+#include "ble_general.h"
+#include "gatt_db_app_interface.h"
+#include "gatt_server_interface.h"
+#include "gap_interface.h"
+#include "bike_simulator_interface.h"
+
+
+/************************************************************************************
+*************************************************************************************
+* Private constants & macros
+*************************************************************************************
+************************************************************************************/
+/*! Bike simulator Service - Subscribed Client */
+static deviceId_t mBs_SubscribedClientId;
+
+/************************************************************************************
+*************************************************************************************
+* Private type definitions
+*************************************************************************************
+************************************************************************************/
+
+/************************************************************************************
+*************************************************************************************
+* Public functions
+*************************************************************************************
+************************************************************************************/
+bleResult_t Bss_Start(bssConfig_t *pServiceConfig)
+{
+	mBs_SubscribedClientId = gInvalidDeviceId_c;
+
+	return Bss_ReadData(pServiceConfig->serviceHandle);
+}
+
+
+
+/*! Read braking power and speed value -> maybe adapt parameter */
+bleResult_t Bss_ReadData(uint16_t serviceHandle)
+{
+    uint16_t  bsValue;
+    bleResult_t result = gBleSuccess_c;
+    //UUID von braking
+    bleUuid_t uuid = uuid_service_bike_simulator; //Service UUID
+
+    /* Get handle of bike_simulator_notify characteristic */
+    //result = GattDb_FindCharValueHandleInService(serviceHandle, gBleUuidType128_c, &uuid_characteristic_bike_notify, &bsValue);
+
+    if (result != gBleSuccess_c)
+        return result;
+
+
+    return gBleSuccess_c;
+}
+/*! Write Data */
+bleResult_t Bss_WriteData(uint16_t serviceHandle, double_t newBrakingValue, double_t newSpeedValue)
+{
+
+}
+
+
+bleResult_t Bsc_Subscribe(deviceId_t deviceId)
+{
+	mBs_SubscribedClientId = deviceId;
+    return gBleSuccess_c;
+}
+
+bleResult_t Bsc_Unsubscribe(void)
+{
+    mBs_SubscribedClientId = gInvalidDeviceId_c;
+    return gBleSuccess_c;
+}
+
+
+
+

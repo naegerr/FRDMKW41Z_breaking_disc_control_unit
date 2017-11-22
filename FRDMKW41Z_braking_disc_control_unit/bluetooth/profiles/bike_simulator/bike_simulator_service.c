@@ -38,97 +38,90 @@ static deviceId_t mBs_SubscribedClientId;
 * Public functions
 *************************************************************************************
 ************************************************************************************/
-
-// Checks if this device is supported.
-static bool_t CheckScanEvent(gapScannedDevice_t* pData)
-{
- uint8_t index = 0;
- uint8_t name[10];
- uint8_t nameLength;
- bool_t foundMatch = FALSE;
-
- while (index < pData->dataLength)
- {
-        gapAdStructure_t adElement;
-
-        adElement.length = pData->data[index];
-        adElement.adType = (gapAdType_t)pData->data[index + 1];
-        adElement.aData = &pData->data[index + 2];
-
-         /* Search for Bike simulator Custom Service */
-        if ((adElement.adType == gAdIncomplete128bitServiceList_c) ||
-          (adElement.adType == gAdComplete128bitServiceList_c))
-        {
-        	// verification of same uuid as bike simulator
-            //foundMatch = MatchDataInAdvElementList(&adElement, &uuid_service_bike_simulator, 16);
-        }
-
-        if ((adElement.adType == gAdShortenedLocalName_c) ||
-          (adElement.adType == gAdCompleteLocalName_c))
-        {
-            nameLength = MIN(adElement.length, 10);
-            FLib_MemCpy(name, adElement.aData, nameLength);
-        }
-
-        /* Move on to the next AD elemnt type */
-        index += adElement.length + sizeof(uint8_t);
- }
-
- if (foundMatch)
- {
-        /* UI */
-        //shell_write("\r\nFound device: \r\n");
-       // shell_writeN((char*)name, nameLength-1);
-        //SHELL_NEWLINE();
-        //shell_writeHex(pData->aAddress, 6);
- }
- return foundMatch;
-}
-
-/************************************************************************************
-*************************************************************************************
-* SERVER
-*************************************************************************************
-************************************************************************************/
 bleResult_t Bss_Start(bssConfig_t *pServiceConfig)
 {
 	mBs_SubscribedClientId = gInvalidDeviceId_c;
 
-	return Bss_ReceiveData(pServiceConfig->serviceHandle);
+	return Bss_ReadData(pServiceConfig->serviceHandle,
+			pServiceConfig->valueBikeNotify, pServiceConfig->valueBikeWrite);
 }
 
 
 
-// Receive braking power value -> maybe adapt parameter
-bleResult_t Bss_ReceiveData(uint16_t serviceHandle)
+/*! Read braking power and speed value -> maybe adapt parameter */
+bleResult_t Bss_ReadData(uint16_t serviceHandle,
+		uint8_t* dataNotify, uint8_t* dataWrite)
 {
-    uint16_t  bsValue;
     bleResult_t result = gBleSuccess_c;
-    //UUID von braking
-    bleUuid_t uuid; //Service UUID
+    bleUuid_t* 	uuidBikeCharacteristicNotify;
+    bleUuid_t* 	uuidBikeCharacteristicWrite;
+    uint16_t	characteristicNotifyhandle;
+    uint16_t	characteristicWritehandle;
+    //uuidBikeCharacteristicNotify->uuid128 = { 0 };
+    //uuidBikeCharacteristicWrite->uuid128 = { 0 };
 
-    /* Get handle of bike_simulator_notify characteristic */
-    //result = GattDb_FindCharValueHandleInService(serviceHandle, gBleUuidType128_c, &uuid_characteristic_bike_notify, &bsValue);
+    /* Get handle of bike_simulator_Notify characteristic */
+    result 	= GattDb_FindCharValueHandleInService(serviceHandle, gBleUuidType128_c,
+    			uuidBikeCharacteristicNotify, &characteristicNotifyhandle);
+    /* Get handle of bike_simulator_Write characteristic */
+    result |= GattDb_FindCharValueHandleInService(serviceHandle, gBleUuidType128_c,
+    			uuidBikeCharacteristicWrite, &characteristicWritehandle);
 
     if (result != gBleSuccess_c)
         return result;
 
+    /* Update characteristics value */
+    result 	= GattDb_WriteAttribute(characteristicNotifyhandle,
+    		sizeof(dataNotify), dataNotify);
+    result |= GattDb_WriteAttribute(characteristicWritehandle,
+    		sizeof(dataWrite), dataWrite);
 
+    if (result != gBleSuccess_c)
+	    return result;
+
+    Bss_SendNotificiation(characteristicNotifyhandle);
     return gBleSuccess_c;
 }
+/*! Write Data */
+bleResult_t Bss_WriteData(uint16_t serviceHandle, double_t newBrakingValue, double_t newSpeedValue)
+{
+	// send data back
+	return gBleSuccess_c;
+}
 
-bleResult_t Bsc_Subscribe(deviceId_t deviceId)
+
+bleResult_t Bss_Subscribe(deviceId_t deviceId)
 {
 	mBs_SubscribedClientId = deviceId;
     return gBleSuccess_c;
 }
 
-bleResult_t Bsc_Unsubscribe(void)
+bleResult_t Bss_Unsubscribe(void)
 {
     mBs_SubscribedClientId = gInvalidDeviceId_c;
     return gBleSuccess_c;
 }
 
+bleResult_t Bss_SendNotificiation(uint16_t handleChar)
+{
+	uint16_t handleCccd;
+	bool_t isNotifciationActive;
+	bleResult_t result;
+
+	/*! Get handle of Cccd */
+	result = GattDb_FindCccdHandleForCharValueHandle(handleChar, &handleCccd);
+
+	if (result != gBleSuccess_c)
+		return result;
+
+	if(gBleSuccess_c == Gap_CheckNotificationStatus(mBs_SubscribedClientId,
+			handleCccd, &isNotifciationActive) && isNotifciationActive)
+	{
+		/*! Send notification to characteristic of the GattServer */
+		GattServer_SendNotification(mBs_SubscribedClientId, handleChar);
+	}
+	return gBleSuccess_c;
+}
 
 
 

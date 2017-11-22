@@ -152,6 +152,8 @@ static basConfig_t      basServiceConfig = {service_battery, 0};
 static hrsUserData_t    hrsUserData;
 static hrsConfig_t 		hrsServiceConfig = {service_heart_rate, TRUE, TRUE, TRUE, gHrs_BodySensorLocChest_c, &hrsUserData};
 static uint16_t 		cpHandles[1] = { value_hr_ctrl_point };
+static bssConfig_t		bssServiceConfig = {service_bike_simulator, 0, 0};
+static uint16_t			cbHandles[2] = { value_bike_notifiy, value_bike_write};
 
 /* Application specific data*/
 static bool_t mToggle16BitHeartRate = FALSE;
@@ -160,7 +162,7 @@ static tmrTimerID_t mAdvTimerId;
 static tmrTimerID_t mMeasurementTimerId;
 static tmrTimerID_t mBatteryMeasurementTimerId;
 
-static gapPairingParameters_t * gPairingparameter;
+
 /************************************************************************************
 *************************************************************************************
 * Private functions prototypes
@@ -222,10 +224,9 @@ static void BleApp_StoreServiceHandles(gattService_t *pService)
 * \brief    Stores handles for the descriptors
 *
 ********************************************************************************** */
-
+#if DESCRIPTORS_ENABLE
 static void BleApp_StoreCharHandles(gattCharacteristic_t *pChar)
 {
-#if DESCRIPTORS_ENABLE
     uint8_t i;
 
     // No desriptors anyway
@@ -254,16 +255,16 @@ static void BleApp_StoreCharHandles(gattCharacteristic_t *pChar)
             }
         }
     }
-#endif
 }
+#endif
 /*! *********************************************************************************
 * \brief    Stores the values for the descriptors
 *
 ********************************************************************************** */
-
+#if DESCRIPTORS_ENABLE
 static void BleApp_StoreDescValues(gattAttribute_t *pDesc)
 {
-#if DESCRIPTORS_ENABLE
+
     if (pDesc->handle == mPeerInformation.customInfo.humClientConfig.hHumDesc)
     {
         /* Store Humidity format*/
@@ -271,9 +272,8 @@ static void BleApp_StoreDescValues(gattAttribute_t *pDesc)
                     pDesc->paValue,
                     pDesc->valueLength);
     }
-#endif
-
 }
+#endif
 
 /*! *********************************************************************************
 * \brief    Initializes application specific functionality before the BLE stack init.
@@ -398,11 +398,15 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 ********************************************************************************** */
 static void BleApp_Config()
 {
+	/* Read public address from controller */
+	Gap_ReadPublicDeviceAddress();
+
     /* Configure as GAP peripheral */
     BleConnManager_GapPeripheralConfig();
 
     /* Register for callbacks */
     GattServer_RegisterHandlesForWriteNotifications(NumberOfElements(cpHandles), cpHandles);
+    GattServer_RegisterHandlesForWriteNotifications(NumberOfElements(cbHandles), cbHandles);
     App_RegisterGattServerCallback(BleApp_GattServerCallback);
 
     mAdvState.advOn = FALSE;
@@ -416,6 +420,9 @@ static void BleApp_Config()
 
     basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
     Bas_Start(&basServiceConfig);
+
+    /* Start bike simulator service */
+    Bss_Start(&bssServiceConfig);
 
     /* Allocate application timers */
     mAdvTimerId = TMR_AllocateTimer();
@@ -556,9 +563,10 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             mAdvState.advOn = FALSE;            
         
             /* Subscribe client */
+            Bss_Subscribe(peerDeviceId);
             Bas_Subscribe(peerDeviceId);        
             Hrs_Subscribe(peerDeviceId);
-            //Bss_Subscribe(peerDeviceId);
+
                                     
 #if (!cPWR_UsePowerDownMode)  
             /* UI */            
@@ -589,9 +597,10 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         case gConnEvtDisconnected_c:
         {
             /* Unsubscribe client */
+        	Bss_Unsubscribe();
             Bas_Unsubscribe();
             Hrs_Unsubscribe();
-            //Bss_Unsubscribe();
+
 
             mPeerDeviceId = gInvalidDeviceId_c;
             
@@ -641,7 +650,29 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         break;
     }
 }
+/*! *********************************************************************************
+* \brief        Send response by ATT protocol
+*
+* \param[in]    pDeviceId    		Device ID to send response
+* \param[in]	pGattServerEvent    Event, responsing to
+* \param[in]	pResult				Result of Receive attribute
+********************************************************************************** */
+static void BleApp_SendAttWriteResponse(deviceId_t* pDeviceId, gattServerEvent_t* pGattServerEvent, bleResult_t* pResult)
+{
+	attErrorCode_t attErrorCode;
 
+	// Determine response to send (OK or Error)
+	if(*pResult == gBleSuccess_c)
+	{
+		attErrorCode = gAttErrCodeNoError_c;
+	}
+	else
+	{
+		attErrorCode = (attErrorCode_t)(*pResult & 0x00FF);
+	}
+	// Send response to client
+	GattServer_SendAttributeWrittenStatus(*pDeviceId, pGattServerEvent->eventData.attributeWrittenEvent.handle, attErrorCode);
+}
 /*! *********************************************************************************
 * \brief        Handles GATT server callback from host stack.
 *
@@ -657,9 +688,30 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
     {
         case gEvtAttributeWritten_c:
         {
+        	/*
+        		Attribute write handler: Create a case for your registered attribute and
+        	    execute callback action accordingly
+        	*/
             handle = pServerEvent->eventData.attributeWrittenEvent.handle;
             status = gAttErrCodeNoError_c;
-            
+            switch(handle)
+            {
+            	case value_bike_notifiy:
+            	{
+            		// When attribute notify written
+            		bleResult_t result;
+            		/* Get written value */
+            		uint8_t* pAttWrittenValue = pServerEvent->eventData.attributeWrittenEvent.aValue;
+
+            		BleApp_SendAttWriteResponse(&deviceId, pServerEvent, &result);
+            	}
+            	break;
+            	case value_bike_write:
+            	{
+
+            	}
+            	break;
+            }
             if (handle == value_hr_ctrl_point)
             {
                 status = Hrs_ControlPointHandler(&hrsUserData, pServerEvent->eventData.attributeWrittenEvent.aValue[0]);
@@ -668,6 +720,34 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
             GattServer_SendAttributeWrittenStatus(deviceId, handle, status);
         }
         break;
+
+        /* Any CCCD is changed */
+        case gEvtCharacteristicCccdWritten_c:
+        {
+        	/* Which CCCD was changed? */
+        	switch(pServerEvent->eventData.charCccdWrittenEvent.handle)
+        	{
+        		case cccd_bike_notify:
+        		{
+        			/* Is notification enabled? */
+        			if (pServerEvent->eventData.charCccdWrittenEvent.newCccd)
+        			{
+        				/* Timer starts */
+        				//TMR_StartTimer(tsiTimerId, timerType, timeInMilliseconds, callback, param)
+        			}
+        			else
+        			{
+        				/* Timer stops */
+        			}
+        		}
+        		break;
+        		default:
+        		break;
+           	}
+
+        }
+        break;
+
     default:
         break;
     }
