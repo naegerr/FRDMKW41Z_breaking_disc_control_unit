@@ -6,29 +6,31 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="gBleDefaultTxOctets" key="selection"/>
+		<item value="BleApp_GattServerCallback" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="gBleDefaultTxOctets"/>
-			<item value="gapPairingParameters"/>
-			<item value="gapPairingParameters_t"/>
-			<item value="Gap_StartAdvertising"/>
-			<item value="gAdvertisingDataSetupComplete_c"/>
-			<item value="BleApp_Advertise"/>
-			<item value="Gap_SetAdvertisingParameters"/>
-			<item value="Ble_Host"/>
+			<item value="BleApp_GattServerCallback"/>
+			<item value="gattServerCall"/>
+			<item value="GattDb"/>
+			<item value="value_bike_notifiy"/>
+			<item value="value_bike_notify"/>
+			<item value="gattServerProcedureCallback "/>
+			<item value="Hrs_RecordHeartRateMeasurement"/>
+			<item value="Bss_Subscribe"/>
 		</list>
 		<list key="replacehistory">
+			<item value="value_bike_notify"/>
+			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="826" key="DIALOG_X_ORIGIN"/>
-		<item value="273" key="DIALOG_Y_ORIGIN"/>
+		<item value="788" key="DIALOG_X_ORIGIN"/>
+		<item value="407" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

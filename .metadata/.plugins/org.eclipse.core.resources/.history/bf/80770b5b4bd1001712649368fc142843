@@ -61,8 +61,10 @@ bleResult_t Bss_ReadData(uint16_t serviceHandle,
     bleUuid_t 	uuidBikeCharacteristicWrite;
     uint16_t	characteristicNotifyhandle;
     uint16_t	characteristicWritehandle;
-    FLib_MemCpy(uuidBikeCharacteristicNotify.uuid128, uuid_characteristic_bike_notify, 16);
-    FLib_MemCpy(uuidBikeCharacteristicWrite.uuid128, uuid_characteristic_bike_write, 16);
+    FLib_MemCmp(uuidBikeCharacteristicNotify.uuid128, uuid_characteristic_bike_notify, 16);
+    //uuidBikeCharacteristicNotify.uuid128 = uuid_characteristic_bike_notify;
+    //uuidBikeCharacteristicWrite = UuidArray(uuid_characteristic_bike_write);
+    // bleUuid_t uuid = Uuid16(gBleSig_ModelNumberString_d);
 
     counter++;
     /* Get handle of bike_simulator_Notify characteristic */

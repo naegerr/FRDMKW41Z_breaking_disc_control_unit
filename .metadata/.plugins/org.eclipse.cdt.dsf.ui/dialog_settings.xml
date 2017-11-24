@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="com.nxp.lpcxpresso.debug.ui.gui.NXPExpressionInformationControlCreator$ExpressionInformationControl">
+		<item value="200" key="Sash.Weight.Details"/>
+		<item value="200" key="Sash.Weight.Tree"/>
+		<item value="614" key="WIDTH"/>
+		<item value="230" key="HEIGHT"/>
+	</section>
 </section>

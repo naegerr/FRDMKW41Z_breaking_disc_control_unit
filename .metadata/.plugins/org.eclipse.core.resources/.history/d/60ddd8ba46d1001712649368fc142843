@@ -3,7 +3,7 @@ PRIMARY_SERVICE_UUID128(service_bike_simulator, uuid_service_bike_simulator)
 			VALUE_UUID128_VARLEN(value_bike_notify, uuid_characteristic_bike_notify, (gPermissionFlagReadable_c | gPermissionFlagWritable_c), 50, 1, 0x00)
 			CCCD(cccd_bike_notify)
 		CHARACTERISTIC_UUID128(characteristic_bike_write, uuid_characteristic_bike_write, (gGattCharPropWrite_c))
-			VALUE_UUID128_VARLEN(value_bike_write, uuid_characteristic_bike_write, (gPermissionFlagWritable_c), 50, 1, 0x00)
+			VALUE_UUID128_VARLEN(value_bike_write, uuid_characteristic_bike_write, (gPermissionFlagWritable_c), 45, 1, 0x00)
 
 PRIMARY_SERVICE(service_gatt, gBleSig_GenericAttributeProfile_d)
         CHARACTERISTIC(char_service_changed, gBleSig_GattServiceChanged_d, (gGattCharPropRead_c | gGattCharPropNotify_c) )

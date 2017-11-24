@@ -1,9 +1,0 @@
-
-
-/*! Bike simulator Service - Configuration */
-typedef struct bsConfig_tag
-{
-    uint16_t    serviceHandle;                 /*!<Service handle */
-    uint8_t     writeValue;            /*!<Input report field */
-    uint8_t     notifyValue;            /*!<Input report field */
-} bsConfig_t;
