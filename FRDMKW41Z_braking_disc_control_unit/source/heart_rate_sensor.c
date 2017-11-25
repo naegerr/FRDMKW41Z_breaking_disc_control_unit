@@ -600,7 +600,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         case gConnEvtDisconnected_c:
         {
             /* Unsubscribe client */
-        	//Bss_Unsubscribe();
+        	Bss_Unsubscribe();
             Bas_Unsubscribe();
             Hrs_Unsubscribe();
 
@@ -683,32 +683,37 @@ static void BleApp_SendAttWriteResponse(deviceId_t* pDeviceId, gattServerEvent_t
 ********************************************************************************** */
 static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* pServerEvent)
 {
-	uint8_t handle;
     switch (pServerEvent->eventType)
     {
-    	/* Write request */
+    	/* Write request from client */
         case gEvtAttributeWritten_c:
         {
         	/*
         		Attribute write handler: Create a case for your registered attribute and
         	    execute callback action accordingly
         	*/
-        	handle = pServerEvent->eventData.attributeWrittenEvent.handle;
         	/* Store value in GATT data base */
-    		GattDb_WriteAttribute(pServerEvent->eventData.attributeWrittenEvent.handle,
-    							  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
-								  pServerEvent->eventData.attributeWrittenEvent.aValue);
-            switch(handle)
+    		switch(pServerEvent->eventData.attributeWrittenEvent.handle)
             {
             	case value_bike_notify:
             	{
+            		GattDb_WriteAttribute(pServerEvent->eventData.attributeWrittenEvent.handle,
+            		    				  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
+            							  pServerEvent->eventData.attributeWrittenEvent.aValue);
+
             		GattServer_SendAttributeWrittenStatus(deviceId, value_bike_notify, gAttErrCodeNoError_c);
             	}
             	break;
             	case value_bike_write:
             	{
+            		GattDb_WriteAttribute(pServerEvent->eventData.attributeWrittenEvent.handle,
+            		    				  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
+            							  pServerEvent->eventData.attributeWrittenEvent.aValue);
+
             		GattServer_SendAttributeWrittenStatus(deviceId, value_bike_write, gAttErrCodeNoError_c);
             	}
+            	break;
+            	default:
             	break;
             }
 
@@ -717,19 +722,18 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
             {
                 Hrs_ControlPointHandler(&hrsUserData, pServerEvent->eventData.attributeWrittenEvent.aValue[0]);
             }
-            GattServer_SendAttributeWrittenStatus(deviceId, handle, gAttErrCodeNoError_c);
+            GattServer_SendAttributeWrittenStatus(deviceId, pServerEvent->eventData.attributeWrittenEvent.handle, gAttErrCodeNoError_c);
         }
         break;
 
-        /* Attribute was read */
+        /* Read request from client */
         case gEvtAttributeRead_c:
         {
         	/*
 				Attribute read handler: Create a case for your registered attribute and
 				execute callback action accordingly
 			*/
-			handle = pServerEvent->eventData.attributeWrittenEvent.handle;
-        	switch(handle)
+        	switch(pServerEvent->eventData.attributeReadEvent.handle)
         	{
 				case value_bike_notify:
 				{
@@ -741,6 +745,9 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
 					GattServer_SendAttributeReadStatus(deviceId, value_bike_write, gAttErrCodeNoError_c);
 				}
 				break;
+				default:
+				break;
+
 			}
         }
         /* Any CCCD is changed */
@@ -771,7 +778,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
         break;
 
     default:
-        break;
+    break;
     }
 }
 
@@ -814,7 +821,7 @@ static void AdvertisingTimerCallback(void * pParam)
 /*! *********************************************************************************
 * \brief        Handles measurement timer callback.
 *
-* \param[in]    pParam        Calback parameters.
+* \param[in]    pParam        Callback parameters.
 ********************************************************************************** */
 static void TimerMeasurementCallback(void * pParam)
 {
@@ -827,8 +834,9 @@ static void TimerMeasurementCallback(void * pParam)
     Hrs_RecordRRInterval(&hrsUserData, (hr & 0xF0));
 #endif
 
-    // REceive data from client
-    //Bss_ReadData(bssServiceConfig.serviceHandle, bssServiceConfig.valueBikeNotify, bssServiceConfig.valueBikeWrite);
+    // NOT NECES
+    // Store received data into GATT database
+    //Bss_StoreData(bssServiceConfig.serviceHandle, bssServiceConfig.valueBikeWrite, bssServiceConfig.valueBikeNotify);
 
     if (mToggle16BitHeartRate)
     {

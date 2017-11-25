@@ -19,7 +19,7 @@
 * Public constants & macros
 *************************************************************************************
 ************************************************************************************/
-#define			MAX_MESSAGE_SIZE	45
+#define			MAX_MESSAGE_SIZE	20
 
 typedef double	double_t;
 
@@ -91,9 +91,9 @@ bleResult_t Bss_Stop(bssConfig_t *bServiceConfig);
 bleResult_t Bss_Subscribe(deviceId_t clientDeviceId);
 bleResult_t Bss_Unsubscribe();
 
-/*! Functions for read, write, update characteristics */
-bleResult_t Bss_WriteData(uint16_t serviceHandle, double_t newBrakingValue, double_t newSpeedValue);
-bleResult_t Bss_ReadData(uint16_t serviceHandle, uint8_t* messageNotify, uint8_t* messageWrite);
+/*! Functions for store, get attributes from profile level to database */
+bleResult_t Bss_GetData(uint16_t serviceHandle, double_t newBrakingValue, double_t newSpeedValue);
+bleResult_t Bss_StoreData(uint16_t serviceHandle, uint8_t* dataWrite, uint8_t* dataNotify);
 
 /*! Notification function */
 bleResult_t Bss_SendNotificiation(uint16_t handle);

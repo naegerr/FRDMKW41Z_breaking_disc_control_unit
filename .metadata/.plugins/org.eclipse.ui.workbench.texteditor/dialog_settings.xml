@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="BleApp_GattServerCallback" key="selection"/>
+		<item value="gBleStatusBase" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="gBleStatusBase"/>
+			<item value="FLib"/>
+			<item value="mem"/>
+			<item value="service_bike_simulator"/>
+			<item value="uuid_service_bike_simulator"/>
 			<item value="BleApp_GattServerCallback"/>
 			<item value="gattServerCall"/>
 			<item value="GattDb"/>
-			<item value="value_bike_notifiy"/>
-			<item value="value_bike_notify"/>
-			<item value="gattServerProcedureCallback "/>
-			<item value="Hrs_RecordHeartRateMeasurement"/>
-			<item value="Bss_Subscribe"/>
 		</list>
 		<list key="replacehistory">
 			<item value="value_bike_notify"/>

@@ -150,6 +150,7 @@ bleResult_t Hrs_Start (hrsConfig_t *pServiceConfig)
         flags |= gHrs_SensorContactDetected_c;
     }
     
+    /* Information Flags set for client */
     Hrs_SetHrmFlags(hValueHrMeasurement, flags);
     
     Hrs_SetBodyLocation(hValueBodyLocation, pServiceConfig->bodySensorLocation);
@@ -188,7 +189,7 @@ bleResult_t Hrs_Unsubscribe(void)
     return gBleSuccess_c;
 }
 
-bleResult_t Hrs_RecordHeartRateMeasurement (uint16_t serviceHandle, uint16_t heartRate, hrsUserData_t *pHrsUserData)
+bleResult_t Hrs_RecordHeartRateMeasurement(uint16_t serviceHandle, uint16_t heartRate, hrsUserData_t *pHrsUserData)
 {
     uint16_t  hValueHrMeasurement;
     bleResult_t result;
