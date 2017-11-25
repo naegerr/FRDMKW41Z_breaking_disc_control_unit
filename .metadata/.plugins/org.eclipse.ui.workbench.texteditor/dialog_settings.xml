@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="gBleStatusBase" key="selection"/>
+		<item value="gEvtAttribute" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="gBleStatusBase"/>
-			<item value="FLib"/>
-			<item value="mem"/>
-			<item value="service_bike_simulator"/>
-			<item value="uuid_service_bike_simulator"/>
-			<item value="BleApp_GattServerCallback"/>
-			<item value="gattServerCall"/>
-			<item value="GattDb"/>
+			<item value="gEvtAttribute"/>
+			<item value="MAX_MESSAGE_SIZE"/>
+			<item value="Hrs_GetHrmFlags"/>
+			<item value="Gattdb_ReadAttribute"/>
+			<item value="read"/>
+			<item value="GattDb_ReadAttribute"/>
+			<item value="gattServerProcedureCallback"/>
+			<item value="Hrs_RecordHeartRateMeasurement"/>
 		</list>
 		<list key="replacehistory">
 			<item value="value_bike_notify"/>
@@ -30,7 +30,7 @@
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="788" key="DIALOG_X_ORIGIN"/>
-		<item value="407" key="DIALOG_Y_ORIGIN"/>
+		<item value="1026" key="DIALOG_X_ORIGIN"/>
+		<item value="342" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

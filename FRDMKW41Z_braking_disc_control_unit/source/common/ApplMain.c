@@ -1019,10 +1019,23 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
                 pfConnCallback(pMsg->msgData.connMsg.deviceId, &pMsg->msgData.connMsg.connEvent);
             break;
         }
+        /* RECEIVED MESSAGE FROM CLIENT! */
         case gAppGattServerMsg_c:
         {
             if (pfGattServerCallback)
                 pfGattServerCallback(pMsg->msgData.gattServerMsg.deviceId, &pMsg->msgData.gattServerMsg.serverEvent);
+
+            // LED SETZEN FUER VORSCHAU
+            if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue == 1)
+            {
+            	// GPIO = HIGH -> 1 LED leuchten lassen
+            }
+            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue == 2)
+            {
+            	// GPIO = HIGH -> 2 LED leuchten lassen
+            }
+
+
             break;
         }
         case gAppGattClientProcedureMsg_c:
