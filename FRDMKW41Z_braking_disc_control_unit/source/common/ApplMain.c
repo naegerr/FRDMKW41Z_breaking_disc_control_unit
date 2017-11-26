@@ -366,6 +366,21 @@ void main_task(uint32_t param)
         LED_Init();
         SecLib_Init();
         
+        // added by NAR for initialize GPIO pins
+        //PORT_SetPinMux(((GPIO_Type *) (0x400FF000u)), 19u, 1U);         /* PORTA18 (pin 6) is configured as PTA18 */
+        //PORT_SetPinMux(((GPIO_Type *) (0x400FF000u)), 18u, 1U);         /* PORTA19 (pin 7) is configured as PTA19 */
+        CLOCK_EnableClock(kCLOCK_PortA);
+        BOARD_InitLEDs();
+        gpio_pin_config_t ledConfig;
+        ledConfig.pinDirection = kGPIO_DigitalOutput;
+        ledConfig.outputLogic = 0;
+        GPIO_PinInit(GPIOA, 18u, &ledConfig);
+        ledConfig.outputLogic = 0;
+        GPIO_PinInit(GPIOA, 19u, &ledConfig);
+        //BOARD_InitRGB():
+        BOARD_BootClockRUN();
+
+
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[4])));
@@ -1022,20 +1037,39 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         /* RECEIVED MESSAGE FROM CLIENT! */
         case gAppGattServerMsg_c:
         {
-            if (pfGattServerCallback)
-                pfGattServerCallback(pMsg->msgData.gattServerMsg.deviceId, &pMsg->msgData.gattServerMsg.serverEvent);
-
+        	uint8_t testvalue;
             // LED SETZEN FUER VORSCHAU
-            if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue == 1)
+            if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 0)
             {
             	// GPIO = HIGH -> 1 LED leuchten lassen
+            	GPIO_WritePinOutput(GPIOA, 19U, 1);
+            	GPIO_WritePinOutput(GPIOA, 18U, 1);
             }
-            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue == 2)
+            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 1)
             {
+            	testvalue = 1;
             	// GPIO = HIGH -> 2 LED leuchten lassen
+            	GPIO_WritePinOutput(GPIOA, 19U, 0);
+            	GPIO_WritePinOutput(GPIOA, 18U, 1);
             }
+            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 2)
+			{
+            	testvalue = 2;
+				// GPIO = HIGH -> 2 LED leuchten lassen
+            	GPIO_WritePinOutput(GPIOA, 19U, 1);
+            	GPIO_WritePinOutput(GPIOA, 18U, 0);
+			}
+            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 3)
+			{
+            	testvalue = 3;
+				// GPIO = HIGH -> 2 LED leuchten lassen
+            	GPIO_WritePinOutput(GPIOA, 19U, 0);
+            	GPIO_WritePinOutput(GPIOA, 18U, 0);
+			}
+            // PRESENTATION FINISHED
 
-
+            if (pfGattServerCallback)
+                pfGattServerCallback(pMsg->msgData.gattServerMsg.deviceId, &pMsg->msgData.gattServerMsg.serverEvent);
             break;
         }
         case gAppGattClientProcedureMsg_c:

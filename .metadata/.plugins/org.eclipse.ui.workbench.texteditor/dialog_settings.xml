@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="gEvtAttribute" key="selection"/>
+		<item value="BOARD_Init" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="gEvtAttribute"/>
-			<item value="MAX_MESSAGE_SIZE"/>
-			<item value="Hrs_GetHrmFlags"/>
-			<item value="Gattdb_ReadAttribute"/>
-			<item value="read"/>
-			<item value="GattDb_ReadAttribute"/>
-			<item value="gattServerProcedureCallback"/>
-			<item value="Hrs_RecordHeartRateMeasurement"/>
+			<item value="BOARD_Init"/>
+			<item value="BOARD_InitPins"/>
+			<item value="gLEDSupported_d"/>
+			<item value=""/>
+			<item value="gLED_support"/>
+			<item value="gLED_supported"/>
+			<item value="gLED_supported_d"/>
+			<item value="LED_Init"/>
 		</list>
 		<list key="replacehistory">
 			<item value="value_bike_notify"/>

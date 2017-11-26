@@ -72,7 +72,7 @@
 * Description: Specifies if RGB led is supported by the LED module
 */
 #ifndef gLedRgbEnabled_d
-#define gLedRgbEnabled_d               FALSE
+#define gLedRgbEnabled_d               TRUE
 #endif
 
 #if gLedRgbEnabled_d

@@ -164,7 +164,7 @@
  ********************************************************************************** */
 /* Disable LEDs when enabling low power */           
 #if cPWR_UsePowerDownMode || gMWS_UseCoexistence_d
-#define gLEDSupported_d 0           
+#define gLEDSupported_d 	0
 #endif
            
 #if gMWS_UseCoexistence_d   

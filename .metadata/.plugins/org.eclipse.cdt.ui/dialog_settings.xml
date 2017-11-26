@@ -33,5 +33,7 @@
 	<section name="PDOMSearchPage">
 	</section>
 	<section name="completion_proposal_size">
+		<item value="480" key="size.y"/>
+		<item value="649" key="size.x"/>
 	</section>
 </section>
