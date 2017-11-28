@@ -1382,7 +1382,7 @@ static void App_GattClientNotificationCallback
 {
     appMsgFromHost_t *pMsgIn = NULL;
 
-    /* Allocate a buffer with enough space to store also the notified value*/
+    /* Allocate a buffer with enough space to store also the notified value */
     pMsgIn = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gattClientNotifIndMsg_t)
                         + valueLength);
 
