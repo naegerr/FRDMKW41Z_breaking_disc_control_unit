@@ -49,6 +49,9 @@
 #include "Flash_Adapter.h"
 #include "SecLib.h"
 #include "Panic.h"
+#include "TMR_Adapter.h"		// added by NAR
+#include "pin_mux.h"			// added by NAR
+#include "fsl_tpm.h"			// added by NAR
 
 #if gFsciIncluded_c    
 #include "FsciInterface.h"
@@ -112,6 +115,15 @@
 #ifndef mAppIdleHook_c
 #define mAppIdleHook_c 0
 #endif
+
+/*! PWM */
+#define		SERVO_FREQUENCY		(24000U)
+#define		SERVO_INIT_VALUE	(100U)
+#define 	SERVO_TPM_BASEADDR 	(TPM0)
+#define 	SERVO_TPM_CHANNEL 	(0U)
+
+// Source clockfor TPM driver
+#define TPM_SOURCE_CLOCK 		CLOCK_GetFreq(kCLOCK_McgFllClk)
 
 /************************************************************************************
 *************************************************************************************
@@ -196,6 +208,58 @@ typedef struct appMsgCallback_tag{
     appCallbackHandler_t   handler;
     appCallbackParam_t     param;
 }appMsgCallback_t;
+
+
+// Power and bike Speed values in uint16_t format
+typedef struct bikeValues_tag
+{
+	uint16_t		power;	   //
+	double			bikeSpeed; //
+} bikeValues_t;
+
+
+// Save some Unicode signs
+typedef enum controlChars_tag
+{
+	angledBrace_open	= 0x5B, /* ( */
+	angledBrace_off 	= 0x5D, /* ) */
+	curlyBrace_open		= 0x7B, /* { */
+	curlyBrace_off		= 0x7D, /* } */
+	comma				= 0x2C, /* , */
+	point				= 0x2E	/* . */
+} controlChars_t;
+
+
+/*! message types according to Mobile App */
+typedef enum bssMessage_tag
+{
+	connectionTest = 48,
+	connectionTestResponse,
+	start,
+	stop,
+	pause,
+	brake,				// integer in [W]
+	acceleration,
+	bikeSpeed,			// [m/s]
+	windSpeed,			// [m/s]
+	windDirection,		// 0 front, 1/2PI right, PI back, 3/2PI left
+	inclination,		// [grade]
+	airDensity,			// [kg/m^3]
+	temperature,		// [°C]
+	gpsLatitude,		// DecDeg Format
+	gpsLongitude,		// DecDeg Format
+	gpsAltitude,		// [m] above Referenzellipsoid WGS 84
+} bssMessage_t;
+
+uint8_t 	pwmInstance;
+uint8_t 	pwmChannel;
+uint16_t	pwmValue;
+uint8_t updatedDutycycle;
+
+tpm_config_t tpmInfo;
+tpm_chnl_pwm_signal_param_t	tpmParam;
+tpm_pwm_level_select_t pwmLevel;
+
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
@@ -261,6 +325,7 @@ static void App_L2caLeControlCallback
 #if !gUseHciTransportDownward_d
 static void BLE_SignalFromISRCallback(void);
 #endif
+
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -365,21 +430,35 @@ void main_task(uint32_t param)
         TMR_Init();       
         LED_Init();
         SecLib_Init();
-        
-        // added by NAR for initialize GPIO pins
-        //PORT_SetPinMux(((GPIO_Type *) (0x400FF000u)), 19u, 1U);         /* PORTA18 (pin 6) is configured as PTA18 */
-        //PORT_SetPinMux(((GPIO_Type *) (0x400FF000u)), 18u, 1U);         /* PORTA19 (pin 7) is configured as PTA19 */
-        CLOCK_EnableClock(kCLOCK_PortA);
+        BOARD_InitPins();
+        //BOARD_InitRGB():
+        BOARD_BootClockRUN();
+        CLOCK_SetTpmClock(1U);
         BOARD_InitLEDs();
+
+        // added by NAR for initialize GPIO pins
         gpio_pin_config_t ledConfig;
         ledConfig.pinDirection = kGPIO_DigitalOutput;
         ledConfig.outputLogic = 0;
         GPIO_PinInit(GPIOA, 18u, &ledConfig);
         ledConfig.outputLogic = 0;
         GPIO_PinInit(GPIOA, 19u, &ledConfig);
-        //BOARD_InitRGB():
-        BOARD_BootClockRUN();
 
+        /* PWM Init */
+	    // Init von PWM
+	    pwmLevel = kTPM_LowTrue;
+	    updatedDutycycle = 50U;
+
+   	    tpmParam.chnlNumber = (tpm_chnl_t) SERVO_TPM_CHANNEL;
+   	    tpmParam.level= pwmLevel;
+   	    tpmParam.dutyCyclePercent = updatedDutycycle;
+	    TPM_GetDefaultConfig(&tpmInfo);
+	    // Initialize TPM module
+	    TPM_Init(SERVO_TPM_BASEADDR, &tpmInfo);
+
+	    TPM_SetupPwm(SERVO_TPM_BASEADDR, &tpmParam, kTPM_EdgeAlignedPwm, 1U, SERVO_FREQUENCY, TPM_SOURCE_CLOCK);
+
+	    TPM_StartTimer(SERVO_TPM_BASEADDR, kTPM_SystemClock);
 
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
@@ -999,6 +1078,119 @@ static void App_KeyboardCallBack
     BleApp_HandleKeys(events);
 }
 #endif
+
+
+
+/*! *********************************************************************************
+* \brief  Checks character if it is a character '0' until '9'.
+*
+* \param[in] 	character	character which has to be checked
+*
+* \return  		TRUE -> character value is '0' until '9'
+* 				otherwise FALSE
+*
+* \remarks
+*
+********************************************************************************** */
+bool_t isUnicodeNumber(char character)
+{
+	return (character < 48 || character > 57)?FALSE:TRUE;
+}
+
+/*! *********************************************************************************
+* \brief  Exponation function
+*
+* \param[in] x			Base of the operation exponation
+* \param[in] expo		exponent of the operation exponation
+*
+* \return  result
+*
+* \remarks
+*
+********************************************************************************** */
+uint16_t n_pow(uint16_t x, uint16_t expo)
+{
+	uint16_t i = 1;
+	if(expo == 0)
+	{
+		return 1;
+	}
+	if(expo == 1)
+	{
+		return x;
+	}
+	while(i<=(expo-1))
+	{
+		x*=x;
+		i++;
+	}
+	return x;
+}
+
+
+/*! *********************************************************************************
+* \brief  Parses the char* message into uint16_t values for power and speed
+*
+* \param[in] writtenMsg		WrittenEvent from Gattserver
+*
+*
+* \return  bikeValues (Power and bikespeed)
+*
+* \remarks This function gets called to get integer values from the message received
+*
+********************************************************************************** */
+bikeValues_t parseBikeMsg(gattServerAttributeWrittenEvent_t writtenMsg)
+{
+	bikeValues_t bikeValues;
+	uint8_t counter = 0;
+	char* strPtr1;
+	char* strPtr2;
+	bikeValues.bikeSpeed = 0;
+	bikeValues.power = 0;
+
+	// char compare
+	if(writtenMsg.aValue[0] == curlyBrace_open && writtenMsg.aValue[1] == angledBrace_open)
+	{
+		// Is brake value?
+		if(writtenMsg.aValue[2] == brake)
+		{
+			// Assumption, no floating values added yet!
+			strPtr1 = strchr((char*)writtenMsg.aValue, angledBrace_off);
+			strPtr2 = strPtr1; // Save value for next message
+			strPtr1--;
+			// Iterate from LS character and sum up characters
+			do{
+				if(isUnicodeNumber(*strPtr1))
+				{
+					bikeValues.power += ((*strPtr1)-48)*n_pow(10, counter);
+					counter++;
+				}
+				strPtr1--;
+			}while(*strPtr1 != comma);
+		}
+		strPtr2 += 2;
+		counter = 0;
+		// Is speed value?
+		if(*strPtr2 == bikeSpeed)
+		{
+			strPtr1 = strchr((char*)strPtr2, angledBrace_off);
+			strPtr1--;
+			// Iterate from LS character and sum up characters
+			do{
+				if(isUnicodeNumber(*strPtr1))
+				{
+					bikeValues.bikeSpeed += ((*strPtr1)-48)*n_pow(10, counter);
+					counter++;
+				}
+
+				strPtr1--;
+			}while(*strPtr1 != comma);
+		}
+	}
+	return bikeValues;
+}
+
+
 /*****************************************************************************
 * Handles all messages received from the host task.
 * Interface assumptions: None
@@ -1037,8 +1229,18 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         /* RECEIVED MESSAGE FROM CLIENT! */
         case gAppGattServerMsg_c:
         {
-        	uint8_t testvalue;
-            // LED SETZEN FUER VORSCHAU
+        	bikeValues_t bikeValues;
+        	// Power and Speed aus Message herauslesen
+        	bikeValues = parseBikeMsg(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent);
+//        	updatedDutycycle = pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] * 30;
+//            /* Disable channel output before updating the dutycycle */
+//		  	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, 0U);
+//		    /* Update PWM duty cycle */
+//		    TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+//		    /* Start channel output with updated dutycycle */
+//		    TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, pwmLevel);
+
+        	// LED SETZEN FUER VORSCHAU
             if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 0)
             {
             	// GPIO = HIGH -> 1 LED leuchten lassen
@@ -1047,21 +1249,18 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
             }
             else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 1)
             {
-            	testvalue = 1;
             	// GPIO = HIGH -> 2 LED leuchten lassen
             	GPIO_WritePinOutput(GPIOA, 19U, 0);
             	GPIO_WritePinOutput(GPIOA, 18U, 1);
             }
             else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 2)
 			{
-            	testvalue = 2;
 				// GPIO = HIGH -> 2 LED leuchten lassen
             	GPIO_WritePinOutput(GPIOA, 19U, 1);
             	GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
             else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 3)
 			{
-            	testvalue = 3;
 				// GPIO = HIGH -> 2 LED leuchten lassen
             	GPIO_WritePinOutput(GPIOA, 19U, 0);
             	GPIO_WritePinOutput(GPIOA, 18U, 0);
@@ -1126,6 +1325,8 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         }
     }   
 }
+
+
 
 static void App_GenericCallback (gapGenericEvent_t* pGenericEvent)
 {

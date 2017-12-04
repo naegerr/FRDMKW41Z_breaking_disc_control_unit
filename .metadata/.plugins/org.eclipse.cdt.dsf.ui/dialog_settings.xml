@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="org.eclipse.cdt.dsf.debug.internal.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
+		<item value="200" key="SashWeightTree"/>
+		<item value="200" key="SashWeightDetails"/>
+		<item value="608" key="WIDTH"/>
+		<item value="230" key="HEIGHT"/>
+	</section>
 	<section name="com.nxp.lpcxpresso.debug.ui.gui.NXPExpressionInformationControlCreator$ExpressionInformationControl">
 		<item value="500" key="Sash.Weight.Details"/>
 		<item value="500" key="Sash.Weight.Tree"/>
-		<item value="728" key="WIDTH"/>
-		<item value="599" key="HEIGHT"/>
+		<item value="782" key="WIDTH"/>
+		<item value="713" key="HEIGHT"/>
 	</section>
 </section>

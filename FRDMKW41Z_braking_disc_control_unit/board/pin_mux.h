@@ -33,6 +33,14 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/* PORTA16 (number 4), J2[4]/D11 */
+#define BOARD_INITPINS_TPM0_CH0_PERIPHERAL                                  TPM0   /*!< Device name: TPM0 */
+#define BOARD_INITPINS_TPM0_CH0_SIGNAL                                        CH   /*!< TPM0 signal: CH */
+#define BOARD_INITPINS_TPM0_CH0_CHANNEL                                        0   /*!< TPM0 channel: 0 */
+#define BOARD_INITPINS_TPM0_CH0_PIN_NAME                                TPM0_CH0   /*!< Pin name */
+#define BOARD_INITPINS_TPM0_CH0_LABEL                                "J2[4]/D11"   /*!< Label */
+#define BOARD_INITPINS_TPM0_CH0_NAME                                  "TPM0_CH0"   /*!< Identifier name */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -134,6 +142,13 @@ void BOARD_InitRGB(void);
 #define BOARD_INITSPI_FLASH_SI_PIN_NAME                                SPI0_SOUT   /*!< Pin name */
 #define BOARD_INITSPI_FLASH_SI_LABEL                            "J1[6]/U4[1]/D5"   /*!< Label */
 #define BOARD_INITSPI_FLASH_SI_NAME                                   "FLASH_SI"   /*!< Identifier name */
+
+/* PORTA16 (number 4), J2[4]/D11 */
+#define BOARD_INITSPI_TPM0_CH0_PERIPHERAL                                   SPI1   /*!< Device name: SPI1 */
+#define BOARD_INITSPI_TPM0_CH0_SIGNAL                                       SOUT   /*!< SPI1 signal: SOUT */
+#define BOARD_INITSPI_TPM0_CH0_PIN_NAME                                SPI1_SOUT   /*!< Pin name */
+#define BOARD_INITSPI_TPM0_CH0_LABEL                                 "J2[4]/D11"   /*!< Label */
+#define BOARD_INITSPI_TPM0_CH0_NAME                                   "TPM0_CH0"   /*!< Identifier name */
 
 /* PORTA18 (number 6), J2[6]/D13/RGB_BLUE */
 #define BOARD_INITSPI_LED_BLUE_PERIPHERAL                                   SPI1   /*!< Device name: SPI1 */

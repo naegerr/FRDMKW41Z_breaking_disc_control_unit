@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;FRDMKW41Z_braking_disc_control_unit/board/Project&apos;" deleteContents="false" description="Delete resource &apos;FRDMKW41Z_braking_disc_control_unit/board/Project&apos;" element1="/FRDMKW41Z_braking_disc_control_unit/board/Project" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1512048803039"/>
+</session>

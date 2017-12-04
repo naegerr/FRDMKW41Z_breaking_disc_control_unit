@@ -7,6 +7,8 @@ package_id: MKW41Z512VHT4
 mcu_data: ksdk2_0
 processor_version: 2.0.1
 board: FRDM-KW41Z
+pin_labels:
+- {pin_num: '4', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, label: 'J2[4]/D11', identifier: TPM0_CH0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -24,11 +26,16 @@ void BOARD_InitBootPins(void) {
     BOARD_InitPins();
 }
 
+#define PCR_PE_DISABLED               0x00u   /*!< Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+#define PCR_SRE_SLOW                  0x01u   /*!< Slew Rate Enable: Slow slew rate is configured on the corresponding pin, if the pin is configured as a digital output. */
+#define PIN16_IDX                       16u   /*!< Pin number for pin 16 in a port */
+
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list: []
+- pin_list:
+  - {pin_num: '4', peripheral: TPM0, signal: 'CH, 0', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, slew_rate: slow, pull_select: no_init, pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -39,6 +46,14 @@ BOARD_InitPins:
  *
  *END**************************************************************************/
 void BOARD_InitPins(void) {
+  CLOCK_EnableClock(kCLOCK_PortA);                           /* Port A Clock Gate Control: Clock enabled */
+
+  PORT_SetPinMux(PORTA, PIN16_IDX, kPORT_MuxAlt5);           /* PORTA16 (pin 4) is configured as TPM0_CH0 */
+  PORTA->PCR[16] = ((PORTA->PCR[16] &
+    (~(PORT_PCR_PE_MASK | PORT_PCR_SRE_MASK | PORT_PCR_ISF_MASK))) /* Mask bits to zero which are setting */
+      | PORT_PCR_PE(PCR_PE_DISABLED)                         /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+      | PORT_PCR_SRE(PCR_SRE_SLOW)                           /* Slew Rate Enable: Slow slew rate is configured on the corresponding pin, if the pin is configured as a digital output. */
+    );
 }
 
 
@@ -141,6 +156,7 @@ void BOARD_InitRGB(void) {
 
 
 #define PIN1_IDX                         1u   /*!< Pin number for pin 1 in a port */
+
 #define PIN16_IDX                       16u   /*!< Pin number for pin 16 in a port */
 #define PIN17_IDX                       17u   /*!< Pin number for pin 17 in a port */
 

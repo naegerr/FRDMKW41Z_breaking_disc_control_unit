@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="BOARD_Init" key="selection"/>
+		<item value="TPM0" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="BOARD_Init"/>
-			<item value="BOARD_InitPins"/>
-			<item value="gLEDSupported_d"/>
-			<item value=""/>
-			<item value="gLED_support"/>
-			<item value="gLED_supported"/>
-			<item value="gLED_supported_d"/>
-			<item value="LED_Init"/>
+			<item value="TPM0"/>
+			<item value="TPM"/>
+			<item value="TPM_CHANNEL_FLAG"/>
+			<item value="kTPM_Chnl0Flag"/>
+			<item value="updatedDutycycle"/>
+			<item value="BOARD_TPM_BASEADDR"/>
+			<item value="TPM_Type"/>
+			<item value="tpm_chnl_pwm_signal_param_t"/>
 		</list>
 		<list key="replacehistory">
 			<item value="value_bike_notify"/>
@@ -30,7 +30,7 @@
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="1026" key="DIALOG_X_ORIGIN"/>
-		<item value="342" key="DIALOG_Y_ORIGIN"/>
+		<item value="765" key="DIALOG_X_ORIGIN"/>
+		<item value="353" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
