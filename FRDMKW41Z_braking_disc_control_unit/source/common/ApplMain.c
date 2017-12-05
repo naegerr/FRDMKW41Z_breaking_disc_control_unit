@@ -1222,6 +1222,8 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         }
         case gAppGapConnectionMsg_c:
         {
+        	//GPIO_WritePinOutput(GPIOA, 19U, 1);
+        	//GPIO_WritePinOutput(GPIOA, 18U, 0);
             if (pfConnCallback)
                 pfConnCallback(pMsg->msgData.connMsg.deviceId, &pMsg->msgData.connMsg.connEvent);
             break;
@@ -1232,6 +1234,8 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         	bikeValues_t bikeValues;
         	// Power and Speed aus Message herauslesen
         	bikeValues = parseBikeMsg(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent);
+        	//GPIO_WritePinOutput(GPIOA, 19U, 0);
+        	//GPIO_WritePinOutput(GPIOA, 18U, 1);
 //        	updatedDutycycle = pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] * 30;
 //            /* Disable channel output before updating the dutycycle */
 //		  	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, 0U);
