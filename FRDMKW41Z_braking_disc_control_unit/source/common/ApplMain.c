@@ -213,16 +213,16 @@ typedef struct appMsgCallback_tag{
 // Power and bike Speed values in uint16_t format
 typedef struct bikeValues_tag
 {
-	uint16_t		power;	   //
-	double			bikeSpeed; //
+	uint64_t		power;	   //
+	uint64_t		bikeSpeed; //
 } bikeValues_t;
 
 
 // Save some Unicode signs
 typedef enum controlChars_tag
 {
-	angledBrace_open	= 0x5B, /* ( */
-	angledBrace_off 	= 0x5D, /* ) */
+	angledBrace_open	= 0x5B, /* [ */
+	angledBrace_off 	= 0x5D, /* ] */
 	curlyBrace_open		= 0x7B, /* { */
 	curlyBrace_off		= 0x7D, /* } */
 	comma				= 0x2C, /* , */
@@ -249,6 +249,7 @@ typedef enum bssMessage_tag
 	gpsLatitude,		// DecDeg Format
 	gpsLongitude,		// DecDeg Format
 	gpsAltitude,		// [m] above Referenzellipsoid WGS 84
+	testMessage			// For developing purposes
 } bssMessage_t;
 
 uint8_t 	pwmInstance;
@@ -259,7 +260,10 @@ uint8_t updatedDutycycle;
 tpm_config_t tpmInfo;
 tpm_chnl_pwm_signal_param_t	tpmParam;
 tpm_pwm_level_select_t pwmLevel;
+uint8_t		counter;
+bikeValues_t bikeValues;
 
+#define		LED_SHOW		0
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
@@ -445,20 +449,20 @@ void main_task(uint32_t param)
         GPIO_PinInit(GPIOA, 19u, &ledConfig);
 
         /* PWM Init */
-	    // Init von PWM
-	    pwmLevel = kTPM_LowTrue;
-	    updatedDutycycle = 50U;
-
-   	    tpmParam.chnlNumber = (tpm_chnl_t) SERVO_TPM_CHANNEL;
-   	    tpmParam.level= pwmLevel;
-   	    tpmParam.dutyCyclePercent = updatedDutycycle;
-	    TPM_GetDefaultConfig(&tpmInfo);
-	    // Initialize TPM module
-	    TPM_Init(SERVO_TPM_BASEADDR, &tpmInfo);
-
-	    TPM_SetupPwm(SERVO_TPM_BASEADDR, &tpmParam, kTPM_EdgeAlignedPwm, 1U, SERVO_FREQUENCY, TPM_SOURCE_CLOCK);
-
-	    TPM_StartTimer(SERVO_TPM_BASEADDR, kTPM_SystemClock);
+//	    // Init von PWM
+//	    pwmLevel = kTPM_LowTrue;
+//	    updatedDutycycle = 50U;
+//
+//   	    tpmParam.chnlNumber = (tpm_chnl_t) SERVO_TPM_CHANNEL;
+//   	    tpmParam.level= pwmLevel;
+//   	    tpmParam.dutyCyclePercent = updatedDutycycle;
+//	    TPM_GetDefaultConfig(&tpmInfo);
+//	    // Initialize TPM module
+//	    TPM_Init(SERVO_TPM_BASEADDR, &tpmInfo);
+//
+//	    TPM_SetupPwm(SERVO_TPM_BASEADDR, &tpmParam, kTPM_EdgeAlignedPwm, 1U, SERVO_FREQUENCY, TPM_SOURCE_CLOCK);
+//
+//	    TPM_StartTimer(SERVO_TPM_BASEADDR, kTPM_SystemClock);
 
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
@@ -507,6 +511,7 @@ void main_task(uint32_t param)
             return;
         }
         
+
         /* Prepare application input queue.*/
         MSG_InitQueue(&mHostAppInputQueue);
         
@@ -1148,17 +1153,53 @@ bikeValues_t parseBikeMsg(gattServerAttributeWrittenEvent_t writtenMsg)
 	bikeValues.bikeSpeed = 0;
 	bikeValues.power = 0;
 
+	// Check if still connected
+	if(writtenMsg.aValue[0] == 89)
+	{
+		bikeValues.power = 0;
+		bikeValues.bikeSpeed = 0;
+		return bikeValues;
+	}
+	// Check if Services discovered
+	if(writtenMsg.aValue[0] == 191)
+	{
+		bikeValues.power = 0;
+		bikeValues.bikeSpeed = 0;
+		return bikeValues;
+	}
 	// char compare
 	if(writtenMsg.aValue[0] == curlyBrace_open && writtenMsg.aValue[1] == angledBrace_open)
 	{
+		if(writtenMsg.aValue[2] == start)
+		{
+			// LED aus
+			bikeValues.power = 0;
+			bikeValues.bikeSpeed = 0;
+			return bikeValues;
+		}
+		if(writtenMsg.aValue[2] == pause)
+		{
+			// türkis
+			bikeValues.power = 0;
+			bikeValues.bikeSpeed = 0;
+			return bikeValues;
+		}
+		if(writtenMsg.aValue[2] == stop)
+		{
+			// türkis
+			bikeValues.power = 0;
+			bikeValues.bikeSpeed = 0;
+			return bikeValues;
+		}
 		// Is brake value?
 		if(writtenMsg.aValue[2] == brake)
 		{
 			// Assumption, no floating values added yet!
 			strPtr1 = strchr((char*)writtenMsg.aValue, angledBrace_off);
 			strPtr2 = strPtr1; // Save value for next message
+			strPtr2 += 2;
 			strPtr1--;
-			// Iterate from LS character and sum up characters
+			// Iterate from LS character and sum up
 			do{
 				if(isUnicodeNumber(*strPtr1))
 				{
@@ -1168,7 +1209,7 @@ bikeValues_t parseBikeMsg(gattServerAttributeWrittenEvent_t writtenMsg)
 				strPtr1--;
 			}while(*strPtr1 != comma);
 		}
-		strPtr2 += 2;
+
 		counter = 0;
 		// Is speed value?
 		if(*strPtr2 == bikeSpeed)
@@ -1222,8 +1263,6 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         }
         case gAppGapConnectionMsg_c:
         {
-        	//GPIO_WritePinOutput(GPIOA, 19U, 1);
-        	//GPIO_WritePinOutput(GPIOA, 18U, 0);
             if (pfConnCallback)
                 pfConnCallback(pMsg->msgData.connMsg.deviceId, &pMsg->msgData.connMsg.connEvent);
             break;
@@ -1231,9 +1270,24 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         /* RECEIVED MESSAGE FROM CLIENT! */
         case gAppGattServerMsg_c:
         {
-        	bikeValues_t bikeValues;
+        	if (pfGattServerCallback)
+			{
+				pfGattServerCallback(pMsg->msgData.gattServerMsg.deviceId, &pMsg->msgData.gattServerMsg.serverEvent);
+			}
         	// Power and Speed aus Message herauslesen
         	bikeValues = parseBikeMsg(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent);
+
+        	// Disconnected from client!
+        	/*if(bikeValues.bikeSpeed == 1000 && bikeValues.power == 1000)
+        	{
+        		temp = 0;
+        	}
+        	// Service discovered
+        	if(bikeValues.bikeSpeed == 100 && bikeValues.power == 100)
+			{
+				temp = 1;
+			}*/
+
         	//GPIO_WritePinOutput(GPIOA, 19U, 0);
         	//GPIO_WritePinOutput(GPIOA, 18U, 1);
 //        	updatedDutycycle = pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] * 30;
@@ -1244,35 +1298,60 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 //		    /* Start channel output with updated dutycycle */
 //		    TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, pwmLevel);
 
+        	if(bikeValues.bikeSpeed > 60)
+			{
+				// GPIO = HIGH -> 1 türkis
+				GPIO_WritePinOutput(GPIOA, 19U, 0);
+				GPIO_WritePinOutput(GPIOA, 18U, 0);
+			}
+			else if(bikeValues.bikeSpeed > 40)
+			{
+				// GPIO = HIGH -> 2 Grün leuchten lassen
+				GPIO_WritePinOutput(GPIOA, 19U, 0);
+				GPIO_WritePinOutput(GPIOA, 18U, 1);
+			}
+			else if(bikeValues.bikeSpeed > 20)
+			{
+				// GPIO = HIGH -> 2 Blau leuchten lassen
+				GPIO_WritePinOutput(GPIOA, 19U, 1);
+				GPIO_WritePinOutput(GPIOA, 18U, 0);
+			}
+			else if(bikeValues.bikeSpeed > 0)
+			{
+				// GPIO = HIGH -> 2 off
+				GPIO_WritePinOutput(GPIOA, 19U, 1);
+				GPIO_WritePinOutput(GPIOA, 18U, 1);
+			}
         	// LED SETZEN FUER VORSCHAU
+#if LED_SHOW
             if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 0)
             {
-            	// GPIO = HIGH -> 1 LED leuchten lassen
+            	// GPIO = HIGH -> 1 ausschalten
             	GPIO_WritePinOutput(GPIOA, 19U, 1);
             	GPIO_WritePinOutput(GPIOA, 18U, 1);
             }
             else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 1)
             {
-            	// GPIO = HIGH -> 2 LED leuchten lassen
+            	// GPIO = HIGH -> 2 Grün leuchten lassen
             	GPIO_WritePinOutput(GPIOA, 19U, 0);
             	GPIO_WritePinOutput(GPIOA, 18U, 1);
             }
             else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 2)
 			{
-				// GPIO = HIGH -> 2 LED leuchten lassen
+				// GPIO = HIGH -> 2 Blau leuchten lassen
             	GPIO_WritePinOutput(GPIOA, 19U, 1);
             	GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
             else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 3)
 			{
-				// GPIO = HIGH -> 2 LED leuchten lassen
+				// GPIO = HIGH -> 2 türkis
             	GPIO_WritePinOutput(GPIOA, 19U, 0);
             	GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
+#endif
             // PRESENTATION FINISHED
 
-            if (pfGattServerCallback)
-                pfGattServerCallback(pMsg->msgData.gattServerMsg.deviceId, &pMsg->msgData.gattServerMsg.serverEvent);
+
             break;
         }
         case gAppGattClientProcedureMsg_c:

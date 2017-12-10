@@ -36,6 +36,7 @@ BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '4', peripheral: TPM0, signal: 'CH, 0', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, slew_rate: slow, pull_select: no_init, pull_enable: disable}
+  - {pin_num: '24', peripheral: ADC0, signal: 'DP, 0', pin_signal: ADC0_DP0/CMP0_IN0, identifier: ADC0_BATT_MON}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

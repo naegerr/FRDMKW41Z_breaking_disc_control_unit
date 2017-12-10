@@ -47,6 +47,11 @@
                         <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="ADC0" signal="DP, 0" pin_num="24" pin_signal="ADC0_DP0/CMP0_IN0">
+                     <pin_features>
+                        <pin_feature name="identifier" value="ADC0_BATT_MON"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
             <function name="BOARD_InitButtons">

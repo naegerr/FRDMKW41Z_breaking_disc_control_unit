@@ -41,6 +41,14 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_TPM0_CH0_LABEL                                "J2[4]/D11"   /*!< Label */
 #define BOARD_INITPINS_TPM0_CH0_NAME                                  "TPM0_CH0"   /*!< Identifier name */
 
+/* ADC0_DP0 (number 24), J4[6]/J35[2]/V_BATT/THER_A/THERMISTOR */
+#define BOARD_INITPINS_ADC0_BATT_MON_PERIPHERAL                             ADC0   /*!< Device name: ADC0 */
+#define BOARD_INITPINS_ADC0_BATT_MON_SIGNAL                                   DP   /*!< ADC0 signal: DP */
+#define BOARD_INITPINS_ADC0_BATT_MON_CHANNEL                                   0   /*!< ADC0 DP channel: 0 */
+#define BOARD_INITPINS_ADC0_BATT_MON_PIN_NAME                           ADC0_DP0   /*!< Pin name */
+#define BOARD_INITPINS_ADC0_BATT_MON_LABEL "J4[6]/J35[2]/V_BATT/THER_A/THERMISTOR" /*!< Label */
+#define BOARD_INITPINS_ADC0_BATT_MON_NAME                        "ADC0_BATT_MON"   /*!< Identifier name */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
