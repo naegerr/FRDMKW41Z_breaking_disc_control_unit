@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MKW31Z_braking_disc_control_unit/CMSIS&apos; to &apos;aasdfasdf&apos;" description="Rename resource &apos;CMSIS&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="CMSIS" name="aasdfasdf" stamp="1513010734541" updateReferences="true"/>
+</session>
