@@ -36,14 +36,14 @@
  *
  * The CPU macro should be declared in the project or makefile.
  */
-#if (defined(CPU_MKW31Z256VHT4) || defined(CPU_MKW31Z512CAT4) || defined(CPU_MKW31Z512VHT4))
+#if (defined(CPU_MKW41Z256VHT4) || defined(CPU_MKW41Z512CAT4) || defined(CPU_MKW41Z512VHT4))
 
-#define KW31Z4_SERIES
+#define KW41Z4_SERIES
 
 /* CMSIS-style register definitions */
-#include "MKW31Z4.h"
+#include "MKW41Z4.h"
 /* CPU specific feature definitions */
-#include "MKW31Z4_features.h"
+#include "MKW41Z4_features.h"
 
 #else
     #error "No valid CPU defined!"

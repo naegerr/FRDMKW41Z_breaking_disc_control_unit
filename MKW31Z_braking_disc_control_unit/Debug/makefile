@@ -47,6 +47,7 @@ RM := rm -rf
 -include bluetooth/profiles/battery/subdir.mk
 -include bluetooth/host/config/subdir.mk
 -include bluetooth/hci_transport/source/subdir.mk
+-include CMSIS/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -67,7 +68,7 @@ all: MKW31Z_braking_disc_control_unit.axf
 MKW31Z_braking_disc_control_unit.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -L"C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\MKW31Z_braking_disc_control_unit\libs" -Xlinker -Map="MKW31Z_braking_disc_control_unit.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m0plus -mthumb -T MKW31Z_braking_disc_control_unit_Debug.ld -o "MKW31Z_braking_disc_control_unit.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -L"C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\MKW31Z_braking_disc_control_unit\libs" -Xlinker -Map="MKW31Z_braking_disc_control_unit.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m0plus -mthumb -T MKW31Z_braking_disc_control_unit_Debug.ld -L ../Debug -o "MKW31Z_braking_disc_control_unit.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

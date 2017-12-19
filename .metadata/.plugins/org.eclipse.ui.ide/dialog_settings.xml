@@ -32,6 +32,10 @@
 		</list>
 	</section>
 	<section name="NewWizardAction">
+		<item value="com.nxp.mcuxpresso.datamodels.wizards.SDKWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="com.nxp.mcuxpresso.sdk.wizard"/>
+		</list>
 	</section>
 	<section name="BasicNewProjectResourceWizard">
 	</section>

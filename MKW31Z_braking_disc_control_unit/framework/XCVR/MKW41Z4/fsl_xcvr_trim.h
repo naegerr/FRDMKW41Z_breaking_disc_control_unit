@@ -31,7 +31,7 @@
 #define _FSL_XCVR_TRIM_H_
 /* Clang-format on. */
 
-#include <aasdfasdf/fsl_device_registers.h>
+#include "fsl_device_registers.h"
 /*!
 * @addtogroup xcvr
 * @{

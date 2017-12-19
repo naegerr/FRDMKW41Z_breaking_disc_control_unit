@@ -1,4 +1,3 @@
-#include <aasdfasdf/fsl_device_registers.h>
 /*!
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
@@ -43,6 +42,7 @@
 #include "MemManager.h"
 #include "FunctionLib.h"
 #include "SecLib.h"
+#include "fsl_device_registers.h"
 #include "fsl_os_abstraction.h"
 #include "Panic.h"
 

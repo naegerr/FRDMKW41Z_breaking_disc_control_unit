@@ -42,7 +42,7 @@
 *************************************************************************************
 ***********************************************************************************/
 #include "EmbeddedTypes.h"
-#include <CMSIS/fsl_device_registers.h>
+#include "fsl_device_registers.h"
 #include "board.h"
 
 

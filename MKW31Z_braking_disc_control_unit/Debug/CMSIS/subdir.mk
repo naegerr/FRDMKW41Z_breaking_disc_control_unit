@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../CMSIS/system_MKW31Z4.c 
+../CMSIS/system_MKW41Z4.c 
 
 OBJS += \
-./CMSIS/system_MKW31Z4.o 
+./CMSIS/system_MKW41Z4.o 
 
 C_DEPS += \
-./CMSIS/system_MKW31Z4.d 
+./CMSIS/system_MKW41Z4.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

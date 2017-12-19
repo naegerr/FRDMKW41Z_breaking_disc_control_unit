@@ -1,4 +1,3 @@
-#include <aasdfasdf/fsl_device_registers.h>
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
@@ -29,6 +28,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "EmbeddedTypes.h"
+#include "fsl_device_registers.h"
 #include "fsl_common.h"
 #include "fsl_xcvr.h"
 #include "fsl_xcvr_trim.h"

@@ -40,7 +40,7 @@
 #include <stddef.h>
 #endif
 
-#include <CMSIS/fsl_device_registers.h>
+#include "fsl_device_registers.h"
 
 /*!
  * @addtogroup ksdk_common

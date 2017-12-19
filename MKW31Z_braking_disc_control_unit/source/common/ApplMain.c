@@ -444,14 +444,10 @@ void main_task(uint32_t param)
         gpio_pin_config_t ledConfig;
         ledConfig.pinDirection = kGPIO_DigitalOutput;
         ledConfig.outputLogic = 0;
-        GPIO_PinInit(GPIOB, 18u, &ledConfig);
+        GPIO_PinInit(GPIOA, 18u, &ledConfig);
+        ledConfig.outputLogic = 0;
+        GPIO_PinInit(GPIOA, 19u, &ledConfig);
 
-        GPIO_WritePinOutput(GPIOB, 18U, 1);
-        GPIO_WritePinOutput(GPIOB, 18U, 0);
-        GPIO_WritePinOutput(GPIOB, 18U, 1);
-        GPIO_WritePinOutput(GPIOB, 18U, 0);
-        GPIO_WritePinOutput(GPIOB, 18U, 1);
-        GPIO_WritePinOutput(GPIOB, 18U, 0);
         /* PWM Init */
 //	    // Init von PWM
 //	    pwmLevel = kTPM_LowTrue;

@@ -1,4 +1,3 @@
-#include <aasdfasdf/fsl_device_registers.h>
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
@@ -28,6 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include "fsl_device_registers.h"
 #include "fsl_xcvr.h"
 #include "dbg_ram_capture.h"
 

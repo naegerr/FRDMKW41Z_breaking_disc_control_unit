@@ -5,7 +5,7 @@
  * Generated linker script file for MKW31Z256xxx4
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.23
- * MCUXpresso IDE v10.0.2 [Build 411] [2017-07-11]  on 11.12.2017 18:07:58
+ * MCUXpresso IDE v10.0.2 [Build 411] [2017-07-11]  on 12.12.2017 14:46:54
  */
 
 INCLUDE "MKW31Z_braking_disc_control_unit_Debug_library.ld"

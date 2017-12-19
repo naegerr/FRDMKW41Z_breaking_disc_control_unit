@@ -1,4 +1,3 @@
-#include <aasdfasdf/fsl_device_registers.h>
 /*! *********************************************************************************
  * \defgroup CONTROLLER
  * @{
@@ -43,6 +42,7 @@
 #include "EmbeddedTypes.h"
 #include "Messaging.h"
 #include "fsl_os_abstraction.h"
+#include "fsl_device_registers.h"
 #include "ble_controller_task_config.h"
 #include "Panic.h"
 #include "controller_interface.h"

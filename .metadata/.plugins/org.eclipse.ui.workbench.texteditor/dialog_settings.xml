@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="App_Connect" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="App_Connect"/>
-			<item value="TPM0"/>
-			<item value="TPM"/>
-			<item value="TPM_CHANNEL_FLAG"/>
-			<item value="kTPM_Chnl0Flag"/>
-			<item value="updatedDutycycle"/>
-			<item value="BOARD_TPM_BASEADDR"/>
-			<item value="TPM_Type"/>
+			<item value="BOARD_InitButtons"/>
+			<item value="__bss_section_table"/>
+			<item value="__data_section_table"/>
+			<item value="section"/>
+			<item value="Global"/>
+			<item value="startup_mkw31z4.c"/>
+			<item value="__data_section_table_"/>
+			<item value="data_section"/>
 		</list>
 		<list key="replacehistory">
 			<item value="value_bike_notify"/>
@@ -29,8 +29,8 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="1167" key="DIALOG_X_ORIGIN"/>
-		<item value="377" key="DIALOG_Y_ORIGIN"/>
+		<item value="420" key="DIALOG_HEIGHT"/>
+		<item value="65" key="DIALOG_X_ORIGIN"/>
+		<item value="246" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

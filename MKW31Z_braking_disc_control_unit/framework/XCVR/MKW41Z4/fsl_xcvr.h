@@ -32,7 +32,7 @@
 #define _FSL_XCVR_H_
 /* clang-format on */
 
-#include <aasdfasdf/fsl_device_registers.h>
+#include "fsl_device_registers.h"
 #include "fsl_xcvr_trim.h"
 
 #if gMWS_UseCoexistence_d

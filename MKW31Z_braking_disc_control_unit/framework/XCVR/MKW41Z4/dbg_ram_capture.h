@@ -33,7 +33,7 @@
 /* clang-format on */
 
 #include "fsl_common.h"
-#include <aasdfasdf/fsl_device_registers.h>
+#include "fsl_device_registers.h"
 
 /*!
  * @addtogroup xcvr

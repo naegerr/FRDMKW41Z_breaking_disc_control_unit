@@ -1,1 +1,0 @@
-The application implements a custom GATT based Temperature Profile. The example works on the FRDM-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

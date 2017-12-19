@@ -3,13 +3,13 @@
 	<section name="org.eclipse.cdt.dsf.debug.internal.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
 		<item value="500" key="SashWeightTree"/>
 		<item value="500" key="SashWeightDetails"/>
-		<item value="632" key="WIDTH"/>
-		<item value="332" key="HEIGHT"/>
+		<item value="938" key="WIDTH"/>
+		<item value="574" key="HEIGHT"/>
 	</section>
 	<section name="com.nxp.lpcxpresso.debug.ui.gui.NXPExpressionInformationControlCreator$ExpressionInformationControl">
 		<item value="500" key="Sash.Weight.Details"/>
 		<item value="500" key="Sash.Weight.Tree"/>
-		<item value="830" key="WIDTH"/>
-		<item value="737" key="HEIGHT"/>
+		<item value="870" key="WIDTH"/>
+		<item value="669" key="HEIGHT"/>
 	</section>
 </section>

@@ -36,7 +36,7 @@
 #define __TMR_INTERFACE_H__
 
 #include "EmbeddedTypes.h"
-#include <CMSIS/fsl_device_registers.h>
+#include "fsl_device_registers.h"
 #include "clock_config.h"
 
 /*****************************************************************************

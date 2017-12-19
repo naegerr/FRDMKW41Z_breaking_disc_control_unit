@@ -1,1 +1,0 @@
-The application implements a Bluetooth Low Energy Host with a shell inteface. The example works on the FRDM-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.
