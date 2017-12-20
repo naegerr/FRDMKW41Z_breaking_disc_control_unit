@@ -14,6 +14,7 @@ pin_labels:
 - {pin_num: '4', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, label: BUTTON, identifier: BUTTON}
 - {pin_num: '5', pin_signal: TSI0_CH11/PTA17/LLWU_P5/RF_RESET/SPI1_SIN/TPM_CLKIN1, label: LED_GREEN, identifier: LED_GREEN}
 - {pin_num: '6', pin_signal: TSI0_CH12/PTA18/LLWU_P6/SPI1_SCK/TPM2_CH0, label: LED_RED, identifier: LED_RED}
+- {pin_num: '7', pin_signal: TSI0_CH13/ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/TPM2_CH1, label: BUTTON_2, identifier: BUTTON_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -31,14 +32,17 @@ void BOARD_InitBootPins(void) {
     BOARD_InitPins();
 }
 
+#define PCR_SRE_SLOW                  0x01u   /*!< Slew Rate Enable: Slow slew rate is configured on the corresponding pin, if the pin is configured as a digital output. */
 #define PIN16_IDX                       16u   /*!< Pin number for pin 16 in a port */
+#define PIN19_IDX                       19u   /*!< Pin number for pin 19 in a port */
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitButtons:
 - options: {coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '4', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, direction: INPUT}
+  - {pin_num: '4', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, direction: INPUT, slew_rate: slow, pull_select: no_init}
+  - {pin_num: '7', peripheral: GPIOA, signal: 'GPIO, 19', pin_signal: TSI0_CH13/ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/TPM2_CH1, direction: INPUT, slew_rate: slow, pull_select: no_init}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -52,10 +56,20 @@ void BOARD_InitButtons(void) {
   CLOCK_EnableClock(kCLOCK_PortA);                           /* Port A Clock Gate Control: Clock enabled */
 
   PORT_SetPinMux(PORTA, PIN16_IDX, kPORT_MuxAsGpio);         /* PORTA16 (pin 4) is configured as PTA16 */
+  PORTA->PCR[16] = ((PORTA->PCR[16] &
+    (~(PORT_PCR_SRE_MASK | PORT_PCR_ISF_MASK)))              /* Mask bits to zero which are setting */
+      | PORT_PCR_SRE(PCR_SRE_SLOW)                           /* Slew Rate Enable: Slow slew rate is configured on the corresponding pin, if the pin is configured as a digital output. */
+    );
+  PORT_SetPinMux(PORTA, PIN19_IDX, kPORT_MuxAsGpio);         /* PORTA19 (pin 7) is configured as PTA19 */
+  PORTA->PCR[19] = ((PORTA->PCR[19] &
+    (~(PORT_PCR_SRE_MASK | PORT_PCR_ISF_MASK)))              /* Mask bits to zero which are setting */
+      | PORT_PCR_SRE(PCR_SRE_SLOW)                           /* Slew Rate Enable: Slow slew rate is configured on the corresponding pin, if the pin is configured as a digital output. */
+    );
 }
 
 
 #define PCR_PFE_DISABLED              0x00u   /*!< Passive Filter Enable: Passive input filter is disabled on the corresponding pin. */
+
 #define PCR_SRE_SLOW                  0x01u   /*!< Slew Rate Enable: Slow slew rate is configured on the corresponding pin, if the pin is configured as a digital output. */
 
 #define PIN16_IDX                       16u   /*!< Pin number for pin 16 in a port */

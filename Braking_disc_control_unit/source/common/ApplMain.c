@@ -52,6 +52,8 @@
 #include "TMR_Adapter.h"		// added by NAR
 #include "pin_mux.h"			// added by NAR
 #include "fsl_tpm.h"			// added by NAR
+#include "fsl_debug_console.h"	// added by NAR
+//#include "GPIO_Adapter.h"		// added by NAR
 #include "fsl_gpio.h"			// added by NAR
 
 #if gFsciIncluded_c    
@@ -450,15 +452,44 @@ extern const uint8_t gUseRtos_c;
 ************************************************************************************/
 void InitGPIO(void)
 {
-    // added by NAR for initialize GPIO pins
+//    // added by NAR for initialize GPIO pins
+//	gpioInputPinConfig_t* pInputConfig = NULL;
+//	pInputConfig->gpioPort = gpioPort_A_c;
+//	pInputConfig->gpioPin = BOARD_INITBUTTONS_BUTTON_GPIO_PIN;
+//	pInputConfig->interruptSelect = pinInt_Disabled_c; 		// MAy be changed, according to SWITCH 3 of FRDM
+//	pInputConfig->pullSelect = pinPull_Disabled_c;		 	// No pull resistor
+//	uint32_t			  nOfElements = 1; // one button
+//	GpioInputPinInit(pInputConfig, nOfElements);
+//
+//	nOfElements = 3;	// 3 LED
+//	gpioOutputPinConfig_t* pOutputconfig = NULL;
+//	pOutputconfig->gpioPort = gpioPort_B_c;
+//	pOutputconfig->gpioPin = BOARD_INITPINS_LED_ORANGE_GPIO_PIN;
+//	pOutputconfig->slewRate = pinSlewRate_Slow_c;
+//	pOutputconfig->driveStrength = pinDriveStrength_Low_c;
+//	pOutputconfig->outputLogic = false;
+//	pOutputconfig++;
+//	pOutputconfig->gpioPort = gpioPort_A_c;
+//	pOutputconfig->gpioPin = BOARD_INITPINS_LED_RED_GPIO_PIN;
+//	pOutputconfig->slewRate = pinSlewRate_Slow_c;
+//	pOutputconfig->driveStrength = pinDriveStrength_Low_c;
+//	pOutputconfig->outputLogic = false;
+//	pOutputconfig++;
+//	pOutputconfig->gpioPort = gpioPort_A_c;
+//	pOutputconfig->gpioPin = BOARD_INITPINS_LED_GREEN_GPIO_PIN;
+//	pOutputconfig->slewRate = pinSlewRate_Slow_c;
+//	pOutputconfig->driveStrength = pinDriveStrength_Low_c;
+//	pOutputconfig->outputLogic = true;
+//	GpioOutputPinInit(pOutputconfig, nOfElements);
     gpio_pin_config_t ledConfig;
     ledConfig.pinDirection = kGPIO_DigitalOutput;
     ledConfig.outputLogic = 0;
-    GPIO_PinInit(GPIOB, 18U, &ledConfig);
-    GPIO_PinInit(GPIOA, 17U, &ledConfig);
-    GPIO_PinInit(GPIOA, 18U, &ledConfig);
+    GPIO_PinInit(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, &ledConfig);
+    GPIO_PinInit(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, &ledConfig);
+    GPIO_PinInit(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, &ledConfig);
     ledConfig.pinDirection = kGPIO_DigitalInput;
-    GPIO_PinInit(GPIOA, 16U, &ledConfig);
+    GPIO_PinInit(BOARD_INITBUTTONS_BUTTON_GPIO, BOARD_INITBUTTONS_BUTTON_GPIO_PIN, &ledConfig);
+    GPIO_PinInit(BOARD_INITBUTTONS_BUTTON_2_GPIO, BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN, &ledConfig);
 }
 
 void InitServoPWM(void)
@@ -538,7 +569,7 @@ void main_task(uint32_t param)
 		
         platformInitialized = 1;
         
-        //hardware_init();			// hängt in while schlaufe, da kein Bit gesetzt wird.
+        hardware_init();			// hängt in while schlaufe, da kein Bit gesetzt wird.
         
         /* Framework init */
         MEM_Init();
@@ -546,19 +577,24 @@ void main_task(uint32_t param)
         LED_Init();
         SecLib_Init();
         BOARD_InitPins();
-        //BOARD_InitRGB():
-        //BOARD_BootClockRUN();		// hängt in while schlaufe, da kein Bit gesetzt wird.
+        //BOARD_InitRGB();
+        BOARD_BootClockRUN();		// hängt in while schlaufe, da kein Bit gesetzt wird.
         CLOCK_SetTpmClock(1U);
         //BOARD_InitLEDs();
 
         /* Init board hardware. */
 		BOARD_InitBootPins();
+		BOARD_InitButtons();
 		BOARD_InitBootClocks();
+
+#if BAT_MEASUREMENT_ENABLE
+		//BOARD_InitAdc();
+#endif
 
 #if BAT_MEASUREMENT_ENABLE
 		EnableIRQ(DEMO_ADC16_IRQn);
 #endif
-        // INitialization for peripherals
+        // Initialization for peripherals
         InitGPIO();
         InitServoPWM();
 
@@ -567,21 +603,26 @@ void main_task(uint32_t param)
         InitADC();
 #endif
 
+        /* Testing purposes */
         GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 1);
         GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
         GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
 
         volatile int i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_GPIO, BOARD_INITBUTTONS_BUTTON_GPIO_PIN);
 
-        i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_GPIO, BOARD_INITBUTTONS_BUTTON_GPIO_PIN);
-        i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_GPIO, BOARD_INITBUTTONS_BUTTON_GPIO_PIN);
+        i = GPIO_ReadPinInput(GPIOA, 16U);
+        i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_2_GPIO, BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN);
+        i = GPIO_ReadPinInput(GPIOA, 16U);
+        i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_2_GPIO, BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN);
 
-        for(int j = 3; j < 14; j++)
+
+//        for(int j = 3; j < 14; j++)
         {
-        	TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, j);
+//        	TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, j);
         }
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 0);
+        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
         GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
+
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[4])));
@@ -603,20 +644,20 @@ void main_task(uint32_t param)
         pfBLE_SignalFromISR = BLE_SignalFromISRCallback;        
 #endif /* !gUseHciTransportDownward_d */
         
-#if (cPWR_UsePowerDownMode || gAppUseNvm_d)
-#if (!mAppIdleHook_c)
-        AppIdle_TaskInit();
-#endif
-#endif
-#if (cPWR_UsePowerDownMode)
-        PWR_Init();
-        PWR_DisallowDeviceToSleep();
-#else    
-        Led1Flashing();
-        Led2Flashing();
-        Led3Flashing();
-        Led4Flashing();           
-#endif    
+//#if (cPWR_UsePowerDownMode || gAppUseNvm_d)
+//#if (!mAppIdleHook_c)
+//        AppIdle_TaskInit();
+//#endif
+//#endif
+//#if (cPWR_UsePowerDownMode)
+//        PWR_Init();
+//        PWR_DisallowDeviceToSleep();
+//#else
+//        Led1Flashing();
+//        Led2Flashing();
+//        Led3Flashing();
+//        Led4Flashing();
+//#endif
        
         /* Initialize peripheral drivers specific to the application */
         BleApp_Init();
@@ -659,7 +700,7 @@ void main_task(uint32_t param)
 void App_Thread (uint32_t param)
 {
     osaEventFlags_t event;
-    
+
     while(1)
     { 
         OSA_EventWait(mAppEvent, osaEventFlagsAll_c, FALSE, osaWaitForever_c , &event);
@@ -1418,27 +1459,27 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 
         	if(bikeValues.bikeSpeed > 60)
 			{
-				// GPIO = HIGH -> 1 türkis
-				GPIO_WritePinOutput(GPIOA, 19U, 0);
-				GPIO_WritePinOutput(GPIOA, 18U, 0);
+				// GPIO = LOW -> aus
+				GPIO_WritePinOutput(GPIOA, 17U, 1);
+				GPIO_WritePinOutput(GPIOA, 18U, 1);
 			}
 			else if(bikeValues.bikeSpeed > 40)
 			{
-				// GPIO = HIGH -> 2 Grün leuchten lassen
-				GPIO_WritePinOutput(GPIOA, 19U, 0);
+				// GPIO = HIGH -> 2 rot leuchten lassen
+				GPIO_WritePinOutput(GPIOA, 17U, 0);
 				GPIO_WritePinOutput(GPIOA, 18U, 1);
 			}
 			else if(bikeValues.bikeSpeed > 20)
 			{
-				// GPIO = HIGH -> 2 Blau leuchten lassen
-				GPIO_WritePinOutput(GPIOA, 19U, 1);
+				// GPIO =  -> 2 grün leuchten lassen
+				GPIO_WritePinOutput(GPIOA, 17U, 1);
 				GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
 			else if(bikeValues.bikeSpeed > 0)
 			{
-				// GPIO = HIGH -> 2 off
-				GPIO_WritePinOutput(GPIOA, 19U, 1);
-				GPIO_WritePinOutput(GPIOA, 18U, 1);
+				// GPIO = LOW -> 2 Rot/grün
+				GPIO_WritePinOutput(GPIOA, 17U, 0);
+				GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
         	// LED SETZEN FUER VORSCHAU
 #if LED_SHOW

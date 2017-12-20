@@ -12,14 +12,14 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="App_KeyboardCallBack"/>
+			<item value="gKBD_KeysCount_cgKBD_KeysCount_c"/>
+			<item value="gKBD_KeysCount_c"/>
+			<item value="Init"/>
+			<item value="switch"/>
 			<item value="BOARD_InitButtons"/>
 			<item value="__bss_section_table"/>
 			<item value="__data_section_table"/>
-			<item value="section"/>
-			<item value="Global"/>
-			<item value="startup_mkw31z4.c"/>
-			<item value="__data_section_table_"/>
-			<item value="data_section"/>
 		</list>
 		<list key="replacehistory">
 			<item value="value_bike_notify"/>

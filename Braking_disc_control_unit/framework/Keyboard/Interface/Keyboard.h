@@ -48,7 +48,7 @@
  * Description: Defines the number of available keys for the keyboard module
  */
 #ifndef gKBD_KeysCount_c
-#define gKBD_KeysCount_c 4
+#define gKBD_KeysCount_c 					1	// 4
 #endif
 
 /*

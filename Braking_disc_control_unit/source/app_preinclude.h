@@ -43,10 +43,10 @@
  * 	Board Configuration
  ********************************************************************************** */
  /* Defines the number of available keys for the keyboard module */
-#define gKBD_KeysCount_c        2
+#define gKBD_KeysCount_c        1
 
 /* Specifies the number of physical LEDs on the target board */
-#define gLEDsOnTargetBoardCnt_c 4
+#define gLEDsOnTargetBoardCnt_c 3
 
 /*! *********************************************************************************
  * 	App Configuration
