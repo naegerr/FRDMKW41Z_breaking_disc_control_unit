@@ -6,22 +6,25 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="ACCU_ADC16_USER_CHANNEL" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="App_KeyboardCallBack"/>
-			<item value="gKBD_KeysCount_cgKBD_KeysCount_c"/>
-			<item value="gKBD_KeysCount_c"/>
-			<item value="Init"/>
-			<item value="switch"/>
-			<item value="BOARD_InitButtons"/>
-			<item value="__bss_section_table"/>
-			<item value="__data_section_table"/>
+			<item value="DEMO_ADC16_USER_CHANNEL"/>
+			<item value="DEMO_ADC16_CHANNEL_GROUP"/>
+			<item value="DEMO_ADC16_BASEADDR"/>
+			<item value="_adc16_channel_status_flags"/>
+			<item value="g_Adc16ConversionDoneFlag"/>
+			<item value="osaEventFlags_t"/>
+			<item value="DEMO_ADC16_IRQ_HANDLER_FUNC"/>
+			<item value="key"/>
 		</list>
 		<list key="replacehistory">
+			<item value="ACCU_ADC16_USER_CHANNEL"/>
+			<item value="ACCU_ADC16_CHANNEL_GROUP"/>
+			<item value="ACCU_ADC16_BASEADDR"/>
 			<item value="value_bike_notify"/>
 			<item value=""/>
 		</list>
@@ -30,7 +33,7 @@
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="420" key="DIALOG_HEIGHT"/>
-		<item value="65" key="DIALOG_X_ORIGIN"/>
-		<item value="246" key="DIALOG_Y_ORIGIN"/>
+		<item value="170" key="DIALOG_X_ORIGIN"/>
+		<item value="333" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -143,6 +143,7 @@ void InitADC(void)
 	 * adc16ConfigStruct.enableContinuousConversion = false;
 	 */
 	ADC16_GetDefaultConfig(&adc16ConfigStruct);
+	adc16ConfigStruct.enableContinuousConversion = false;
 	ADC16_Init(DEMO_ADC16_BASEADDR, &adc16ConfigStruct);
 	/* Make sure the software trigger is used. */
 	ADC16_EnableHardwareTrigger(DEMO_ADC16_BASEADDR, false);
@@ -155,7 +156,7 @@ void InitADC(void)
 
 	/* Prepare ADC channel setting */
 	g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
-	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
+	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
 	g_adc16ChannelConfigStruct.enableDifferentialConversion = false;
 #endif /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
@@ -167,7 +168,6 @@ int main(void) {
     BOARD_InitBootClocks();
   	/* Init FSL debug console. */
 	BOARD_InitDebugConsole();
-    EnableIRQ(DEMO_ADC16_IRQn);
 
 	// Initialize Buttons and LED
 	InitGPIO();
@@ -176,12 +176,13 @@ int main(void) {
     // Initialize ADC
 	InitADC();
 
+    EnableIRQ(DEMO_ADC16_IRQn);
 	/* Force the counter to be placed into memory. */
     volatile static int i = 0 ;
     updatedDutycycle = 0;
     /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
-    	TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+    	//TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
 
 //    	if(updatedDutycycle < 10)
 //		{
@@ -193,15 +194,20 @@ int main(void) {
 //		}
         i++ ;
         updatedDutycycle++;
-        g_Adc16ConversionDoneFlag = false;
-        ADC16_SetChannelConfig(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
+        if(g_Adc16ConversionDoneFlag)
+        {
+        	g_Adc16ConversionDoneFlag = false;
+        	ADC16_SetChannelConfig(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
+        	g_Adc16ConversionValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
+
+        }
+
+        //ADC16_SetChannelConfig(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
+
       /*  while (!g_Adc16ConversionDoneFlag)
 		{
 		}*/
-        while(GPIO_ReadPinInput(GPIOA, 16U))
-        {
 
-        }
 
 		GPIO_WritePinOutput(GPIOB, 18U, 1);
 		GPIO_WritePinOutput(GPIOA, 17U, 1);

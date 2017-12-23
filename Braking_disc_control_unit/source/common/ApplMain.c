@@ -52,9 +52,8 @@
 #include "TMR_Adapter.h"		// added by NAR
 #include "pin_mux.h"			// added by NAR
 #include "fsl_tpm.h"			// added by NAR
-#include "fsl_debug_console.h"	// added by NAR
-//#include "GPIO_Adapter.h"		// added by NAR
 #include "fsl_gpio.h"			// added by NAR
+#include "fsl_adc16.h"			// added by NAR
 
 #if gFsciIncluded_c    
 #include "FsciInterface.h"
@@ -120,7 +119,7 @@
 #endif
 
 // Enable BAT_MEASUREMENT and interrupt
-#define 	BAT_MEASUREMENT_ENABLE	false
+#define 	BAT_MEASUREMENT_ENABLE	TRUE
 
 /************************************************************************************
 *************************************************************************************
@@ -210,8 +209,8 @@ typedef struct appMsgCallback_tag{
 // Power and bike Speed values in uint16_t format
 typedef struct bikeValues_tag
 {
-	uint64_t		power;	   //
-	uint64_t		bikeSpeed; //
+	uint64_t		power;	   // in W
+	uint64_t		bikeSpeed; // in 10*m/s
 } bikeValues_t;
 
 
@@ -260,7 +259,7 @@ tpm_pwm_level_select_t pwmLevel;
 uint8_t		counter;
 bikeValues_t bikeValues;
 
-#define		LED_SHOW		0
+#define		LED_SHOW		1
 
 /*! PWM */
 #define		SERVO_FREQUENCY		(50)
@@ -282,27 +281,22 @@ tpm_pwm_level_select_t pwmLevel;
 
 /* ADC */
 #if BAT_MEASUREMENT_ENABLE
-#define DEMO_ADC16_BASEADDR 		ADC0
-#define DEMO_ADC16_CHANNEL_GROUP 	0 // DP0
-#define DEMO_ADC16_USER_CHANNEL 	0
+#define ACCU_ADC16_BASEADDR 		ADC0
+#define ACCU_ADC16_CHANNEL_GROUP 	0 // DP0
+#define ACCU_ADC16_USER_CHANNEL 	0
 
 #define DEMO_ADC16_IRQn 			ADC0_IRQn
 #define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 volatile bool g_Adc16ConversionDoneFlag = false;
 volatile uint32_t g_Adc16ConversionValue = 0;
 adc16_channel_config_t g_adc16ChannelConfigStruct;
+#endif
 /*
  * @brief   Application entry point.
  */
 
 
-void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
-{
-    g_Adc16ConversionDoneFlag = true;
-    /* Read conversion result to clear the conversion completed flag. */
-    g_Adc16ConversionValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
-}
-#endif
+
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
@@ -452,35 +446,6 @@ extern const uint8_t gUseRtos_c;
 ************************************************************************************/
 void InitGPIO(void)
 {
-//    // added by NAR for initialize GPIO pins
-//	gpioInputPinConfig_t* pInputConfig = NULL;
-//	pInputConfig->gpioPort = gpioPort_A_c;
-//	pInputConfig->gpioPin = BOARD_INITBUTTONS_BUTTON_GPIO_PIN;
-//	pInputConfig->interruptSelect = pinInt_Disabled_c; 		// MAy be changed, according to SWITCH 3 of FRDM
-//	pInputConfig->pullSelect = pinPull_Disabled_c;		 	// No pull resistor
-//	uint32_t			  nOfElements = 1; // one button
-//	GpioInputPinInit(pInputConfig, nOfElements);
-//
-//	nOfElements = 3;	// 3 LED
-//	gpioOutputPinConfig_t* pOutputconfig = NULL;
-//	pOutputconfig->gpioPort = gpioPort_B_c;
-//	pOutputconfig->gpioPin = BOARD_INITPINS_LED_ORANGE_GPIO_PIN;
-//	pOutputconfig->slewRate = pinSlewRate_Slow_c;
-//	pOutputconfig->driveStrength = pinDriveStrength_Low_c;
-//	pOutputconfig->outputLogic = false;
-//	pOutputconfig++;
-//	pOutputconfig->gpioPort = gpioPort_A_c;
-//	pOutputconfig->gpioPin = BOARD_INITPINS_LED_RED_GPIO_PIN;
-//	pOutputconfig->slewRate = pinSlewRate_Slow_c;
-//	pOutputconfig->driveStrength = pinDriveStrength_Low_c;
-//	pOutputconfig->outputLogic = false;
-//	pOutputconfig++;
-//	pOutputconfig->gpioPort = gpioPort_A_c;
-//	pOutputconfig->gpioPin = BOARD_INITPINS_LED_GREEN_GPIO_PIN;
-//	pOutputconfig->slewRate = pinSlewRate_Slow_c;
-//	pOutputconfig->driveStrength = pinDriveStrength_Low_c;
-//	pOutputconfig->outputLogic = true;
-//	GpioOutputPinInit(pOutputconfig, nOfElements);
     gpio_pin_config_t ledConfig;
     ledConfig.pinDirection = kGPIO_DigitalOutput;
     ledConfig.outputLogic = 0;
@@ -518,6 +483,14 @@ void InitServoPWM(void)
 }
 
 #if BAT_MEASUREMENT_ENABLE
+void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
+{
+    g_Adc16ConversionDoneFlag = true;
+    /* Read conversion result to clear the conversion completed flag. */
+    g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
+}
+
+
 void InitADC(void)
 {
 	/* ADC INIT */
@@ -536,18 +509,18 @@ void InitADC(void)
 	 * adc16ConfigStruct.enableContinuousConversion = false;
 	 */
 	ADC16_GetDefaultConfig(&adc16ConfigStruct);
-	ADC16_Init(DEMO_ADC16_BASEADDR, &adc16ConfigStruct);
+	ADC16_Init(ACCU_ADC16_BASEADDR, &adc16ConfigStruct);
 	/* Make sure the software trigger is used. */
-	ADC16_EnableHardwareTrigger(DEMO_ADC16_BASEADDR, false);
+	ADC16_EnableHardwareTrigger(ACCU_ADC16_BASEADDR, false);
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
-	if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR))
+	if (kStatus_Success == ADC16_DoAutoCalibration(ACCU_ADC16_BASEADDR))
 	{
-		GPIO_WritePinOutput(GPIOB, 18U, 1);
+		//GPIO_WritePinOutput(GPIOB, 18U, 1);
 	}
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
 
 	/* Prepare ADC channel setting */
-	g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+	g_adc16ChannelConfigStruct.channelNumber = ACCU_ADC16_USER_CHANNEL;
 	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
 	g_adc16ChannelConfigStruct.enableDifferentialConversion = false;
@@ -587,9 +560,6 @@ void main_task(uint32_t param)
 		BOARD_InitButtons();
 		BOARD_InitBootClocks();
 
-#if BAT_MEASUREMENT_ENABLE
-		//BOARD_InitAdc();
-#endif
 
 #if BAT_MEASUREMENT_ENABLE
 		EnableIRQ(DEMO_ADC16_IRQn);
@@ -608,18 +578,6 @@ void main_task(uint32_t param)
         GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
         GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
 
-        volatile int i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_GPIO, BOARD_INITBUTTONS_BUTTON_GPIO_PIN);
-
-        i = GPIO_ReadPinInput(GPIOA, 16U);
-        i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_2_GPIO, BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN);
-        i = GPIO_ReadPinInput(GPIOA, 16U);
-        i = GPIO_ReadPinInput(BOARD_INITBUTTONS_BUTTON_2_GPIO, BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN);
-
-
-//        for(int j = 3; j < 14; j++)
-        {
-//        	TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, j);
-        }
         GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
         GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
 
@@ -1436,27 +1394,28 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         	// Power and Speed aus Message herauslesen
         	bikeValues = parseBikeMsg(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent);
 
-        	// Disconnected from client!
-        	/*if(bikeValues.bikeSpeed == 1000 && bikeValues.power == 1000)
+        	updatedDutycycle = bikeValues.bikeSpeed / 5U + 3U;
+        	if(updatedDutycycle > 2 && updatedDutycycle < 14)
         	{
-        		temp = 0;
+        		TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+        		GPIO_WritePinOutput(GPIOA, 17U, 0);
         	}
-        	// Service discovered
-        	if(bikeValues.bikeSpeed == 100 && bikeValues.power == 100)
+        	else
+        	{
+        		// GPIO =  -> 2 grün leuchten lassen
+				GPIO_WritePinOutput(GPIOA, 17U, 1);
+        	}
+		    g_Adc16ConversionDoneFlag = false;
+			ADC16_SetChannelConfig(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
+
+			if(g_Adc16ConversionDoneFlag)
 			{
-				temp = 1;
-			}*/
+				g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
+			}
 
-        	//GPIO_WritePinOutput(GPIOA, 19U, 0);
-        	//GPIO_WritePinOutput(GPIOA, 18U, 1);
-//        	updatedDutycycle = pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] * 30;
-//            /* Disable channel output before updating the dutycycle */
-//		  	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, 0U);
-//		    /* Update PWM duty cycle */
-//		    TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
-//		    /* Start channel output with updated dutycycle */
-//		    TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, pwmLevel);
 
+
+#if LED_SHOW
         	if(bikeValues.bikeSpeed > 60)
 			{
 				// GPIO = LOW -> aus
@@ -1481,32 +1440,31 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 				GPIO_WritePinOutput(GPIOA, 17U, 0);
 				GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
-        	// LED SETZEN FUER VORSCHAU
-#if LED_SHOW
-            if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 0)
-            {
-            	// GPIO = HIGH -> 1 ausschalten
-            	GPIO_WritePinOutput(GPIOA, 19U, 1);
-            	GPIO_WritePinOutput(GPIOA, 18U, 1);
-            }
-            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 1)
-            {
-            	// GPIO = HIGH -> 2 Grün leuchten lassen
-            	GPIO_WritePinOutput(GPIOA, 19U, 0);
-            	GPIO_WritePinOutput(GPIOA, 18U, 1);
-            }
-            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 2)
-			{
-				// GPIO = HIGH -> 2 Blau leuchten lassen
-            	GPIO_WritePinOutput(GPIOA, 19U, 1);
-            	GPIO_WritePinOutput(GPIOA, 18U, 0);
-			}
-            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 3)
-			{
-				// GPIO = HIGH -> 2 türkis
-            	GPIO_WritePinOutput(GPIOA, 19U, 0);
-            	GPIO_WritePinOutput(GPIOA, 18U, 0);
-			}
+
+//            if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 0)
+//            {
+//            	// GPIO = HIGH -> 1 ausschalten
+//            	GPIO_WritePinOutput(GPIOA, 19U, 1);
+//            	GPIO_WritePinOutput(GPIOA, 18U, 1);
+//            }
+//            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 1)
+//            {
+//            	// GPIO = HIGH -> 2 Grün leuchten lassen
+//            	GPIO_WritePinOutput(GPIOA, 19U, 0);
+//            	GPIO_WritePinOutput(GPIOA, 18U, 1);
+//            }
+//            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 2)
+//			{
+//				// GPIO = HIGH -> 2 Blau leuchten lassen
+//            	GPIO_WritePinOutput(GPIOA, 19U, 1);
+//            	GPIO_WritePinOutput(GPIOA, 18U, 0);
+//			}
+//            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 3)
+//			{
+//				// GPIO = HIGH -> 2 türkis
+//            	GPIO_WritePinOutput(GPIOA, 19U, 0);
+//            	GPIO_WritePinOutput(GPIOA, 18U, 0);
+//			}
 #endif
             // PRESENTATION FINISHED
 

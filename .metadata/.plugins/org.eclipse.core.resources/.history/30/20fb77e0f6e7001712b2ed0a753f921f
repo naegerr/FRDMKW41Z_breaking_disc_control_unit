@@ -87,24 +87,24 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
     /* Read conversion result to clear the conversion completed flag. */
     g_Adc16ConversionValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
 }
-
-int main(void) {
-  	/* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-  	/* Init FSL debug console. */
-	BOARD_InitDebugConsole();
-    EnableIRQ(DEMO_ADC16_IRQn);
-
-	CLOCK_SetTpmClock(1U);
+void InitGPIO(void)
+{
     // added by NAR for initialize GPIO pins
     gpio_pin_config_t ledConfig;
     ledConfig.pinDirection = kGPIO_DigitalOutput;
     ledConfig.outputLogic = 0;
     GPIO_PinInit(GPIOB, 18U, &ledConfig);
+    GPIO_PinInit(GPIOA, 17U, &ledConfig);
+    GPIO_PinInit(GPIOA, 18U, &ledConfig);
+    ledConfig.pinDirection = kGPIO_DigitalInput;
+    GPIO_PinInit(GPIOA, 16U, &ledConfig);
+}
 
-    /* PWM Init */
+void InitPWM(void)
+{
+	 /* PWM Init */
 	// Init von PWM
+	CLOCK_SetTpmClock(1U);
 	pwmLevel = kTPM_LowTrue;
 	updatedDutycycle = 5;
 
@@ -123,9 +123,13 @@ int main(void) {
 
 	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_HighTrue);
 
+}
+
+void InitADC(void)
+{
 	/* ADC INIT */
+	adc16_channel_config_t 		g_adc16ChannelConfigStruct;
 	adc16_config_t 				adc16ConfigStruct;
-	adc16_channel_config_t g_adc16ChannelConfigStruct;
 	/* Configure the ADC16. */
 	/*
 	 * adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
@@ -139,28 +143,46 @@ int main(void) {
 	 * adc16ConfigStruct.enableContinuousConversion = false;
 	 */
 	ADC16_GetDefaultConfig(&adc16ConfigStruct);
+	adc16ConfigStruct->enableContinuousConversion = true;
 	ADC16_Init(DEMO_ADC16_BASEADDR, &adc16ConfigStruct);
 	/* Make sure the software trigger is used. */
 	ADC16_EnableHardwareTrigger(DEMO_ADC16_BASEADDR, false);
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
-    if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR))
-    {
+	if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR))
+	{
 		GPIO_WritePinOutput(GPIOB, 18U, 1);
-    }
+	}
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
 
-    /* Prepare ADC channel setting */
-    g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
-    g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
+	/* Prepare ADC channel setting */
+	g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
-    g_adc16ChannelConfigStruct.enableDifferentialConversion = false;
+	g_adc16ChannelConfigStruct.enableDifferentialConversion = false;
 #endif /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
+}
+
+int main(void) {
+  	/* Init board hardware. */
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+  	/* Init FSL debug console. */
+	BOARD_InitDebugConsole();
+    EnableIRQ(DEMO_ADC16_IRQn);
+
+	// Initialize Buttons and LED
+	InitGPIO();
+	// Initialize PWM for Servo
+	InitPWM();
+    // Initialize ADC
+	InitADC();
+
 	/* Force the counter to be placed into memory. */
     volatile static int i = 0 ;
     updatedDutycycle = 0;
     /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
-    	TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+    	//TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
 
 //    	if(updatedDutycycle < 10)
 //		{
@@ -174,11 +196,20 @@ int main(void) {
         updatedDutycycle++;
         g_Adc16ConversionDoneFlag = false;
         ADC16_SetChannelConfig(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
-        while (!g_Adc16ConversionDoneFlag)
+      /*  while (!g_Adc16ConversionDoneFlag)
 		{
-		}
+		}*/
+        while(GPIO_ReadPinInput(GPIOA, 16U))
+        {
+
+        }
+
 		GPIO_WritePinOutput(GPIOB, 18U, 1);
+		GPIO_WritePinOutput(GPIOA, 17U, 1);
+		//GPIO_WritePinOutput(GPIOA, 18U, 1);
 		GPIO_WritePinOutput(GPIOB, 18U, 0);
+		//GPIO_WritePinOutput(GPIOA, 17U, 0);
+		//GPIO_WritePinOutput(GPIOA, 18U, 0);
     }
     return 0 ;
 }
