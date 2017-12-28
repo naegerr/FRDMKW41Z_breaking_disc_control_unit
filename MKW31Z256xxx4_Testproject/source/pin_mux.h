@@ -51,14 +51,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_PWM_SERVO_NAME                                "PWM_SERVO"   /*!< Identifier name */
 #define BOARD_INITPINS_PWM_SERVO_DIRECTION              kPIN_MUX_DirectionOutput   /*!< Direction */
 
-/* ADC0_DP0 (number 24), ACCU_MEAS */
-#define BOARD_INITPINS_ACCU_MEAS_PERIPHERAL                                 ADC0   /*!< Device name: ADC0 */
-#define BOARD_INITPINS_ACCU_MEAS_SIGNAL                                       DP   /*!< ADC0 signal: DP */
-#define BOARD_INITPINS_ACCU_MEAS_CHANNEL                                       0   /*!< ADC0 DP channel: 0 */
-#define BOARD_INITPINS_ACCU_MEAS_PIN_NAME                               ADC0_DP0   /*!< Pin name */
-#define BOARD_INITPINS_ACCU_MEAS_LABEL                               "ACCU_MEAS"   /*!< Label */
-#define BOARD_INITPINS_ACCU_MEAS_NAME                                "ACCU_MEAS"   /*!< Identifier name */
-
 /* PORTA17 (number 5), LED_GREEN */
 #define BOARD_INITPINS_LED_GREEN_GPIO                                      GPIOA   /*!< GPIO device name: GPIOA */
 #define BOARD_INITPINS_LED_GREEN_PORT                                      PORTA   /*!< PORT device name: PORTA */

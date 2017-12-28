@@ -43,8 +43,6 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: '23', peripheral: GPIOB, signal: 'GPIO, 18', pin_signal: DAC0_OUT/ADC0_SE4/CMP0_IN2/PTB18/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b, direction: OUTPUT, passive_filter: disable}
   - {pin_num: '45', peripheral: TPM0, signal: 'CH, 3', pin_signal: TSI0_CH4/PTC16/LLWU_P0/SPI0_SCK/I2C0_SDA/UART0_RTS_b/TPM0_CH3, direction: OUTPUT}
-  - {pin_num: '24', peripheral: ADC0, signal: 'DP, 0', pin_signal: ADC0_DP0/CMP0_IN0}
-  - {pin_num: '27', peripheral: ADC0, signal: VREFH, pin_signal: VREFH/VREF_OUT}
   - {pin_num: '5', peripheral: GPIOA, signal: 'GPIO, 17', pin_signal: TSI0_CH11/PTA17/LLWU_P5/RF_RESET/SPI1_SIN/TPM_CLKIN1, direction: OUTPUT}
   - {pin_num: '6', peripheral: GPIOA, signal: 'GPIO, 18', pin_signal: TSI0_CH12/PTA18/LLWU_P6/SPI1_SCK/TPM2_CH0, direction: OUTPUT}
   - {pin_num: '4', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: TSI0_CH10/PTA16/LLWU_P4/SPI1_SOUT/TPM0_CH0, direction: INPUT}

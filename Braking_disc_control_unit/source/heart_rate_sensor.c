@@ -697,7 +697,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
             	case value_bike_notify:
             	{
             		GattDb_WriteAttribute(pServerEvent->eventData.attributeWrittenEvent.handle,
-            		    				  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
+            		            		  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
             							  pServerEvent->eventData.attributeWrittenEvent.aValue);
 
             		GattServer_SendAttributeWrittenStatus(deviceId, value_bike_notify, gAttErrCodeNoError_c);

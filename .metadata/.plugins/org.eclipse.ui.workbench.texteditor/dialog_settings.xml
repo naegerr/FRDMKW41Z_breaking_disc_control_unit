@@ -6,22 +6,25 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="ACCU_ADC16_USER_CHANNEL" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="DEMO_ADC16_USER_CHANNEL"/>
-			<item value="DEMO_ADC16_CHANNEL_GROUP"/>
-			<item value="DEMO_ADC16_BASEADDR"/>
-			<item value="_adc16_channel_status_flags"/>
-			<item value="g_Adc16ConversionDoneFlag"/>
-			<item value="osaEventFlags_t"/>
-			<item value="DEMO_ADC16_IRQ_HANDLER_FUNC"/>
-			<item value="key"/>
+			<item value="ADC16_ChannelGetStatusFlags"/>
+			<item value="PIT_LED_HANDLER"/>
+			<item value="ADC0_IRQHandler"/>
+			<item value="PIT_IRQHandler"/>
+			<item value="PIT"/>
+			<item value="SOPT"/>
+			<item value="SIM"/>
+			<item value="TRGSEL"/>
 		</list>
 		<list key="replacehistory">
+			<item value="PIT_ADC_HANDLER"/>
+			<item value="ADC16_IRQn"/>
+			<item value="ADC16_IRQ_HANDLER_FUNC"/>
 			<item value="ACCU_ADC16_USER_CHANNEL"/>
 			<item value="ACCU_ADC16_CHANNEL_GROUP"/>
 			<item value="ACCU_ADC16_BASEADDR"/>

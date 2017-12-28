@@ -54,6 +54,7 @@
 #include "fsl_tpm.h"			// added by NAR
 #include "fsl_gpio.h"			// added by NAR
 #include "fsl_adc16.h"			// added by NAR
+#include "fsl_pit.h"			// added by NAR
 
 #if gFsciIncluded_c    
 #include "FsciInterface.h"
@@ -282,21 +283,29 @@ tpm_pwm_level_select_t pwmLevel;
 /* ADC */
 #if BAT_MEASUREMENT_ENABLE
 #define ACCU_ADC16_BASEADDR 		ADC0
-#define ACCU_ADC16_CHANNEL_GROUP 	0 // DP0
-#define ACCU_ADC16_USER_CHANNEL 	0
+#define ACCU_ADC16_CHANNEL_GROUP 	0U
+#define ACCU_ADC16_USER_CHANNEL 	0U
+#define ADC16_IRQn 					ADC0_IRQn
+#define ADC16_IRQ_HANDLER_FUNC 		ADC0_IRQHandler
+#define	ACCU_UNDER_VOLTAGE			(36500U)
+#define ACCU_CHECK_PERIOD_SEC		1 // Time the accu will be checked!
 
-#define DEMO_ADC16_IRQn 			ADC0_IRQn
-#define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 volatile bool g_Adc16ConversionDoneFlag = false;
 volatile uint32_t g_Adc16ConversionValue = 0;
 adc16_channel_config_t g_adc16ChannelConfigStruct;
 #endif
+
+/* PIT */
+
+#define PIT_ADC_HANDLER 	PIT_IRQHandler
+#define PIT_IRQ_ID 			PIT_IRQn
+/* Get source clock for PIT driver */
+#define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
+
+volatile bool pitIsrFlag = false;
 /*
  * @brief   Application entry point.
  */
-
-
-
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
@@ -473,28 +482,23 @@ void InitServoPWM(void)
 	tpmInfo.enableDebugMode = true;	// has to be set to true
 	// Initialize TPM module
 	TPM_Init(SERVO_TPM_BASEADDR, &tpmInfo);
-
 	TPM_SetupPwm(SERVO_TPM_BASEADDR, &tpmParam, 1U,kTPM_EdgeAlignedPwm , SERVO_FREQUENCY, TPM_SOURCE_CLOCK);
-
 	TPM_StartTimer(SERVO_TPM_BASEADDR, kTPM_SystemClock);
-
 	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_HighTrue);
 
 }
 
 #if BAT_MEASUREMENT_ENABLE
-void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
-{
-    g_Adc16ConversionDoneFlag = true;
-    /* Read conversion result to clear the conversion completed flag. */
-    g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
-}
-
+//void ADC16_IRQ_HANDLER_FUNC(void)
+//{
+//    g_Adc16ConversionDoneFlag = true;
+//    /* Read conversion result to clear the conversion completed flag. */
+//    g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
+//}
 
 void InitADC(void)
 {
 	/* ADC INIT */
-	adc16_channel_config_t 		g_adc16ChannelConfigStruct;
 	adc16_config_t 				adc16ConfigStruct;
 	/* Configure the ADC16. */
 	/*
@@ -509,22 +513,56 @@ void InitADC(void)
 	 * adc16ConfigStruct.enableContinuousConversion = false;
 	 */
 	ADC16_GetDefaultConfig(&adc16ConfigStruct);
+	adc16ConfigStruct.resolution = kADC16_Resolution16Bit;
 	ADC16_Init(ACCU_ADC16_BASEADDR, &adc16ConfigStruct);
+
 	/* Make sure the software trigger is used. */
 	ADC16_EnableHardwareTrigger(ACCU_ADC16_BASEADDR, false);
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
 	if (kStatus_Success == ADC16_DoAutoCalibration(ACCU_ADC16_BASEADDR))
 	{
-		//GPIO_WritePinOutput(GPIOB, 18U, 1);
+		GPIO_WritePinOutput(GPIOB, 18U, 1);
 	}
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
 
 	/* Prepare ADC channel setting */
 	g_adc16ChannelConfigStruct.channelNumber = ACCU_ADC16_USER_CHANNEL;
-	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
+	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
 	g_adc16ChannelConfigStruct.enableDifferentialConversion = false;
 #endif /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
+}
+
+/* Periodic interrupt timer */
+void PIT_ADC_HANDLER(void)
+{
+    /* Clear interrupt flag */
+    PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
+    ADC16_SetChannelConfig(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct); // Triggers Conversion
+
+    while (kADC16_ChannelConversionDoneFlag != ADC16_GetChannelStatusFlags(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP))
+    {
+    }
+    g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
+	if(g_Adc16ConversionValue < (ACCU_UNDER_VOLTAGE))
+	{
+		GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 0);
+	}
+}
+
+void InitPIT(void)
+{
+	pit_config_t pitConfig;
+	pitConfig.enableRunInDebug = true;
+	/* Init pit module */
+	PIT_Init(PIT, &pitConfig);
+	/* Set timer period for channel 0 */
+	PIT_SetTimerPeriod(PIT, kPIT_Chnl_0, USEC_TO_COUNT(ACCU_CHECK_PERIOD_SEC*1000000U, PIT_SOURCE_CLOCK));
+	/* Enable timer interrupts for channel 0 */
+	PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
+	/* Enable at the NVIC */
+	EnableIRQ(PIT_IRQ_ID);
+	PIT_StartTimer(PIT, kPIT_Chnl_0);
 }
 #endif
 /*! *********************************************************************************
@@ -538,6 +576,7 @@ void main_task(uint32_t param)
 {  
     if (!platformInitialized)
     {
+    	uint32_t counterTemp;
         uint8_t pseudoRNGSeed[20] = {0};
 		
         platformInitialized = 1;
@@ -560,26 +599,23 @@ void main_task(uint32_t param)
 		BOARD_InitButtons();
 		BOARD_InitBootClocks();
 
-
-#if BAT_MEASUREMENT_ENABLE
-		EnableIRQ(DEMO_ADC16_IRQn);
-#endif
         // Initialization for peripherals
         InitGPIO();
         InitServoPWM();
 
-
 #if BAT_MEASUREMENT_ENABLE
         InitADC();
+        InitPIT();
 #endif
 
-        /* Testing purposes */
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 1);
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
 
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
+        /* Testing purposes */
+//        GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 1);
+        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
+//        GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+//
+//        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
+//        GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
 
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
@@ -618,7 +654,7 @@ void main_task(uint32_t param)
 //#endif
        
         /* Initialize peripheral drivers specific to the application */
-        BleApp_Init();
+        //BleApp_Init();		// Second Init from ADC
             
         /* Create application event */
         mAppEvent = OSA_EventCreate(TRUE);
@@ -642,7 +678,7 @@ void main_task(uint32_t param)
             return;
         }
     }
-    
+
     /* Call application task */
     App_Thread( param );
 }
@@ -1405,14 +1441,6 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         		// GPIO =  -> 2 grün leuchten lassen
 				GPIO_WritePinOutput(GPIOA, 17U, 1);
         	}
-		    g_Adc16ConversionDoneFlag = false;
-			ADC16_SetChannelConfig(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
-
-			if(g_Adc16ConversionDoneFlag)
-			{
-				g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
-			}
-
 
 
 #if LED_SHOW

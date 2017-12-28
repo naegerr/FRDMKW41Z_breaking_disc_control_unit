@@ -18,6 +18,7 @@ C_SRCS += \
 ../drivers/fsl_lpuart.c \
 ../drivers/fsl_lpuart_freertos.c \
 ../drivers/fsl_ltc.c \
+../drivers/fsl_pit.c \
 ../drivers/fsl_pmc.c \
 ../drivers/fsl_rtc.c \
 ../drivers/fsl_smc.c \
@@ -39,6 +40,7 @@ OBJS += \
 ./drivers/fsl_lpuart.o \
 ./drivers/fsl_lpuart_freertos.o \
 ./drivers/fsl_ltc.o \
+./drivers/fsl_pit.o \
 ./drivers/fsl_pmc.o \
 ./drivers/fsl_rtc.o \
 ./drivers/fsl_smc.o \
@@ -60,6 +62,7 @@ C_DEPS += \
 ./drivers/fsl_lpuart.d \
 ./drivers/fsl_lpuart_freertos.d \
 ./drivers/fsl_ltc.d \
+./drivers/fsl_pit.d \
 ./drivers/fsl_pmc.d \
 ./drivers/fsl_rtc.d \
 ./drivers/fsl_smc.d \

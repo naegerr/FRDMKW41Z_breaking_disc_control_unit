@@ -33,6 +33,7 @@ source/common/ApplMain.o source/common/ApplMain.d: \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\board/pin_mux.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_tpm.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_adc16.h \
+ C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_pit.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\bluetooth\host\interface/gatt_interface.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\bluetooth\host\interface/ble_general.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\FunctionLib/FunctionLib.h \
@@ -122,6 +123,8 @@ C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_tpm.h:
 
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_adc16.h:
+
+C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_pit.h:
 
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\bluetooth\host\interface/gatt_interface.h:
 

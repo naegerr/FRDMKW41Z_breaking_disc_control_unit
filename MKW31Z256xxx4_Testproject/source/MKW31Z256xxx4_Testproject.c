@@ -156,7 +156,7 @@ void InitADC(void)
 
 	/* Prepare ADC channel setting */
 	g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
-	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
+	g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
 	g_adc16ChannelConfigStruct.enableDifferentialConversion = false;
 #endif /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
@@ -194,27 +194,24 @@ int main(void) {
 //		}
         i++ ;
         updatedDutycycle++;
-        if(g_Adc16ConversionDoneFlag)
-        {
-        	g_Adc16ConversionDoneFlag = false;
-        	ADC16_SetChannelConfig(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
-        	g_Adc16ConversionValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
 
-        }
+
+
 
         //ADC16_SetChannelConfig(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP, &g_adc16ChannelConfigStruct);
 
-      /*  while (!g_Adc16ConversionDoneFlag)
+        while (!g_Adc16ConversionDoneFlag)
 		{
-		}*/
+        	GPIO_WritePinOutput(GPIOA, 17U, 0);
+		}
 
-
-		GPIO_WritePinOutput(GPIOB, 18U, 1);
-		GPIO_WritePinOutput(GPIOA, 17U, 1);
-		//GPIO_WritePinOutput(GPIOA, 18U, 1);
-		GPIO_WritePinOutput(GPIOB, 18U, 0);
-		//GPIO_WritePinOutput(GPIOA, 17U, 0);
-		//GPIO_WritePinOutput(GPIOA, 18U, 0);
+        g_Adc16ConversionDoneFlag  = false;
+//		GPIO_WritePinOutput(GPIOB, 18U, 1);
+		GPIO_WritePinOutput(GPIOA, 17U,1);
+//		GPIO_WritePinOutput(GPIOA, 18U, 1);
+//		GPIO_WritePinOutput(GPIOB, 18U, 0);
+//		GPIO_WritePinOutput(GPIOA, 17U, 0);
+//		GPIO_WritePinOutput(GPIOA, 18U, 0);
     }
     return 0 ;
 }
