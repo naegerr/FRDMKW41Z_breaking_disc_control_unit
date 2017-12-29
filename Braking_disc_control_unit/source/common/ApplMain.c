@@ -53,8 +53,10 @@
 #include "pin_mux.h"			// added by NAR
 #include "fsl_tpm.h"			// added by NAR
 #include "fsl_gpio.h"			// added by NAR
+#include "fsl_port.h"			// added by NAR
 #include "fsl_adc16.h"			// added by NAR
 #include "fsl_pit.h"			// added by NAR
+#include "fsl_i2c.h"			// added by NAR
 
 #if gFsciIncluded_c    
 #include "FsciInterface.h"
@@ -119,8 +121,7 @@
 #define mAppIdleHook_c 0
 #endif
 
-// Enable BAT_MEASUREMENT and interrupt
-#define 	BAT_MEASUREMENT_ENABLE	TRUE
+
 
 /************************************************************************************
 *************************************************************************************
@@ -207,6 +208,9 @@ typedef struct appMsgCallback_tag{
 }appMsgCallback_t;
 
 
+// Enable BAT_MEASUREMENT and interrupt
+#define 	BAT_MEASUREMENT_ENABLE	TRUE
+
 // Power and bike Speed values in uint16_t format
 typedef struct bikeValues_tag
 {
@@ -252,16 +256,21 @@ typedef enum bssMessage_tag
 uint8_t 	pwmInstance;
 uint8_t 	pwmChannel;
 uint16_t	pwmValue;
-uint8_t updatedDutycycle;
+uint8_t 	pdatedDutycycle;
 
-tpm_config_t tpmInfo;
+tpm_config_t 				tpmInfo;
 tpm_chnl_pwm_signal_param_t	tpmParam;
-tpm_pwm_level_select_t pwmLevel;
-uint8_t		counter;
-bikeValues_t bikeValues;
+tpm_pwm_level_select_t 		pwmLevel;
+uint8_t						counter;
+bikeValues_t 				bikeValues;
 
-#define		LED_SHOW		1
 
+#define		LED_SHOW_ACCEL		1
+#if LED_SHOW_ACCEL
+#define		LED_SHOW_SPEED		0
+#else
+#define		LED_SHOW_SPEED		1
+#endif
 /*! PWM */
 #define		SERVO_FREQUENCY		(50)
 #define		SERVO_INIT_VALUE	(3)	// not used
@@ -287,8 +296,8 @@ tpm_pwm_level_select_t pwmLevel;
 #define ACCU_ADC16_USER_CHANNEL 	0U
 #define ADC16_IRQn 					ADC0_IRQn
 #define ADC16_IRQ_HANDLER_FUNC 		ADC0_IRQHandler
-#define	ACCU_UNDER_VOLTAGE			(36500U)
-#define ACCU_CHECK_PERIOD_SEC		1 // Time the accu will be checked!
+#define	ACCU_UNDER_VOLTAGE			(36800U)
+#define ACCU_CHECK_PERIOD_SEC		5 // Time the accu will be checked!
 
 volatile bool g_Adc16ConversionDoneFlag = false;
 volatile uint32_t g_Adc16ConversionValue = 0;
@@ -296,13 +305,65 @@ adc16_channel_config_t g_adc16ChannelConfigStruct;
 #endif
 
 /* PIT */
-
 #define PIT_ADC_HANDLER 	PIT_IRQHandler
 #define PIT_IRQ_ID 			PIT_IRQn
 /* Get source clock for PIT driver */
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
-
 volatile bool pitIsrFlag = false;
+
+/* I2C */
+#define BOARD_ACCEL_I2C_BASEADDR I2C0
+
+#define ACCEL_I2C_CLK_SRC 		I2C0_CLK_SRC
+#define ACCEL_I2C_CLK_FREQ 		CLOCK_GetFreq(I2C0_CLK_SRC)
+
+#define I2C_RELEASE_SDA_PORT 	PORTB
+#define I2C_RELEASE_SCL_PORT 	PORTB
+#define I2C_RELEASE_SDA_GPIO 	GPIOB
+#define I2C_RELEASE_SDA_PIN 	1U
+#define I2C_RELEASE_SCL_GPIO 	GPIOB
+#define I2C_RELEASE_SCL_PIN 	0U
+#define I2C_RELEASE_BUS_COUNT 	100U
+#define I2C_BAUDRATE 			100000U
+
+#define MMA8452_WHOAMI 			0x2AU
+
+
+/*! message types according to Mobile App */
+typedef enum accel_register_t
+{
+	accel_state 			= 0x00U,	// State register (read only)
+	accel_whoami			= 0x0DU,	// Device ID register address(read only)
+	accel_transient_cfg		= 0x1DU,	// transient acceleration detection (read/write)
+	accel_hp_filter			= 0x0FU,	// high-pass filter register (read/write)
+	accel_xyz_data_cfg 		= 0x0EU,	// Data config (read/write)
+	accel_ctrl_reg1			= 0x2AU,	// Control-register 1 (read/write)
+	accel_ctrl_reg2			= 0x2BU,	// Control-register 2 (read/write)
+	accel_ctrl_reg3			= 0x2CU,	// Control-register 3 (read/write)
+	accel_ctrl_reg4			= 0x2DU,	// Control-register 4 (read/write)
+	accel_ctrl_reg5			= 0x2EU,	// Control-register 5 (read/write)
+} accel_register;
+
+/* FXOS8700 and MMA8451 have the same who_am_i register address. */
+#define ACCEL_READ_TIMES 		10U
+#define DEVICE_ID				0x2AU		// Device ID
+
+const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
+i2c_master_handle_t g_m_handle;
+
+uint8_t g_accel_addr_found = 0x00;
+int16_t x, y, z;
+uint8_t readBuff[7];
+
+volatile bool completionFlag = false;
+volatile bool nakFlag = false;
+
+/* Device ID from other Accel sensors */
+#define FXOS8700_WHOAMI 		0xC7U
+#define MMA8451_WHOAMI 			0x1AU
+
+
+
 /*
  * @brief   Application entry point.
  */
@@ -453,6 +514,10 @@ extern const uint8_t gUseRtos_c;
 * Public functions
 *************************************************************************************
 ************************************************************************************/
+/*! *********************************************************************************
+* \brief  InitGPIO
+* \remarks	initalizes buttons and LED's
+********************************************************************************** */
 void InitGPIO(void)
 {
     gpio_pin_config_t ledConfig;
@@ -463,9 +528,12 @@ void InitGPIO(void)
     GPIO_PinInit(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, &ledConfig);
     ledConfig.pinDirection = kGPIO_DigitalInput;
     GPIO_PinInit(BOARD_INITBUTTONS_BUTTON_GPIO, BOARD_INITBUTTONS_BUTTON_GPIO_PIN, &ledConfig);
-    GPIO_PinInit(BOARD_INITBUTTONS_BUTTON_2_GPIO, BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN, &ledConfig);
 }
-
+/*! *********************************************************************************
+* \brief  InitServoPWM
+*
+* \remarks	Init for the PWM signal for the Servo. 50Hz Timer.
+********************************************************************************** */
 void InitServoPWM(void)
 {
 	 /* PWM Init */
@@ -485,17 +553,16 @@ void InitServoPWM(void)
 	TPM_SetupPwm(SERVO_TPM_BASEADDR, &tpmParam, 1U,kTPM_EdgeAlignedPwm , SERVO_FREQUENCY, TPM_SOURCE_CLOCK);
 	TPM_StartTimer(SERVO_TPM_BASEADDR, kTPM_SystemClock);
 	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_HighTrue);
-
 }
 
+/*! *********************************************************************************
+* \brief  InitADC
+*
+* \remarks	The Analog and Digital conversion. 16Bit and no differential conversion.
+* No interrupts, because conversion is triggered in PIT interrupt, because Software trigger
+* is used.
+********************************************************************************** */
 #if BAT_MEASUREMENT_ENABLE
-//void ADC16_IRQ_HANDLER_FUNC(void)
-//{
-//    g_Adc16ConversionDoneFlag = true;
-//    /* Read conversion result to clear the conversion completed flag. */
-//    g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
-//}
-
 void InitADC(void)
 {
 	/* ADC INIT */
@@ -533,7 +600,13 @@ void InitADC(void)
 #endif /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
 }
 
-/* Periodic interrupt timer */
+/*! *********************************************************************************
+* \brief  PIT_ADC_HANDLER
+*
+* \remarks	The interrupt subroutine which is called every couple of seconds.
+* It starts the ADC conversion and sets or resets the orange LED.
+*
+********************************************************************************** */
 void PIT_ADC_HANDLER(void)
 {
     /* Clear interrupt flag */
@@ -544,12 +617,19 @@ void PIT_ADC_HANDLER(void)
     {
     }
     g_Adc16ConversionValue = ADC16_GetChannelConversionValue(ACCU_ADC16_BASEADDR, ACCU_ADC16_CHANNEL_GROUP);
-	if(g_Adc16ConversionValue < (ACCU_UNDER_VOLTAGE))
+    GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 1);
+    if(g_Adc16ConversionValue < (ACCU_UNDER_VOLTAGE))
 	{
 		GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 0);
 	}
 }
 
+/*! *********************************************************************************
+* \brief  InitPIT
+*
+* \remarks	The Periodic interrupt timer is intialized: Ch0,every couple of second
+*
+********************************************************************************** */
 void InitPIT(void)
 {
 	pit_config_t pitConfig;
@@ -566,6 +646,385 @@ void InitPIT(void)
 }
 #endif
 /*! *********************************************************************************
+* \brief  i2c_release_bus_delay
+*
+* \remarks	Delay for I2C bus
+********************************************************************************** */
+static void i2c_release_bus_delay(void)
+{
+    uint32_t i = 0;
+    for (i = 0; i < I2C_RELEASE_BUS_COUNT; i++)
+    {
+        __NOP();
+    }
+}
+/*! *********************************************************************************
+* \brief  BOARD_I2C_ReleaseBus
+*
+* \remarks	Sends start- and stop signals to I2C bus
+********************************************************************************** */
+void BOARD_I2C_ReleaseBus(void)
+{
+    uint8_t i = 0;
+    gpio_pin_config_t pin_config;
+    port_pin_config_t i2c_pin_config = {0};
+
+    /* Config pin mux as gpio */
+    i2c_pin_config.pullSelect = kPORT_PullUp; // onboard pullups
+    i2c_pin_config.mux = kPORT_MuxAsGpio;
+
+    pin_config.pinDirection = kGPIO_DigitalOutput;
+    pin_config.outputLogic = 1U;
+    CLOCK_EnableClock(kCLOCK_PortB);
+    PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
+    PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
+
+    GPIO_PinInit(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, &pin_config);
+    GPIO_PinInit(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, &pin_config);
+
+    /* Drive SDA low first to simulate a start */
+    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    i2c_release_bus_delay();
+
+    /* Send 9 pulses on SCL and keep SDA low */
+    for (i = 0; i < 9; i++)
+    {
+        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+        i2c_release_bus_delay();
+
+        GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+        i2c_release_bus_delay();
+
+        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+        i2c_release_bus_delay();
+        i2c_release_bus_delay();
+    }
+
+    /* Send stop */
+    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+    i2c_release_bus_delay();
+
+    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    i2c_release_bus_delay();
+
+    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+    i2c_release_bus_delay();
+
+    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+    i2c_release_bus_delay();
+}
+/*! *********************************************************************************
+* \brief  i2c_master_callback
+* \param[in]	base	I2C bus
+* \param[in]	handle	handle of I2C
+* \param[in]	status	states of the signal
+* \param[in]	data 	sent/received. May be NULL
+* \remarks	Sends start- and stop signals to I2C bus
+********************************************************************************** */
+static void i2c_master_callback(I2C_Type *base, i2c_master_handle_t *handle, status_t status, void *userData)
+{
+    /* Signal transfer success when received success status. */
+    if (status == kStatus_Success)
+    {
+        completionFlag = true;
+    }
+    /* Signal transfer success when received success status. */
+    if ((status == kStatus_I2C_Nak) || (status == kStatus_I2C_Addr_Nak))
+    {
+        nakFlag = true;
+    }
+}
+
+/*! *********************************************************************************
+* \brief  I2C_ReadAccelWhoAmI
+* \return		True: Successfully read a device. Otherwise false.
+* \remarks	Checks if accelsensor available with set Device ID.
+********************************************************************************** */
+static bool I2C_ReadAccelWhoAmI(void)
+{
+    /*
+	How to read the device who_am_I value ?
+	Start + Device_address_Write , who_am_I_register;
+	Repeart_Start + Device_address_Read , who_am_I_value.
+	*/
+	uint8_t who_am_i_reg = accel_whoami;
+	uint8_t who_am_i_value = 0x00;
+	uint8_t accel_addr_array_size = 0x00;
+	bool find_device = false;
+	uint8_t i = 0;
+	uint32_t sourceClock = 0;
+
+	i2c_master_config_t masterConfig;
+
+	/*
+	 * masterConfig.baudRate_Bps = 100000U;
+	 * masterConfig.enableStopHold = false;
+	 * masterConfig.glitchFilterWidth = 0U;
+	 * masterConfig.enableMaster = true;
+	 */
+	I2C_MasterGetDefaultConfig(&masterConfig);
+
+	masterConfig.baudRate_Bps = I2C_BAUDRATE;
+
+	sourceClock = ACCEL_I2C_CLK_FREQ;
+
+	I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &masterConfig, sourceClock);
+
+	i2c_master_transfer_t masterXfer;
+	memset(&masterXfer, 0, sizeof(masterXfer));
+
+	masterXfer.slaveAddress = g_accel_address[0];
+	masterXfer.direction = kI2C_Write;
+	masterXfer.subaddress = 0;
+	masterXfer.subaddressSize = 0;
+	masterXfer.data = &who_am_i_reg;
+	masterXfer.dataSize = 1;
+	masterXfer.flags = kI2C_TransferNoStopFlag;
+
+	accel_addr_array_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
+
+	for (i = 0; i < accel_addr_array_size; i++)
+	{
+		masterXfer.slaveAddress = g_accel_address[i];
+		I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+		/*  wait for transfer completed. */
+		while ((!nakFlag) && (!completionFlag))
+		{
+		}
+
+		nakFlag = false;
+
+		if (completionFlag == true)
+		{
+			completionFlag = false;
+			find_device = true;
+			g_accel_addr_found = masterXfer.slaveAddress;
+			break;
+		}
+	}
+
+	if (find_device == true)
+	{
+		masterXfer.direction = kI2C_Read;
+		masterXfer.subaddress = 0;
+		masterXfer.subaddressSize = 0;
+		masterXfer.data = &who_am_i_value;
+		masterXfer.dataSize = 1;
+		masterXfer.flags = kI2C_TransferRepeatedStartFlag;
+
+		I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+
+		/*  wait for transfer completed. */
+		while ((!nakFlag) && (!completionFlag))
+		{
+		}
+		nakFlag = false;
+		if (completionFlag == true)
+		{
+			completionFlag = false;
+			if (who_am_i_value == MMA8452_WHOAMI)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
+				return true;
+			}
+		}
+	}
+}
+/*! *********************************************************************************
+* \brief  I2C_WriteAccelReg
+* \param[in]	base			I2C bus
+* \param[in]	device_addr		Device addr of Slave
+* \param[in]	reg_addr		Register to address
+* \param[in]	value			Data value which is sent to Register
+* \return		True: Successfully write to device. Otherwise false.
+* \remarks	Writes a databyte the a register
+********************************************************************************** */
+static bool I2C_WriteAccelReg(I2C_Type *base, uint8_t device_addr, uint8_t reg_addr, uint8_t value)
+{
+    i2c_master_transfer_t masterXfer;
+    memset(&masterXfer, 0, sizeof(masterXfer));
+
+    masterXfer.slaveAddress = device_addr;
+    masterXfer.direction = kI2C_Write;
+    masterXfer.subaddress = reg_addr;
+    masterXfer.subaddressSize = 1;
+    masterXfer.data = &value;
+    masterXfer.dataSize = 1;
+    masterXfer.flags = kI2C_TransferDefaultFlag;
+
+    /*  direction=write : start+device_write;cmdbuff;xBuff; */
+    /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
+    I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+
+    /*  wait for transfer completed. */
+    while ((!nakFlag) && (!completionFlag))
+    {
+    }
+
+    nakFlag = false;
+    if (completionFlag == true)
+    {
+        completionFlag = false;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+/*! *********************************************************************************
+* \brief  I2C_ReadAccelRegs
+* \param[in]	base			I2C bus
+* \param[in]	device_addr		Device addr of Slave
+* \param[in]	reg_addr		Register to address
+* \param[out]	rxBuff			Buffer for received data
+* \param[in]	rxSize			Size of the buffer
+* \return		True: Successfully Read from device. Otherwise false.
+* \remarks		Receives one or several data bytes from Slave
+********************************************************************************** */
+static bool I2C_ReadAccelRegs(I2C_Type *base, uint8_t device_addr, uint8_t reg_addr, uint8_t *rxBuff, uint32_t rxSize)
+{
+    i2c_master_transfer_t masterXfer;
+    memset(&masterXfer, 0, sizeof(masterXfer));
+    masterXfer.slaveAddress = device_addr;
+    masterXfer.direction = kI2C_Read;
+    masterXfer.subaddress = reg_addr;
+    masterXfer.subaddressSize = 1;
+    masterXfer.data = rxBuff;
+    masterXfer.dataSize = rxSize;
+    masterXfer.flags = kI2C_TransferDefaultFlag;
+
+    /*  direction=write : start+device_write;cmdbuff;xBuff; */
+    /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
+
+    I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+    /*  wait for transfer completed. */
+    while ((!nakFlag) && (!completionFlag))
+    {
+    }
+
+    nakFlag = false;
+    if (completionFlag == true)
+    {
+        completionFlag = false;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+/*! *********************************************************************************
+* \brief  I2C_Accel_Config
+* \remarks		Writes settings to I2C Slave
+* 				Further informatin in datashset MMA8452
+********************************************************************************** */
+void I2C_Accel_Config(void)
+{
+	bool isThereAccel = false;
+	I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, i2c_master_callback, NULL);
+	isThereAccel = I2C_ReadAccelWhoAmI();
+    /*  read the accel xyz value if there is accel device on board */
+    if (isThereAccel)
+    {
+        uint8_t databyte = 0;
+        uint8_t write_reg = 0;
+        uint8_t status0_value = 0;
+        uint32_t i = 0U;
+
+        /*  SET 0 TO SET TO STANDBY MODE */
+        /*  write 0000 0000 = 0x00 to accelerometer control register 1 */
+        /*  standby */
+        /*  [7-1] = 0000 000 */
+        /*  [0]: active=0 */
+        write_reg = accel_ctrl_reg1;
+        databyte = 0;
+        I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+
+        /*  write 0000 0000 = 0x00 to XYZ_DATA_CFG register */
+        /*  [7]: reserved */
+        /*  [6]: reserved */
+        /*  [5]: reserved */
+        /*  [4]: hpf_out=0 */
+        /*  [3]: reserved */
+        /*  [2]: reserved */
+        /*  [1-0]: fs=00 for accelerometer range of +/-2g range with 0.488mg/LSB */
+        /*  databyte = 0x00; */
+        write_reg = accel_xyz_data_cfg;
+        databyte = 0x00;
+        I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+
+        /*  write 0000 0000 = 0x00 to accelerometer control register 2 */
+	    /*  [7]: ST=0 for Self-test disabled */
+	    /*  [6]: RST=0 for Softwarereset disabled */
+	    /*  [5]: Reserved */
+	    /*  [4-3]: SMODS=00 for sleep pwer mode disabled */
+        /*  [2]: SLPE=0 for Auto-sleep mode disabled */
+	    /*  [1-0]: MODS=00 for Normal power mode */
+	    /*  databyte = 0xFD; */
+	    write_reg = accel_ctrl_reg2;
+	    databyte = 0x00;
+	    I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+
+        /*  write 0000 0000 = 0x00 to accelerometer control register 4 */
+	    /*  [7]: INT_EN_ASLP=0 for Auto-sleep interrupt disabled */
+	    /*  [6]: Reserved */
+	    /*  [5]: INT_EN_TRANS=0 for Transient interrupt disabled */
+	    /*  [4]: INT_EN_LNDPRT=0 for orientation interrupt disabled */
+	    /*  [3]: INT_EN_PULSE=0 for pulse detection interrupt disabled */
+        /*  [2]: INT_CFG_FF_MT=0 for Freefall/Motion interrupt disabled */
+	    /*  [1]: Reserved */
+	    /*  [0]: INT_EN_DRDY=0 for data-ready interrupt disabled */
+	    /*  databyte = 0x00; */
+	    write_reg = accel_ctrl_reg4;
+	    databyte = 0x00;
+	    I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+
+	    /*  write 0000 0000 = 0x00 to accelerometer control register 5 */
+		/*  [7]: INT_CFG_ASLP=0 for Auto-sleep interrupt to INT2 */
+		/*  [6]: Reserved */
+		/*  [5]: INT_EN_TRANS=0 for Transient interrupt to INT2 */
+		/*  [4]: INT_EN_LNDPRT=0 for orientation interrupt to INT2 */
+		/*  [3]: INT_EN_PULSE=0 for pulse detection interrupt to INT2 */
+		/*  [2]: INT_CFG_FF_MT=0 for Freefall/Motion interrupt to INT2 */
+		/*  [1]: Reserved */
+		/*  [0]: INT_EN_DRDY=0 for data-ready interrupt to INT2 */
+		/*  databyte = 0x00; */
+		write_reg = accel_ctrl_reg5;
+		databyte = 0x00;
+		I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+
+        /*  write 1111 1101 = 0xFD to accelerometer control register 1 */
+        /*  [7-6]: aslp_rate=11 for 1.56 Hz ODR when Sleep mode */
+        /*  [5-3]: dr=111 for 1.56Hz data rate (when in hybrid mode) */
+        /*  [2]: lnoise=1 for low noise mode */
+        /*  [1]: f_read=0 for normal 16 bit reads */
+        /*  [0]: active=1 active and enable sampling */
+        /*  databyte = 0xFD; */
+        write_reg = accel_ctrl_reg1;
+        databyte = 0xFD;
+        I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+
+//        for (i = 0; i < ACCEL_READ_TIMES; i++)
+//        {
+//            status0_value = 0;
+//            /*  wait for new data are ready. */
+//            while (status0_value != 0xFF)
+//            {
+//                I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, accel_state, &status0_value, 1);
+//            }
+//
+//            /*  Multiple-byte Read from STATUS (0x00) register */
+//            I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, accel_state, readBuff, 7);
+//
+//            status0_value = readBuff[0];
+//            x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
+//            y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
+//            z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
+//        }
+    }
+}
+/*! *********************************************************************************
 * \brief  This is the first task created by the OS. This task will initialize 
 *         the system
 *
@@ -578,11 +1037,8 @@ void main_task(uint32_t param)
     {
     	uint32_t counterTemp;
         uint8_t pseudoRNGSeed[20] = {0};
-		
         platformInitialized = 1;
-        
-        hardware_init();			// hängt in while schlaufe, da kein Bit gesetzt wird.
-        
+        hardware_init();
         /* Framework init */
         MEM_Init();
         TMR_Init();       
@@ -590,17 +1046,20 @@ void main_task(uint32_t param)
         SecLib_Init();
         BOARD_InitPins();
         //BOARD_InitRGB();
-        BOARD_BootClockRUN();		// hängt in while schlaufe, da kein Bit gesetzt wird.
-        CLOCK_SetTpmClock(1U);
-        //BOARD_InitLEDs();
+        BOARD_BootClockRUN();
+        InitGPIO();
 
+        BOARD_I2C_ReleaseBus();
+        BOARD_I2C_InitPins();
+        I2C_Accel_Config();
+
+        CLOCK_SetTpmClock(1U);
         /* Init board hardware. */
 		BOARD_InitBootPins();
 		BOARD_InitButtons();
 		BOARD_InitBootClocks();
 
         // Initialization for peripherals
-        InitGPIO();
         InitServoPWM();
 
 #if BAT_MEASUREMENT_ENABLE
@@ -608,14 +1067,7 @@ void main_task(uint32_t param)
         InitPIT();
 #endif
 
-
         /* Testing purposes */
-//        GPIO_WritePinOutput(BOARD_INITPINS_LED_ORANGE_GPIO, BOARD_INITPINS_LED_ORANGE_GPIO_PIN, 1);
-        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
-//        GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
-//
-//        GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
-//        GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
 
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
@@ -663,7 +1115,6 @@ void main_task(uint32_t param)
             panic(0,0,0,0);
             return;
         }
-        
 
         /* Prepare application input queue.*/
         MSG_InitQueue(&mHostAppInputQueue);
@@ -678,6 +1129,7 @@ void main_task(uint32_t param)
             return;
         }
     }
+    GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
 
     /* Call application task */
     App_Thread( param );
@@ -1290,8 +1742,6 @@ uint16_t n_pow(uint16_t x, uint16_t expo)
 * \brief  Parses the char* message into uint16_t values for power and speed
 *
 * \param[in] writtenMsg		WrittenEvent from Gattserver
-*
-*
 * \return  bikeValues (Power and bikespeed)
 *
 * \remarks This function gets called to get integer values from the message received
@@ -1434,31 +1884,52 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
         	if(updatedDutycycle > 2 && updatedDutycycle < 14)
         	{
         		TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
-        		GPIO_WritePinOutput(GPIOA, 17U, 0);
         	}
-        	else
-        	{
-        		// GPIO =  -> 2 grün leuchten lassen
-				GPIO_WritePinOutput(GPIOA, 17U, 1);
-        	}
+        	/*  Multiple-byte Read from STATUS (0x00) register */
+			I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, accel_state, readBuff, 7);
 
+			//status0_value = readBuff[0];
+			x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
+			y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
+			z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
 
-#if LED_SHOW
+#if LED_SHOW_ACCEL
+			if(x > 3000)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
+			}
+			else if(y > 3000)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
+			}
+			else if(z > 3000)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
+			}
+			else
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
+			}
+#endif
+#if LED_SHOW_SPEED
         	if(bikeValues.bikeSpeed > 60)
 			{
-				// GPIO = LOW -> aus
 				GPIO_WritePinOutput(GPIOA, 17U, 1);
 				GPIO_WritePinOutput(GPIOA, 18U, 1);
 			}
 			else if(bikeValues.bikeSpeed > 40)
 			{
-				// GPIO = HIGH -> 2 rot leuchten lassen
+				//rot leuchten lassen
 				GPIO_WritePinOutput(GPIOA, 17U, 0);
 				GPIO_WritePinOutput(GPIOA, 18U, 1);
 			}
 			else if(bikeValues.bikeSpeed > 20)
 			{
-				// GPIO =  -> 2 grün leuchten lassen
+				// grün leuchten lassen
 				GPIO_WritePinOutput(GPIOA, 17U, 1);
 				GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
@@ -1468,34 +1939,8 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 				GPIO_WritePinOutput(GPIOA, 17U, 0);
 				GPIO_WritePinOutput(GPIOA, 18U, 0);
 			}
-
-//            if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 0)
-//            {
-//            	// GPIO = HIGH -> 1 ausschalten
-//            	GPIO_WritePinOutput(GPIOA, 19U, 1);
-//            	GPIO_WritePinOutput(GPIOA, 18U, 1);
-//            }
-//            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 1)
-//            {
-//            	// GPIO = HIGH -> 2 Grün leuchten lassen
-//            	GPIO_WritePinOutput(GPIOA, 19U, 0);
-//            	GPIO_WritePinOutput(GPIOA, 18U, 1);
-//            }
-//            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 2)
-//			{
-//				// GPIO = HIGH -> 2 Blau leuchten lassen
-//            	GPIO_WritePinOutput(GPIOA, 19U, 1);
-//            	GPIO_WritePinOutput(GPIOA, 18U, 0);
-//			}
-//            else if(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue[0] == 3)
-//			{
-//				// GPIO = HIGH -> 2 türkis
-//            	GPIO_WritePinOutput(GPIOA, 19U, 0);
-//            	GPIO_WritePinOutput(GPIOA, 18U, 0);
-//			}
 #endif
             // PRESENTATION FINISHED
-
 
             break;
         }

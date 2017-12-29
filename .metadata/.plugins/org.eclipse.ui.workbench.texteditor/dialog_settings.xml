@@ -6,37 +6,37 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="readBuff" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="ADC16_ChannelGetStatusFlags"/>
-			<item value="PIT_LED_HANDLER"/>
-			<item value="ADC0_IRQHandler"/>
-			<item value="PIT_IRQHandler"/>
-			<item value="PIT"/>
-			<item value="SOPT"/>
-			<item value="SIM"/>
-			<item value="TRGSEL"/>
+			<item value="readBuff"/>
+			<item value="who_am_i_reg"/>
+			<item value="MMA8452_WHOAMI"/>
+			<item value="FXOS8700_WHOAMI"/>
+			<item value="kPORT_PullUp"/>
+			<item value="I2C_RELEASE_SCL_PORT"/>
+			<item value="I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &amp;g_m_handle, i2c_master_callback, NULL);"/>
+			<item value="i2c_master_callback"/>
 		</list>
 		<list key="replacehistory">
+			<item value="accel_ctrl_reg1"/>
+			<item value="accel_xyz_data_cfg"/>
 			<item value="PIT_ADC_HANDLER"/>
 			<item value="ADC16_IRQn"/>
 			<item value="ADC16_IRQ_HANDLER_FUNC"/>
 			<item value="ACCU_ADC16_USER_CHANNEL"/>
 			<item value="ACCU_ADC16_CHANNEL_GROUP"/>
 			<item value="ACCU_ADC16_BASEADDR"/>
-			<item value="value_bike_notify"/>
-			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="420" key="DIALOG_HEIGHT"/>
-		<item value="170" key="DIALOG_X_ORIGIN"/>
-		<item value="333" key="DIALOG_Y_ORIGIN"/>
+		<item value="54" key="DIALOG_X_ORIGIN"/>
+		<item value="306" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

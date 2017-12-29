@@ -42,15 +42,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITBUTTONS_BUTTON_NAME                                   "BUTTON"   /*!< Identifier name */
 #define BOARD_INITBUTTONS_BUTTON_DIRECTION               kPIN_MUX_DirectionInput   /*!< Direction */
 
-/* PORTA19 (number 7), BUTTON_2 */
-#define BOARD_INITBUTTONS_BUTTON_2_GPIO                                    GPIOA   /*!< GPIO device name: GPIOA */
-#define BOARD_INITBUTTONS_BUTTON_2_PORT                                    PORTA   /*!< PORT device name: PORTA */
-#define BOARD_INITBUTTONS_BUTTON_2_GPIO_PIN                                  19U   /*!< PORTA pin index: 19 */
-#define BOARD_INITBUTTONS_BUTTON_2_PIN_NAME                                PTA19   /*!< Pin name */
-#define BOARD_INITBUTTONS_BUTTON_2_LABEL                              "BUTTON_2"   /*!< Label */
-#define BOARD_INITBUTTONS_BUTTON_2_NAME                               "BUTTON_2"   /*!< Identifier name */
-#define BOARD_INITBUTTONS_BUTTON_2_DIRECTION             kPIN_MUX_DirectionInput   /*!< Direction */
-
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -108,6 +99,13 @@ void BOARD_InitButtons(void);
  *
  */
 void BOARD_InitPins(void);
+
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_I2C_InitPins(void);
 
 #if defined(__cplusplus)
 }

@@ -522,10 +522,7 @@
 		<projectStorage>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#13;
 &lt;TargetConfig&gt;&#13;
 &lt;Properties property_3="NXP" property_4="MKW31Z256xxx4" property_count="5" version="70200"/&gt;&#13;
-&lt;infoList vendor="NXP"&gt;&#13;
-&lt;info chip="MKW31Z256xxx4" name="MKW31Z256xxx4"&gt;&#13;
-&lt;chip&gt;&#13;
-&lt;name&gt;MKW31Z256xxx4&lt;/name&gt;&#13;
+&lt;infoList vendor="NXP"&gt;&lt;info chip="MKW31Z256xxx4" name="MKW31Z256xxx4"&gt;&lt;chip&gt;&lt;name&gt;MKW31Z256xxx4&lt;/name&gt;&#13;
 &lt;family&gt;KW3x&lt;/family&gt;&#13;
 &lt;vendor&gt;NXP&lt;/vendor&gt;&#13;
 &lt;memory can_program="true" id="Flash" is_ro="true" size="0" type="Flash"/&gt;&#13;
@@ -593,8 +590,7 @@
 &lt;peripheralInstance derived_from="FGPIOB" determined="infoFile" id="FGPIOB" location="0xF8000040"/&gt;&#13;
 &lt;peripheralInstance derived_from="FGPIOC" determined="infoFile" id="FGPIOC" location="0xF8000080"/&gt;&#13;
 &lt;/chip&gt;&#13;
-&lt;processor&gt;&#13;
-&lt;name gcc_name="cortex-m0plus"&gt;Cortex-M0+&lt;/name&gt;&#13;
+&lt;processor&gt;&lt;name gcc_name="cortex-m0plus"&gt;Cortex-M0+&lt;/name&gt;&#13;
 &lt;family&gt;Cortex-M&lt;/family&gt;&#13;
 &lt;/processor&gt;&#13;
 &lt;link href="MKW31Z4_internal_peripheral.xml" show="embed" type="simple"/&gt;&#13;
@@ -608,4 +604,5 @@
 		<sdkComponents>middleware.freertos.MKW31Z4;middleware.template_application.freertos.MKW31Z4;platform.drivers.adc16.MKW31Z4;platform.drivers.clock.MKW31Z4;platform.drivers.common.MKW31Z4;platform.drivers.lpuart.MKW31Z4;platform.utilities.debug_console.MKW31Z4;platform.drivers.gpio.MKW31Z4;platform.drivers.cmp.MKW31Z4;platform.drivers.cmt.MKW31Z4;platform.drivers.cop.MKW31Z4;platform.drivers.dac.MKW31Z4;platform.drivers.dcdc.MKW31Z4;platform.drivers.dmamux.MKW31Z4;platform.drivers.dspi.MKW31Z4;platform.drivers.edma.MKW31Z4;platform.drivers.flash.MKW31Z4;platform.drivers.i2c.MKW31Z4;platform.drivers.llwu.MKW31Z4;platform.drivers.lptmr.MKW31Z4;platform.drivers.ltc.MKW31Z4;platform.drivers.pit.MKW31Z4;platform.drivers.pmc.MKW31Z4;platform.drivers.port.MKW31Z4;platform.drivers.rcm.MKW31Z4;platform.drivers.rtc.MKW31Z4;platform.drivers.sim.MKW31Z4;platform.drivers.smc.MKW31Z4;platform.drivers.tpm.MKW31Z4;platform.drivers.trng.MKW31Z4;platform.drivers.tsi_v4.MKW31Z4;platform.drivers.vref.MKW31Z4;startup;CMSIS_Include;</sdkComponents>
 		<core>cm0plus</core>
 	</storageModule>
+	<storageModule moduleId="refreshScope"/>
 </cproject>
