@@ -1,0 +1,13 @@
+/*
+ * GPIO_Adapter.h
+ *
+ *  Created on: 30.12.2017
+ *      Author: rober_000
+ */
+
+#ifndef COMMON_GPIO_ADAPTER_H_
+#define COMMON_GPIO_ADAPTER_H_
+
+
+
+#endif /* COMMON_GPIO_ADAPTER_H_ */

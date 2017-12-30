@@ -1,0 +1,27 @@
+/*
+ * PWM_Servo.h
+ *
+ *  Created on: 30.12.2017
+ *      Author: rober_000
+ */
+
+#ifndef COMMON_PWM_SERVO_H_
+#define COMMON_PWM_SERVO_H_
+
+/*! *********************************************************************************
+* \brief  InitServoPWM
+*
+* \remarks	Init for the PWM signal for the Servo. 50Hz Timer.
+********************************************************************************** */
+void InitServoPWM(void);
+
+
+/*! *********************************************************************************
+* \brief  PWM_updateServo
+* \param[in]	bikeSpeed	the Bike speed in 10*m/s
+* \remarks	The PWM of the Servo is updated and send to peripherie according to new bikespeed.
+* In future, update should be made using the power value.
+********************************************************************************** */
+void PWM_updateServo(uint16_t bikeSpeed);
+
+#endif /* COMMON_PWM_SERVO_H_ */

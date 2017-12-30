@@ -30,7 +30,7 @@
 #ifndef __FSL_GPIO_PINS_H__
 #define __FSL_GPIO_PINS_H__
 
-#include "GPIO_Adapter.h"
+#include <GPIO_Adapter.h>
 
 /*! @file */
 /*!*/

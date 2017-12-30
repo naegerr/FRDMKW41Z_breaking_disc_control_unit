@@ -29,13 +29,9 @@ source/common/ApplMain.o source/common/ApplMain.d: \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_flash.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\SecLib/SecLib.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\Panic\Interface/Panic.h \
- C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\TimersManager\Source/TMR_Adapter.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\board/pin_mux.h \
- C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_tpm.h \
- C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_port.h \
- C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_adc16.h \
- C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_pit.h \
- C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_i2c.h \
+ ../source/common/Accel_Altitude_sensor.h ../source/common/Accu_monitor.h \
+ ../source/common/PWM_Servo.h ../source/common/GPIO_Adapter_Board.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\bluetooth\host\interface/gatt_interface.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\bluetooth\host\interface/ble_general.h \
  C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\FunctionLib/FunctionLib.h \
@@ -118,19 +114,15 @@ C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking
 
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\Panic\Interface/Panic.h:
 
-C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\framework\TimersManager\Source/TMR_Adapter.h:
-
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\board/pin_mux.h:
 
-C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_tpm.h:
+../source/common/Accel_Altitude_sensor.h:
 
-C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_port.h:
+../source/common/Accu_monitor.h:
 
-C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_adc16.h:
+../source/common/PWM_Servo.h:
 
-C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_pit.h:
-
-C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\drivers/fsl_i2c.h:
+../source/common/GPIO_Adapter_Board.h:
 
 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\bluetooth\host\interface/gatt_interface.h:
 

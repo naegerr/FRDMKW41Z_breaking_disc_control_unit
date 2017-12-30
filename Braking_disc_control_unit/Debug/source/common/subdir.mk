@@ -4,21 +4,33 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/common/Accel_Altitude_sensor.c \
+../source/common/Accu_monitor.c \
 ../source/common/ApplMain.c \
+../source/common/GPIO_Adapter_Board.c \
+../source/common/PWM_Servo.c \
 ../source/common/ble_conn_manager.c \
 ../source/common/ble_controller_task.c \
 ../source/common/ble_host_tasks.c \
 ../source/common/ble_init.c 
 
 OBJS += \
+./source/common/Accel_Altitude_sensor.o \
+./source/common/Accu_monitor.o \
 ./source/common/ApplMain.o \
+./source/common/GPIO_Adapter_Board.o \
+./source/common/PWM_Servo.o \
 ./source/common/ble_conn_manager.o \
 ./source/common/ble_controller_task.o \
 ./source/common/ble_host_tasks.o \
 ./source/common/ble_init.o 
 
 C_DEPS += \
+./source/common/Accel_Altitude_sensor.d \
+./source/common/Accu_monitor.d \
 ./source/common/ApplMain.d \
+./source/common/GPIO_Adapter_Board.d \
+./source/common/PWM_Servo.d \
 ./source/common/ble_conn_manager.d \
 ./source/common/ble_controller_task.d \
 ./source/common/ble_host_tasks.d \
