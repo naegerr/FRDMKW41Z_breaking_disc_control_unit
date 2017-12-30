@@ -2,3 +2,4 @@
 1514531923974	Rename resource 'frdmkw41z_cmsis_driver_examples_i2c_read_accel_value_transfer'
 1514532056225	Delete resource 'FRDMKW41Z_cmsis_driver_examples_i2c_read_accel_value_transfer'
 1514534934185	Delete resource 'FRDMKW41Z_driver_examples_i2c_read_accel_value_transfer'
+1514640984034	Delete resource 'Braking_disc_control_unit/source/common/Accel_Altitude_sensor.c'

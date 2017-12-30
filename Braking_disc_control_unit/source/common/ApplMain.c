@@ -312,7 +312,7 @@ adc16_channel_config_t g_adc16ChannelConfigStruct;
 volatile bool pitIsrFlag = false;
 
 /* I2C */
-#define BOARD_ACCEL_I2C_BASEADDR I2C0
+#define BOARD_I2C_BASEADDR I2C0
 
 #define ACCEL_I2C_CLK_SRC 		I2C0_CLK_SRC
 #define ACCEL_I2C_CLK_FREQ 		CLOCK_GetFreq(I2C0_CLK_SRC)
@@ -326,10 +326,12 @@ volatile bool pitIsrFlag = false;
 #define I2C_RELEASE_BUS_COUNT 	100U
 #define I2C_BAUDRATE 			100000U
 
+// Device ID's on board
 #define MMA8452_WHOAMI 			0x2AU
+#define MPL3115_WHOAMI			0xC4U
 
 
-/*! message types according to Mobile App */
+/*! Register according to datasheet MMA8452 */
 typedef enum accel_register_t
 {
 	accel_state 			= 0x00U,	// State register (read only)
@@ -346,14 +348,14 @@ typedef enum accel_register_t
 
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_READ_TIMES 		10U
-#define DEVICE_ID				0x2AU		// Device ID
 
-const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
+const uint8_t slave_address[] = {0x1CU, 0x60U,  0x1DU, 0x1EU, 0x1FU};
 i2c_master_handle_t g_m_handle;
 
-uint8_t g_accel_addr_found = 0x00;
+uint8_t slave_I2C_addr_found = 0x00;
 int16_t x, y, z;
-uint8_t readBuff[7];
+uint8_t readBuffAccel[7];
+uint8_t readBuffAltitude[4];
 
 volatile bool completionFlag = false;
 volatile bool nakFlag = false;
@@ -362,7 +364,38 @@ volatile bool nakFlag = false;
 #define FXOS8700_WHOAMI 		0xC7U
 #define MMA8451_WHOAMI 			0x1AU
 
+/*! Register according to datasheet MMA8452 */
+typedef enum altitude_register_t
+{
+	altitude_state 			= 0x00U,	// State register (read only)
+	altitude_data_msb		= 0x01U,	// Register for Data output MSB (read only)
+	altitude_data_csb		= 0x02U,	// Register for Data output CSB (read only)
+	altitude_data_lsb		= 0x03U,	// Register for Data output LSB (read only)
+	altitude_whoami			= 0x0CU,	// Device ID register address(read only)
+	altitude_FIFO_setup		= 0x0FU,	// FIFO setup register (read only)
+	altitude_int_source		= 0x12U,	// interrupt source register (read only)
+	altitude_sensor_data	= 0x13U,	// Sensor data register (read only)
+	altitude_ctrl_reg1		= 0x26U,	// Control-register 1 (read/write)
+	altitude_ctrl_reg2		= 0x27U,	// Control-register 2 (read/write)
+	altitude_ctrl_reg3		= 0x28U,	// Control-register 3 (read/write)
+	altitude_ctrl_reg4		= 0x29U,	// Control-register 4 (read/write)
+	altitude_ctrl_reg5		= 0x2AU		// Control-register 5 (read/write)
+} altitude_register;
 
+typedef struct altitude_value_t
+{
+	int16_t		altitudeInteger;		// Altitude in [m] / MSBit gives sign: 1 -> negative
+	uint8_t		altitudeFraction;		// Altitude fractions in [m] only Bit 4-7 used!
+										/* from datasheet MPL3115 attachement
+										 * 0b1000 = 0.5 m
+										 * 0b0100 = 0.25 m
+										 * 0b0010 = 0.125 m
+										 * 0b0001 = 0.0625 m
+										 */
+
+} altitude_value;
+
+altitude_value altitude;
 
 /*
  * @brief   Application entry point.
@@ -556,6 +589,19 @@ void InitServoPWM(void)
 }
 
 /*! *********************************************************************************
+* \brief  PWM_updateServo
+* \remarks	The PWM of the Servo is updated and send to peripherie according to new bikespeed.
+* In future, update should be made using the power value.
+********************************************************************************** */
+void PWM_updateServo()
+{
+	updatedDutycycle = bikeValues.bikeSpeed / 5U + 3U;
+	if(updatedDutycycle > 2 && updatedDutycycle < 14)
+	{
+		TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+	}
+}
+/*! *********************************************************************************
 * \brief  InitADC
 *
 * \remarks	The Analog and Digital conversion. 16Bit and no differential conversion.
@@ -714,6 +760,90 @@ void BOARD_I2C_ReleaseBus(void)
     i2c_release_bus_delay();
 }
 /*! *********************************************************************************
+* \brief  I2C_WriteRegister
+* \param[in]	base			I2C bus
+* \param[in]	device_addr		Device addr of Slave
+* \param[in]	reg_addr		Register to address
+* \param[in]	value			Data value which is sent to Register
+* \return		True: Successfully write to device. Otherwise false.
+* \remarks	Writes a databyte the a register
+********************************************************************************** */
+static bool I2C_WriteRegister(I2C_Type *base, uint8_t device_addr, uint8_t reg_addr, uint8_t value)
+{
+    i2c_master_transfer_t masterXfer;
+    memset(&masterXfer, 0, sizeof(masterXfer));
+
+    masterXfer.slaveAddress = device_addr;
+    masterXfer.direction = kI2C_Write;
+    masterXfer.subaddress = reg_addr;
+    masterXfer.subaddressSize = 1;
+    masterXfer.data = &value;
+    masterXfer.dataSize = 1;
+    masterXfer.flags = kI2C_TransferDefaultFlag;
+
+    /*  direction=write : start+device_write;cmdbuff;xBuff; */
+    /*  direction=receive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
+    I2C_MasterTransferNonBlocking(BOARD_I2C_BASEADDR, &g_m_handle, &masterXfer);
+
+    /*  wait for transfer completed. */
+    while ((!nakFlag) && (!completionFlag))
+    {
+    }
+
+    nakFlag = false;
+    if (completionFlag == true)
+    {
+        completionFlag = false;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+/*! *********************************************************************************
+* \brief  I2C_ReadRegister
+* \param[in]	base			I2C bus
+* \param[in]	device_addr		Device addr of Slave
+* \param[in]	reg_addr		Register to address
+* \param[out]	rxBuff			Buffer for received data
+* \param[in]	rxSize			Size of the buffer
+* \return		True: Successfully Read from device. Otherwise false.
+* \remarks		Receives one or several data bytes from Slave
+********************************************************************************** */
+static bool I2C_ReadRegister(I2C_Type *base, uint8_t device_addr, uint8_t reg_addr, uint8_t *rxBuff, uint32_t rxSize)
+{
+    i2c_master_transfer_t masterXfer;
+    memset(&masterXfer, 0, sizeof(masterXfer));
+    masterXfer.slaveAddress = device_addr;
+    masterXfer.direction = kI2C_Read;
+    masterXfer.subaddress = reg_addr;
+    masterXfer.subaddressSize = 1;
+    masterXfer.data = rxBuff;
+    masterXfer.dataSize = rxSize;
+    masterXfer.flags = kI2C_TransferDefaultFlag;
+
+    /*  direction=write : start+device_write;cmdbuff;xBuff; */
+    /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
+
+    I2C_MasterTransferNonBlocking(BOARD_I2C_BASEADDR, &g_m_handle, &masterXfer);
+    /*  wait for transfer completed. */
+    while ((!nakFlag) && (!completionFlag))
+    {
+    }
+
+    nakFlag = false;
+    if (completionFlag == true)
+    {
+        completionFlag = false;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+/*! *********************************************************************************
 * \brief  i2c_master_callback
 * \param[in]	base	I2C bus
 * \param[in]	handle	handle of I2C
@@ -762,18 +892,17 @@ static bool I2C_ReadAccelWhoAmI(void)
 	 * masterConfig.glitchFilterWidth = 0U;
 	 * masterConfig.enableMaster = true;
 	 */
+	/* Init only once per bus */
 	I2C_MasterGetDefaultConfig(&masterConfig);
-
 	masterConfig.baudRate_Bps = I2C_BAUDRATE;
-
 	sourceClock = ACCEL_I2C_CLK_FREQ;
-
-	I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &masterConfig, sourceClock);
+	I2C_MasterInit(BOARD_I2C_BASEADDR, &masterConfig, sourceClock);
 
 	i2c_master_transfer_t masterXfer;
 	memset(&masterXfer, 0, sizeof(masterXfer));
 
-	masterXfer.slaveAddress = g_accel_address[0];
+
+	masterXfer.slaveAddress = slave_address[0];
 	masterXfer.direction = kI2C_Write;
 	masterXfer.subaddress = 0;
 	masterXfer.subaddressSize = 0;
@@ -781,12 +910,13 @@ static bool I2C_ReadAccelWhoAmI(void)
 	masterXfer.dataSize = 1;
 	masterXfer.flags = kI2C_TransferNoStopFlag;
 
-	accel_addr_array_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
+
+	accel_addr_array_size = sizeof(slave_address) / sizeof(slave_address[0]);
 
 	for (i = 0; i < accel_addr_array_size; i++)
 	{
-		masterXfer.slaveAddress = g_accel_address[i];
-		I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+		masterXfer.slaveAddress = slave_address[i];
+		I2C_MasterTransferNonBlocking(BOARD_I2C_BASEADDR, &g_m_handle, &masterXfer);
 		/*  wait for transfer completed. */
 		while ((!nakFlag) && (!completionFlag))
 		{
@@ -798,7 +928,7 @@ static bool I2C_ReadAccelWhoAmI(void)
 		{
 			completionFlag = false;
 			find_device = true;
-			g_accel_addr_found = masterXfer.slaveAddress;
+			slave_I2C_addr_found = masterXfer.slaveAddress;
 			break;
 		}
 	}
@@ -812,7 +942,7 @@ static bool I2C_ReadAccelWhoAmI(void)
 		masterXfer.dataSize = 1;
 		masterXfer.flags = kI2C_TransferRepeatedStartFlag;
 
-		I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+		I2C_MasterTransferNonBlocking(BOARD_I2C_BASEADDR, &g_m_handle, &masterXfer);
 
 		/*  wait for transfer completed. */
 		while ((!nakFlag) && (!completionFlag))
@@ -827,93 +957,106 @@ static bool I2C_ReadAccelWhoAmI(void)
 				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
 				return true;
 			}
+			if (who_am_i_value == MPL3115_WHOAMI)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+				return true;
+			}
 		}
 	}
 }
+
 /*! *********************************************************************************
-* \brief  I2C_WriteAccelReg
-* \param[in]	base			I2C bus
-* \param[in]	device_addr		Device addr of Slave
-* \param[in]	reg_addr		Register to address
-* \param[in]	value			Data value which is sent to Register
-* \return		True: Successfully write to device. Otherwise false.
-* \remarks	Writes a databyte the a register
+* \brief  I2C_ReadAltitudeWhoAmI
+* \return		True: Successfully read a device. Otherwise false.
+* \remarks	Checks if Altitude sensor available with set Device ID.
 ********************************************************************************** */
-static bool I2C_WriteAccelReg(I2C_Type *base, uint8_t device_addr, uint8_t reg_addr, uint8_t value)
+static bool I2C_ReadAltitudeWhoAmI(void)
 {
-    i2c_master_transfer_t masterXfer;
-    memset(&masterXfer, 0, sizeof(masterXfer));
+    /*
+	How to read the device who_am_I value ?
+	Start + Device_address_Write , who_am_I_register;
+	Repeart_Start + Device_address_Read , who_am_I_value.
+	*/
+	uint8_t who_am_i_reg = altitude_whoami;
+	uint8_t who_am_i_value = 0x00;
+	uint8_t accel_addr_array_size = 0x00;
+	bool find_device = false;
+	uint8_t i = 0;
 
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = reg_addr;
-    masterXfer.subaddressSize = 1;
-    masterXfer.data = &value;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
 
-    /*  direction=write : start+device_write;cmdbuff;xBuff; */
-    /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
-    I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
+	/*
+	 * masterConfig.baudRate_Bps = 100000U;
+	 * masterConfig.enableStopHold = false;
+	 * masterConfig.glitchFilterWidth = 0U;
+	 * masterConfig.enableMaster = true;
+	 */
+	/* Init only once per bus */
 
-    /*  wait for transfer completed. */
-    while ((!nakFlag) && (!completionFlag))
-    {
-    }
+	i2c_master_transfer_t masterXfer;
+	memset(&masterXfer, 0, sizeof(masterXfer));
 
-    nakFlag = false;
-    if (completionFlag == true)
-    {
-        completionFlag = false;
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+	masterXfer.slaveAddress = slave_address[1];
+	masterXfer.direction = kI2C_Write;
+	masterXfer.subaddress = 0;
+	masterXfer.subaddressSize = 0;
+	masterXfer.data = &who_am_i_reg;
+	masterXfer.dataSize = 1;
+	masterXfer.flags = kI2C_TransferNoStopFlag;
+
+	accel_addr_array_size = sizeof(slave_address) / sizeof(slave_address[1]);
+
+	for (i = 1; i < accel_addr_array_size; i++)
+	{
+		masterXfer.slaveAddress = slave_address[i];
+		I2C_MasterTransferNonBlocking(BOARD_I2C_BASEADDR, &g_m_handle, &masterXfer);
+		/*  wait for transfer completed. */
+		while ((!nakFlag) && (!completionFlag))
+		{
+		}
+		nakFlag = false;
+		if (completionFlag == true)
+		{
+			completionFlag = false;
+			find_device = true;
+			slave_I2C_addr_found = masterXfer.slaveAddress;
+			break;
+		}
+	}
+
+	if (find_device == true)
+	{
+		masterXfer.direction = kI2C_Read;
+		masterXfer.subaddress = 0;
+		masterXfer.subaddressSize = 0;
+		masterXfer.data = &who_am_i_value;
+		masterXfer.dataSize = 1;
+		masterXfer.flags = kI2C_TransferRepeatedStartFlag;
+
+		I2C_MasterTransferNonBlocking(BOARD_I2C_BASEADDR, &g_m_handle, &masterXfer);
+
+		/*  wait for transfer completed. */
+		while ((!nakFlag) && (!completionFlag))
+		{
+		}
+		nakFlag = false;
+		if (completionFlag == true)
+		{
+			completionFlag = false;
+			if (who_am_i_value == MMA8452_WHOAMI)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
+				return true;
+			}
+			if (who_am_i_value == MPL3115_WHOAMI)
+			{
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+				return true;
+			}
+		}
+	}
 }
-/*! *********************************************************************************
-* \brief  I2C_ReadAccelRegs
-* \param[in]	base			I2C bus
-* \param[in]	device_addr		Device addr of Slave
-* \param[in]	reg_addr		Register to address
-* \param[out]	rxBuff			Buffer for received data
-* \param[in]	rxSize			Size of the buffer
-* \return		True: Successfully Read from device. Otherwise false.
-* \remarks		Receives one or several data bytes from Slave
-********************************************************************************** */
-static bool I2C_ReadAccelRegs(I2C_Type *base, uint8_t device_addr, uint8_t reg_addr, uint8_t *rxBuff, uint32_t rxSize)
-{
-    i2c_master_transfer_t masterXfer;
-    memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kI2C_Read;
-    masterXfer.subaddress = reg_addr;
-    masterXfer.subaddressSize = 1;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxSize;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
 
-    /*  direction=write : start+device_write;cmdbuff;xBuff; */
-    /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
-
-    I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
-    /*  wait for transfer completed. */
-    while ((!nakFlag) && (!completionFlag))
-    {
-    }
-
-    nakFlag = false;
-    if (completionFlag == true)
-    {
-        completionFlag = false;
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 /*! *********************************************************************************
 * \brief  I2C_Accel_Config
 * \remarks		Writes settings to I2C Slave
@@ -922,7 +1065,7 @@ static bool I2C_ReadAccelRegs(I2C_Type *base, uint8_t device_addr, uint8_t reg_a
 void I2C_Accel_Config(void)
 {
 	bool isThereAccel = false;
-	I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, i2c_master_callback, NULL);
+	I2C_MasterTransferCreateHandle(BOARD_I2C_BASEADDR, &g_m_handle, i2c_master_callback, NULL);
 	isThereAccel = I2C_ReadAccelWhoAmI();
     /*  read the accel xyz value if there is accel device on board */
     if (isThereAccel)
@@ -939,7 +1082,7 @@ void I2C_Accel_Config(void)
         /*  [0]: active=0 */
         write_reg = accel_ctrl_reg1;
         databyte = 0;
-        I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+        I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
 
         /*  write 0000 0000 = 0x00 to XYZ_DATA_CFG register */
         /*  [7]: reserved */
@@ -952,7 +1095,7 @@ void I2C_Accel_Config(void)
         /*  databyte = 0x00; */
         write_reg = accel_xyz_data_cfg;
         databyte = 0x00;
-        I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+        I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
 
         /*  write 0000 0000 = 0x00 to accelerometer control register 2 */
 	    /*  [7]: ST=0 for Self-test disabled */
@@ -964,7 +1107,7 @@ void I2C_Accel_Config(void)
 	    /*  databyte = 0xFD; */
 	    write_reg = accel_ctrl_reg2;
 	    databyte = 0x00;
-	    I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+	    I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
 
         /*  write 0000 0000 = 0x00 to accelerometer control register 4 */
 	    /*  [7]: INT_EN_ASLP=0 for Auto-sleep interrupt disabled */
@@ -978,7 +1121,7 @@ void I2C_Accel_Config(void)
 	    /*  databyte = 0x00; */
 	    write_reg = accel_ctrl_reg4;
 	    databyte = 0x00;
-	    I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+	    I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
 
 	    /*  write 0000 0000 = 0x00 to accelerometer control register 5 */
 		/*  [7]: INT_CFG_ASLP=0 for Auto-sleep interrupt to INT2 */
@@ -992,7 +1135,7 @@ void I2C_Accel_Config(void)
 		/*  databyte = 0x00; */
 		write_reg = accel_ctrl_reg5;
 		databyte = 0x00;
-		I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+		I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
 
         /*  write 1111 1101 = 0xFD to accelerometer control register 1 */
         /*  [7-6]: aslp_rate=11 for 1.56 Hz ODR when Sleep mode */
@@ -1003,27 +1146,180 @@ void I2C_Accel_Config(void)
         /*  databyte = 0xFD; */
         write_reg = accel_ctrl_reg1;
         databyte = 0xFD;
-        I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+        I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
 
-//        for (i = 0; i < ACCEL_READ_TIMES; i++)
-//        {
-//            status0_value = 0;
-//            /*  wait for new data are ready. */
-//            while (status0_value != 0xFF)
-//            {
-//                I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, accel_state, &status0_value, 1);
-//            }
-//
-//            /*  Multiple-byte Read from STATUS (0x00) register */
-//            I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, accel_state, readBuff, 7);
-//
-//            status0_value = readBuff[0];
-//            x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
-//            y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
-//            z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
-//        }
     }
 }
+/*! *********************************************************************************
+* \brief  I2C_Altitude_Config
+* \remarks		Writes settings to I2C Slave
+* 				Further information in datashset MPL3115
+********************************************************************************** */
+void I2C_Altitude_Config(void)
+{
+	bool isThereAltitude = false;
+	I2C_MasterTransferCreateHandle(BOARD_I2C_BASEADDR, &g_m_handle, i2c_master_callback, NULL);
+	isThereAltitude = I2C_ReadAltitudeWhoAmI();
+    /*  read the accel xyz value if there is accel device on board */
+    if (isThereAltitude)
+    {
+        uint8_t databyte = 0;
+        uint8_t write_reg = 0;
+        uint8_t status0_value = 0;
+        uint32_t i = 0U;
+
+        /*  SET 0 TO SET TO STANDBY MODE */
+        /*  write 0000 0000 = 0x00 to altimeter control register 1 */
+        /*  standby */
+        /*  [7-1] = 0000 000 */
+        /*  [0]: active=0 */
+        write_reg = altitude_ctrl_reg1;
+        databyte = 0;
+        I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+        /*  write 0010 0000 = 0x20 to altimeter sensor data register */
+		/*  [7-3] = 0000 000 */
+		/*  [2]: DREM=0 for data ready event flag disable */
+        /*  [1]: PDEFE=1 for data ready event flag enable */
+        /*  [0]: TDEFE=0 for data ready event flag disable */
+        /*  databyte = 0x02; */
+		write_reg = altitude_sensor_data;
+		databyte = 0x02;
+		I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+        /*  write 0010 0000 = 0x20 to altimeter control register 2 */
+	    /*  [7-6]: Reserved */
+	    /*  [5]: LOAD_OUTPUT=1 for loading OUT as target values */
+	    /*  [4]: Reserved */
+	    /*  [3-0]: ST=00 for autoacquisition time step = 1s */
+	    /*  databyte = 0x20; */
+	    write_reg = altitude_ctrl_reg2;
+	    databyte = 0x20;
+	    I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+	    /*  write 0010 0010 = 0x22 to altimeter control register 3 */
+		/*  [7-6]: Reserved */
+		/*  [5]: IPOL1=1 for interrupt polarity = Active high */
+		/*  [4]: PP_OD1=0 for internal pullup enabled */
+		/*  [3-2]: Reserved */
+	    /*  [1]: IPOL2=1 for interrupt polarity = Active high */
+	    /*  [0]: PP_OD2=0 for internal pullup enabled */
+		/*  databyte = 0x22; */
+		write_reg = altitude_ctrl_reg3;
+		databyte = 0x22;
+		I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+		/*  write 0000 0000 = 0x00 to altimeter control register 4 */
+		/*  [7]: INT_EN_DRDY=0 for data ready interrupt disabled */
+		/*  [6]: INT_EN_FIFO=0 for FIFO interrupt disabled */
+		/*  [5]: INT_EN_PW=0 for pressure window interrupt disabled */
+		/*  [4]: INT_EN_TW=0 for temp window interrupt disabled */
+		/*  [3]: INT_EN_PTH=0 for pressure thresh interrupt disabled */
+		/*  [2]: INT_EN_TTH=0 for temp thresh interrupt disabled */
+		/*  [1]: INT_EN_PCHG=0 for pressure change interrupt disabled */
+		/*  [0]: INT_EN_TCHG=0 for temp change interrupt disabled */
+		/*  databyte = 0x00; */
+		write_reg = altitude_ctrl_reg4;
+		databyte = 0x00;
+		I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+		/*  write 0000 0000 = 0x00 to altimeter control register 5 */
+		/*  [7]: INT_CFG_DRDY=0 for data-ready interrupt to INT2 */
+		/*  [6]: INT_CFG_FIFO=0 for FIFO interrupt to INT2 */
+		/*  [5]: INT_CFG_PW=0 for pressure window interrupt to INT2 */
+		/*  [4]: INT_CFG_TW=0 for temp window interrupt to INT2 */
+		/*  [3]: INT_CFG_PTH=0 for pressure thresh interrupt to INT2 */
+		/*  [2]: INT_CFG_TTH=0 for temp thresh interrupt to INT2 */
+		/*  [1]: INT_CFG_PCHG=0 for pressure change interrupt to INT2 */
+		/*  [0]: INT_CFG_TCHG=0 for temp change interrupt to INT2 */
+		/*  databyte = 0x00; */
+		write_reg = altitude_ctrl_reg5;
+		databyte = 0x00;
+		I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+	    /*  write 1000 0011 = 0x00 to altimeter control register 1 */
+		/*  [7]: ALT=1 for for altimeter mode */
+		/*  [6]: RAW=0 for NOT RAW mode */
+		/*  [5-3]: OS=000 for Oversampling = 1 */
+		/*  [2]: RST=0 for device reset disabled */
+		/*  [1]: OST=1 for initating a measurement */
+		/*  [0]: SBYB=1 for active mode */
+		/*  databyte = 0x83; */
+		write_reg = altitude_ctrl_reg1;
+		databyte = 0x83;
+		I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+	    for (i = 0; i < ACCEL_READ_TIMES; i++)
+		{
+			status0_value = 0;
+			/*  wait for new data are ready. */
+			while ((status0_value & (1<<2)) != 0x04)
+			{
+				I2C_ReadRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, altitude_state, &status0_value, 1);
+			}
+
+			/*  Multiple-byte Read from STATUS (0x00) register */
+			I2C_ReadRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, altitude_state, readBuffAltitude, 4);
+
+			status0_value = readBuffAltitude[0];
+			altitude.altitudeInteger = ((int16_t)(((readBuffAltitude[1] * 256U) | readBuffAltitude[2])));
+			altitude.altitudeFraction = readBuffAltitude[3] & 0xF0U;
+			altitude.altitudeInteger = ((int16_t)(((readBuffAltitude[1] * 256U) | readBuffAltitude[2])));
+
+            /* Clear OST-Bit again, because auto-clear is not avaible */
+            /* To initiate another measurement -> set OST Bit = 1 */
+			write_reg = altitude_ctrl_reg1;
+			databyte = 0x81;
+			I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_I2C_addr_found, write_reg, databyte);
+
+		}
+
+    }
+}
+/*! *********************************************************************************
+* \brief  I2C_getAccel
+* \remarks		Gets the accelsensor values x,y,z from MMA8452 according to settings of config
+* 				uses polling and waites until data is ready.
+* 				Further information in datasheet MMA8452
+********************************************************************************** */
+void I2C_updateAccel()
+{
+	/*  Multiple-byte Read from STATUS (0x00) register */
+	I2C_ReadRegister(BOARD_I2C_BASEADDR, slave_address[0], accel_state, readBuffAccel, 7);
+	//status0_value = readBuff[0];
+	x = ((int16_t)(((readBuffAccel[1] * 256U) | readBuffAccel[2]))) / 4U;
+	y = ((int16_t)(((readBuffAccel[3] * 256U) | readBuffAccel[4]))) / 4U;
+	z = ((int16_t)(((readBuffAccel[5] * 256U) | readBuffAccel[6]))) / 4U;
+}
+
+/*! *********************************************************************************
+* \brief  I2C_updateAltitude
+* \remarks		Gets the altitude from MPL3115 according to settings of config
+* 				uses polling and waites until data is ready.
+* 				Further information in datashset MPL3115
+********************************************************************************** */
+void I2C_updateAltitude()
+{
+	uint8_t status0_value = 0;
+	// Request altitude values
+	I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_address[1], altitude_ctrl_reg1, 0x83U);
+	/*  wait for new data are ready. */
+	while ((status0_value & (1<<2)) != 0x04)
+	{
+		I2C_ReadRegister(BOARD_I2C_BASEADDR, slave_address[1], altitude_state, &status0_value, 1);
+	}
+
+	/*  Multiple-byte Read from STATUS (0x00) register */
+	I2C_ReadRegister(BOARD_I2C_BASEADDR, slave_address[1], altitude_state, readBuffAltitude, 4);
+	altitude.altitudeInteger = ((int16_t)(((readBuffAltitude[1] * 256U) | readBuffAltitude[2])));
+	altitude.altitudeFraction = readBuffAltitude[3] & 0xF0U;
+	altitude.altitudeInteger = ((int16_t)(((readBuffAltitude[1] * 256U) | readBuffAltitude[2])));
+
+	/* Clear OST-Bit again, because auto-clear is not avaible */
+	/* To initiate another measurement -> set OST Bit = 1 */
+	I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_address[1], altitude_ctrl_reg1, 0x81U);
+}
+
 /*! *********************************************************************************
 * \brief  This is the first task created by the OS. This task will initialize 
 *         the system
@@ -1035,7 +1331,6 @@ void main_task(uint32_t param)
 {  
     if (!platformInitialized)
     {
-    	uint32_t counterTemp;
         uint8_t pseudoRNGSeed[20] = {0};
         platformInitialized = 1;
         hardware_init();
@@ -1047,11 +1342,15 @@ void main_task(uint32_t param)
         BOARD_InitPins();
         //BOARD_InitRGB();
         BOARD_BootClockRUN();
+
+        // Init GPIO pins
         InitGPIO();
 
+        // I2C init and configuration
         BOARD_I2C_ReleaseBus();
         BOARD_I2C_InitPins();
         I2C_Accel_Config();
+        I2C_Altitude_Config();
 
         CLOCK_SetTpmClock(1U);
         /* Init board hardware. */
@@ -1129,7 +1428,6 @@ void main_task(uint32_t param)
             return;
         }
     }
-    GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
 
     /* Call application task */
     App_Thread( param );
@@ -1775,21 +2073,18 @@ bikeValues_t parseBikeMsg(gattServerAttributeWrittenEvent_t writtenMsg)
 	{
 		if(writtenMsg.aValue[2] == start)
 		{
-			// LED aus
 			bikeValues.power = 0;
 			bikeValues.bikeSpeed = 0;
 			return bikeValues;
 		}
 		if(writtenMsg.aValue[2] == pause)
 		{
-			// türkis
 			bikeValues.power = 0;
 			bikeValues.bikeSpeed = 0;
 			return bikeValues;
 		}
 		if(writtenMsg.aValue[2] == stop)
 		{
-			// türkis
 			bikeValues.power = 0;
 			bikeValues.bikeSpeed = 0;
 			return bikeValues;
@@ -1879,19 +2174,10 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 			}
         	// Power and Speed aus Message herauslesen
         	bikeValues = parseBikeMsg(pMsg->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent);
-
-        	updatedDutycycle = bikeValues.bikeSpeed / 5U + 3U;
-        	if(updatedDutycycle > 2 && updatedDutycycle < 14)
-        	{
-        		TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
-        	}
-        	/*  Multiple-byte Read from STATUS (0x00) register */
-			I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, accel_state, readBuff, 7);
-
-			//status0_value = readBuff[0];
-			x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
-			y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
-			z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
+        	// Get altitude and acceleration values and update the PWMvalue
+        	I2C_updateAccel();
+			I2C_updateAltitude();
+        	PWM_updateServo();
 
 #if LED_SHOW_ACCEL
 			if(x > 3000)
@@ -1918,30 +2204,28 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 #if LED_SHOW_SPEED
         	if(bikeValues.bikeSpeed > 60)
 			{
-				GPIO_WritePinOutput(GPIOA, 17U, 1);
-				GPIO_WritePinOutput(GPIOA, 18U, 1);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
 			}
 			else if(bikeValues.bikeSpeed > 40)
 			{
 				//rot leuchten lassen
-				GPIO_WritePinOutput(GPIOA, 17U, 0);
-				GPIO_WritePinOutput(GPIOA, 18U, 1);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 1);
 			}
 			else if(bikeValues.bikeSpeed > 20)
 			{
 				// grün leuchten lassen
-				GPIO_WritePinOutput(GPIOA, 17U, 1);
-				GPIO_WritePinOutput(GPIOA, 18U, 0);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 1);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
 			}
 			else if(bikeValues.bikeSpeed > 0)
 			{
-				// GPIO = LOW -> 2 Rot/grün
-				GPIO_WritePinOutput(GPIOA, 17U, 0);
-				GPIO_WritePinOutput(GPIOA, 18U, 0);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_GPIO_PIN, 0);
+				GPIO_WritePinOutput(BOARD_INITPINS_LED_GREEN_GPIO, BOARD_INITPINS_LED_GREEN_GPIO_PIN, 0);
 			}
 #endif
             // PRESENTATION FINISHED
-
             break;
         }
         case gAppGattClientProcedureMsg_c:

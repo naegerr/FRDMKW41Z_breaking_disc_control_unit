@@ -23,6 +23,9 @@
                <pin_label pin_num="5" pin_signal="TSI0_CH11/PTA17/LLWU_P5/RF_RESET/SPI1_SIN/TPM_CLKIN1" label="LED_GREEN" identifier="LED_GREEN"/>
                <pin_label pin_num="6" pin_signal="TSI0_CH12/PTA18/LLWU_P6/SPI1_SCK/TPM2_CH0" label="LED_RED" identifier="LED_RED"/>
                <pin_label pin_num="7" pin_signal="TSI0_CH13/ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/TPM2_CH1" label="BUTTON_2" identifier="BUTTON_2"/>
+               <pin_label pin_num="16" pin_signal="PTB0/LLWU_P8/XTAL_OUT_EN/I2C0_SCL/CMP0_OUT/TPM0_CH1/CLKOUT" label="I2C0_SCL"/>
+               <pin_label pin_num="37" pin_signal="PTC1/ANT_B/I2C0_SDA/UART0_RTS_b/TPM0_CH2/BLE_RF_ACTIVE" label="I2C0_SDA"/>
+               <pin_label pin_num="17" pin_signal="ADC0_SE1/CMP0_IN5/PTB1/DTM_RX/I2C0_SDA/LPTMR0_ALT1/TPM0_CH2/CMT_IRO" label="I2C0_SDA"/>
             </pin_labels>
          </pins_profile>
          <functions_list>
@@ -95,6 +98,38 @@
                   <pin peripheral="GPIOA" signal="GPIO, 18" pin_num="6" pin_signal="TSI0_CH12/PTA18/LLWU_P6/SPI1_SCK/TPM2_CH0">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+               </pins>
+            </function>
+            <function name="BOARD_I2C_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.&amp;lt;br/&amp;gt;</description>
+               <options>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins.BOARD_I2C_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins.BOARD_I2C_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="I2C0" signal="CLK" pin_num="16" pin_signal="PTB0/LLWU_P8/XTAL_OUT_EN/I2C0_SCL/CMP0_OUT/TPM0_CH1/CLKOUT">
+                     <pin_features>
+                        <pin_feature name="pull_select" value="no_init"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="I2C0" signal="SDA" pin_num="17" pin_signal="ADC0_SE1/CMP0_IN5/PTB1/DTM_RX/I2C0_SDA/LPTMR0_ALT1/TPM0_CH2/CMT_IRO">
+                     <pin_features>
+                        <pin_feature name="slew_rate" value="fast"/>
+                        <pin_feature name="pull_select" value="no_init"/>
                      </pin_features>
                   </pin>
                </pins>
