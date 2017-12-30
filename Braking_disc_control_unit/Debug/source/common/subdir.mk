@@ -9,6 +9,7 @@ C_SRCS += \
 ../source/common/ApplMain.c \
 ../source/common/GPIO_Adapter_Board.c \
 ../source/common/PWM_Servo.c \
+../source/common/ble_Message_Handle.c \
 ../source/common/ble_conn_manager.c \
 ../source/common/ble_controller_task.c \
 ../source/common/ble_host_tasks.c \
@@ -20,6 +21,7 @@ OBJS += \
 ./source/common/ApplMain.o \
 ./source/common/GPIO_Adapter_Board.o \
 ./source/common/PWM_Servo.o \
+./source/common/ble_Message_Handle.o \
 ./source/common/ble_conn_manager.o \
 ./source/common/ble_controller_task.o \
 ./source/common/ble_host_tasks.o \
@@ -31,6 +33,7 @@ C_DEPS += \
 ./source/common/ApplMain.d \
 ./source/common/GPIO_Adapter_Board.d \
 ./source/common/PWM_Servo.d \
+./source/common/ble_Message_Handle.d \
 ./source/common/ble_conn_manager.d \
 ./source/common/ble_controller_task.d \
 ./source/common/ble_host_tasks.d \
