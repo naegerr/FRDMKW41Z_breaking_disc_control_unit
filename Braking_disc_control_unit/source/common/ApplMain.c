@@ -417,7 +417,6 @@ void main_task(uint32_t param)
         InitADC();
         InitPIT();
 #endif
-
         RNG_Init();   
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[0])));
         RNG_GetRandomNo((uint32_t*)(&(pseudoRNGSeed[4])));

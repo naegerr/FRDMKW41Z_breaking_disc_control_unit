@@ -6,30 +6,30 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="readBuff" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="readBuff"/>
-			<item value="who_am_i_reg"/>
-			<item value="MMA8452_WHOAMI"/>
-			<item value="FXOS8700_WHOAMI"/>
-			<item value="kPORT_PullUp"/>
-			<item value="I2C_RELEASE_SCL_PORT"/>
-			<item value="I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &amp;g_m_handle, i2c_master_callback, NULL);"/>
+			<item value="offset"/>
+			<item value="GREEN"/>
+			<item value="get"/>
+			<item value="counter"/>
 			<item value="i2c_master_callback"/>
+			<item value=" static "/>
+			<item value="pwmValue"/>
+			<item value="pwmChannel"/>
 		</list>
 		<list key="replacehistory">
-			<item value="accel_ctrl_reg1"/>
-			<item value="accel_xyz_data_cfg"/>
-			<item value="PIT_ADC_HANDLER"/>
-			<item value="ADC16_IRQn"/>
-			<item value="ADC16_IRQ_HANDLER_FUNC"/>
-			<item value="ACCU_ADC16_USER_CHANNEL"/>
-			<item value="ACCU_ADC16_CHANNEL_GROUP"/>
-			<item value="ACCU_ADC16_BASEADDR"/>
+			<item value="I2C_getAltitude"/>
+			<item value="I2C_getAccel"/>
+			<item value="I2C_updateAltitude"/>
+			<item value="I2C_updateAccel()"/>
+			<item value="slave_address"/>
+			<item value="I2C_WriteRegister"/>
+			<item value="I2C_ReadRegister"/>
+			<item value="slave_I2C_addr_found"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

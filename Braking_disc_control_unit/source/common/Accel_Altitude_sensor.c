@@ -361,6 +361,7 @@ static void i2c_master_callback(I2C_Type *base, i2c_master_handle_t *handle, sta
  	/*  Multiple-byte Read from STATUS (0x00) register */
  	I2C_ReadRegister(BOARD_I2C_BASEADDR, slave_address[0], accel_state, readBuffAccel, 7);
  	//status0_value = readBuff[0];
+ 	// Divide by 4 because of further calculation to not dedrease the amount of bytes
  	acceleration.x = ((int16_t)(((readBuffAccel[1] * 256U) | readBuffAccel[2]))) / 4U;
  	acceleration.y = ((int16_t)(((readBuffAccel[3] * 256U) | readBuffAccel[4]))) / 4U;
  	acceleration.z = ((int16_t)(((readBuffAccel[5] * 256U) | readBuffAccel[6]))) / 4U;
@@ -390,7 +391,7 @@ static void i2c_master_callback(I2C_Type *base, i2c_master_handle_t *handle, sta
  	altitude.altitudeInteger = ((int16_t)(((readBuffAltitude[1] * 256U) | readBuffAltitude[2])));
  	altitude.altitudeFraction = readBuffAltitude[3] & 0xF0U;
 
- 	/* Clear OST-Bit again, because auto-clear is not avaible */
+ 	/* Clear OST-Bit again, because auto-clear is not available */
  	/* To initiate another measurement -> set OST Bit = 1 */
  	I2C_WriteRegister(BOARD_I2C_BASEADDR, slave_address[1], altitude_ctrl_reg1, 0x81U);
  	return altitude;
