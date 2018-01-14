@@ -58,14 +58,10 @@ void InitServoPWM(void)
 ********************************************************************************** */
 void PWM_updateServo(uint16_t bikeSpeed)
 {
-	updatedDutycycle = 13U - bikeSpeed / 7U; // updatedDutycycle = bikeSpeed / 5U + 3U;
-	updatedDutycycle = 10U - bikeSpeed / 15U;	// adapted to mechanical prototype
-	if(updatedDutycycle > 2 && updatedDutycycle < 14) // Limits of Servo
+	updatedDutycycle = bikeSpeed / 5U + 3U;
+	if(updatedDutycycle > 2 && updatedDutycycle < 14)
 	{
-		if(updatedDutycycle > 5 && updatedDutycycle < 11) // Limits of mechanical prototype
-		{
-			TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
-		}
+		TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
 	}
 }
 

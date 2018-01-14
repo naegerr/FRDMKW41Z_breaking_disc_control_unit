@@ -452,9 +452,6 @@ void main_task(uint32_t param)
 //        Led3Flashing();
 //        Led4Flashing();
 //#endif
-        uint16_t	pwmValue = 0;
-        PWM_updateServo(1);
-
        
         /* Initialize peripheral drivers specific to the application */
         //BleApp_Init();		// Second Init from ADC
