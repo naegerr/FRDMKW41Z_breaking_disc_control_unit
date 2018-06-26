@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="Update" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="update"/>
+			<item value="tpm_chnl_pwm_signal_param_t"/>
+			<item value="TPM_SetupPwm()"/>
 			<item value="offset"/>
 			<item value="GREEN"/>
 			<item value="get"/>
 			<item value="counter"/>
 			<item value="i2c_master_callback"/>
-			<item value=" static "/>
-			<item value="pwmValue"/>
-			<item value="pwmChannel"/>
 		</list>
 		<list key="replacehistory">
 			<item value="I2C_getAltitude"/>
