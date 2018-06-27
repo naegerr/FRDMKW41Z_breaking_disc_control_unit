@@ -15,11 +15,14 @@
 
 // Source clock for TPM driver
 #define TPM_SOURCE_CLOCK 		CLOCK_GetFreq(kCLOCK_McgFllClk)
+#define SERVO_LIMIT_UPPER		415U	// Endanschlag Servo auf Basis MOD 3275
+#define SERVO_LIMIT_LOWER		65U		// Endanschlag Servo auf Basis MOD 3275
+#define SPEED_RANGE				84U		// 84 entspricht 35 km/h
 
 uint8_t 	pwmInstance;
 uint8_t 	pwmChannel;
 uint16_t	pwmValue;
-uint8_t 	updatedDutycycle;
+uint16_t 	updatedDutycycle;
 
 tpm_config_t tpmInfo;
 tpm_chnl_pwm_signal_param_t	tpmParam;
@@ -58,15 +61,89 @@ void InitServoPWM(void)
 ********************************************************************************** */
 void PWM_updateServo(uint16_t bikeSpeed)
 {
-	updatedDutycycle = 13U - bikeSpeed / 7U; // updatedDutycycle = bikeSpeed / 5U + 3U;
-	updatedDutycycle = 10U - bikeSpeed / 15U;	// adapted to mechanical prototype
-	if(updatedDutycycle > 2 && updatedDutycycle < 14) // Limits of Servo
+	//updatedDutycycle = 13U - bikeSpeed / 7U; // updatedDutycycle = bikeSpeed / 5U + 3U;
+	//updatedDutycycle = 10U - bikeSpeed / 15U;	// adapted to mechanical prototype
+	updatedDutycycle = (327U - 197U)/(99U - 0U)*bikeSpeed + 197U;
+	updatedDutycycle = (SERVO_LIMIT_UPPER - SERVO_LIMIT_LOWER)/(SPEED_RANGE)*bikeSpeed + SERVO_LIMIT_LOWER;
+
+	// for figuring out mechanical Limits...
+/*	 for(uint16_t pwmvalue = 0; pwmvalue < 1000U; pwmvalue++)
 	{
-		if(updatedDutycycle > 5 && updatedDutycycle < 11) // Limits of mechanical prototype
-		{
-			TPM_UpdatePwmDutycycle(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
-		}
+		TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, pwmvalue);
+
 	}
+*/
+	//if(updatedDutycycle > 65U && updatedDutycycle < 311U) // Limits of Servo
+
+		//if(updatedDutycycle > 196 && updatedDutycycle < 328) // Limits of mechanical prototype
+		{
+			// Update with resolution
+			TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+		}
+
 }
 
+/*! *********************************************************************************
+* \brief  PWM_updatePWM
+* \remarks	This function calculates the PWM dutycycle with a higher resolution as
+* the given function TPM_UpdatePwmCutycycle from Freescale
+* It is required to have a smoother braking effect of the mechanical prototype.
+* The code is basically copied from the freescale library function TPM_Update PwmDutycycle
+* but the cnv value calculation was adapted.
+********************************************************************************** */
+
+void TPM_updatePWM(TPM_Type *base,
+                   tpm_chnl_t chnlNumber,
+                   tpm_pwm_mode_t currentPwmMode,
+                   uint16_t dutycycle)
+{
+	#if 1
+    assert(chnlNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base));
+#if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
+    if(currentPwmMode == kTPM_CombinedPwm)
+    {
+        assert(FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
+    }
+#endif
+
+    uint16_t cnv, mod;
+
+    mod = base->MOD;
+#if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
+    if (currentPwmMode == kTPM_CombinedPwm)
+    {
+        uint16_t cnvFirstEdge;
+
+        /* This check is added for combined mode as the channel number should be the pair number */
+        if (chnlNumber >= (FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2))
+        {
+            return;
+        }
+
+        cnv = (mod * dutycycle) / 3275U;
+        cnv = dutycycle;
+        cnvFirstEdge = base->CONTROLS[chnlNumber * 2].CnV;
+        /* For 100% duty cycle */
+        if (cnv >= mod)
+        {
+            cnv = mod + 1;
+        }
+        base->CONTROLS[(chnlNumber * 2) + 1].CnV = cnvFirstEdge + cnv;
+    }
+    else
+    {
+#endif
+        cnv = (mod * dutycycle) / 3275U;
+        cnv = dutycycle;
+        /* For 100% duty cycle */
+        if (cnv >= mod)
+        {
+            cnv = mod + 1;
+        }
+        base->CONTROLS[chnlNumber].CnV = cnv;
+#if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
+    }
+#endif
+#endif
+}
 

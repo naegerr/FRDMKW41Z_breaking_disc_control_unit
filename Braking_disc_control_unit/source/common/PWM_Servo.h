@@ -23,5 +23,6 @@ void InitServoPWM(void);
 * In future, update should be made using the power value.
 ********************************************************************************** */
 void PWM_updateServo(uint16_t bikeSpeed);
+//void TPM_updatePWM(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_pwm_mode_t currentPwmMode, uint16_t dutycycle);
 
 #endif /* COMMON_PWM_SERVO_H_ */

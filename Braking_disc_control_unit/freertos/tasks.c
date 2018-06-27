@@ -3342,8 +3342,7 @@ static void prvInitialiseTaskLists( void )
 UBaseType_t uxPriority;
 
 	for( uxPriority = ( UBaseType_t ) 0U; uxPriority < ( UBaseType_t ) configMAX_PRIORITIES; uxPriority++ )
-	{
-		vListInitialise( &( pxReadyTasksLists[ uxPriority ] ) );
+	{		vListInitialise( &( pxReadyTasksLists[ uxPriority ] ) );
 	}
 
 	vListInitialise( &xDelayedTaskList1 );

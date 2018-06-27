@@ -413,6 +413,8 @@ void main_task(uint32_t param)
         // Initialization for peripherals
         InitServoPWM();
 
+
+
 #if BAT_MEASUREMENT_ENABLE
         InitADC();
         InitPIT();
