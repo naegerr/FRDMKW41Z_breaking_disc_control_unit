@@ -223,73 +223,7 @@
 						<entry kind="includePath" name="/${ProjName}/CMSIS">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/FunctionLib">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/Messaging/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/NVM/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/NVM/Source">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SecLib">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/XCVR/MKW41Z4">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/MemManager/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/board">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/common">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/device_info">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/LED/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/GPIO">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/ModuleInfo">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SerialManager/Source/UART_Adapter">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/battery">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/Panic/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SerialManager/Source/I2C_Adapter">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/heart_rate">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SerialManager/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/controller/interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/host/interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+						<entry kind="includePath" name="/${ProjName}/Debug">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -304,9 +238,6 @@
 						<entry kind="macro" name="__MCUXPRESSO" value=""/>
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value=""/>
-						<entry kind="macroFile" name="/${ProjName}/source/app_preinclude.h">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
 					</resource>
 					<resource project-relative-path="framework/Lists/GenericList.c">
 						<entry kind="includePath" name="/${ProjName}/source">
@@ -11015,73 +10946,7 @@
 						<entry kind="includePath" name="/${ProjName}/CMSIS">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/FunctionLib">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/Messaging/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/NVM/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/NVM/Source">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SecLib">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/XCVR/MKW41Z4">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/MemManager/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/board">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/common">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/device_info">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/LED/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/GPIO">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/ModuleInfo">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SerialManager/Source/UART_Adapter">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/battery">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/Panic/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SerialManager/Source/I2C_Adapter">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/heart_rate">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/framework/SerialManager/Interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/controller/interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/host/interface">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/host/config">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
-						<entry kind="includePath" name="/${ProjName}/bluetooth/profiles/bike_simulator">
+						<entry kind="includePath" name="/${ProjName}/Debug">
 							<flag value="VALUE_WORKSPACE_PATH"/>
 						</entry>
 						<entry kind="macro" name="CPU_MKW41Z512VHT4" value=""/>
@@ -11096,9 +10961,6 @@
 						<entry kind="macro" name="__MCUXPRESSO" value=""/>
 						<entry kind="macro" name="__REDLIB__" value=""/>
 						<entry kind="macro" name="__USE_CMSIS" value=""/>
-						<entry kind="macroFile" name="/${ProjName}/source/app_preinclude.h">
-							<flag value="VALUE_WORKSPACE_PATH"/>
-						</entry>
 					</resource>
 					<resource project-relative-path="drivers/fsl_tpm.c">
 						<entry kind="includePath" name="/${ProjName}/source">

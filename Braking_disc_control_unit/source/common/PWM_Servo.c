@@ -17,7 +17,11 @@
 #define TPM_SOURCE_CLOCK 		CLOCK_GetFreq(kCLOCK_McgFllClk)
 #define SERVO_LIMIT_UPPER		415U	// Endanschlag Servo auf Basis MOD 3275
 #define SERVO_LIMIT_LOWER		65U		// Endanschlag Servo auf Basis MOD 3275
-#define SPEED_RANGE				84U		// 84 entspricht 35 km/h
+#define SPEED_RANGE				84U		// 84 entspricht 30 km/h
+
+// Wurden durch ausprobieren ermittelt
+#define SERVO_LIMIT_UPPER_MECH_PROTOTYPE		(298U+65U)	// Endanschlag Servo bei Einbau mech. Prototype Basis MOD 3275
+#define SERVO_LIMIT_LOWER_MECH_PROTOTYPE		(176U+20U)	// Endanschlag Servo bei Einbau mech. Prototype Basis MOD 3275
 
 uint8_t 	pwmInstance;
 uint8_t 	pwmChannel;
@@ -39,7 +43,7 @@ void InitServoPWM(void)
 	// Init von PWM
 	CLOCK_SetTpmClock(1U);
 	pwmLevel = kTPM_LowTrue;
-	updatedDutycycle = 5;
+	updatedDutycycle = 6U;
 
 	tpmParam.chnlNumber = (tpm_chnl_t) SERVO_TPM_CHANNEL;
 	tpmParam.level= pwmLevel;
@@ -53,36 +57,6 @@ void InitServoPWM(void)
 	TPM_StartTimer(SERVO_TPM_BASEADDR, kTPM_SystemClock);
 	TPM_UpdateChnlEdgeLevelSelect(SERVO_TPM_BASEADDR, SERVO_TPM_CHANNEL, kTPM_HighTrue);
 }
-
-/*! *********************************************************************************
-* \brief  PWM_updateServo
-* \remarks	The PWM of the Servo is updated and send to peripherie according to new bikespeed.
-* In future, update should be made using the power value.
-********************************************************************************** */
-void PWM_updateServo(uint16_t bikeSpeed)
-{
-	//updatedDutycycle = 13U - bikeSpeed / 7U; // updatedDutycycle = bikeSpeed / 5U + 3U;
-	//updatedDutycycle = 10U - bikeSpeed / 15U;	// adapted to mechanical prototype
-	updatedDutycycle = (327U - 197U)/(99U - 0U)*bikeSpeed + 197U;
-	updatedDutycycle = (SERVO_LIMIT_UPPER - SERVO_LIMIT_LOWER)/(SPEED_RANGE)*bikeSpeed + SERVO_LIMIT_LOWER;
-
-	// for figuring out mechanical Limits...
-/*	 for(uint16_t pwmvalue = 0; pwmvalue < 1000U; pwmvalue++)
-	{
-		TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, pwmvalue);
-
-	}
-*/
-	//if(updatedDutycycle > 65U && updatedDutycycle < 311U) // Limits of Servo
-
-		//if(updatedDutycycle > 196 && updatedDutycycle < 328) // Limits of mechanical prototype
-		{
-			// Update with resolution
-			TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
-		}
-
-}
-
 /*! *********************************************************************************
 * \brief  PWM_updatePWM
 * \remarks	This function calculates the PWM dutycycle with a higher resolution as
@@ -146,4 +120,41 @@ void TPM_updatePWM(TPM_Type *base,
 #endif
 #endif
 }
+
+/*! *********************************************************************************
+* \brief  PWM_updateServo
+* \remarks	The PWM of the Servo is updated and send to peripherie according to new bikespeed.
+* In future, update should be made using the power value.
+********************************************************************************** */
+void PWM_updateServo(uint16_t bikeSpeed)
+{
+	//updatedDutycycle = 13U - bikeSpeed / 7U; // updatedDutycycle = bikeSpeed / 5U + 3U;
+	//updatedDutycycle = 10U - bikeSpeed / 15U;	// adapted to mechanical prototype
+	//updatedDutycycle = (327U - 197U)/(99U - 0U)*bikeSpeed + 197U;
+	//updatedDutycycle = (SERVO_LIMIT_UPPER - SERVO_LIMIT_LOWER)/(SPEED_RANGE)*bikeSpeed + SERVO_LIMIT_LOWER;
+
+	updatedDutycycle = (SERVO_LIMIT_UPPER_MECH_PROTOTYPE - SERVO_LIMIT_LOWER_MECH_PROTOTYPE)/(SPEED_RANGE)*bikeSpeed + SERVO_LIMIT_LOWER_MECH_PROTOTYPE;
+
+	if(bikeSpeed >= 75U)
+	{
+		//TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+	}
+	// for figuring out mechanical Limits...
+/*	for(uint16_t pwmvalue = (SERVO_LIMIT_LOWER_MECH_PROTOTYPE); pwmvalue < SERVO_LIMIT_UPPER_MECH_PROTOTYPE; pwmvalue++)
+	{
+		TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, pwmvalue);
+
+	}
+*/
+	//if(updatedDutycycle > 65U && updatedDutycycle < 311U) // Limits of Servo
+
+		if(updatedDutycycle >= SERVO_LIMIT_LOWER_MECH_PROTOTYPE && updatedDutycycle <= SERVO_LIMIT_UPPER_MECH_PROTOTYPE) // Limits of mechanical prototype
+		{
+			// Update with resolution
+			TPM_updatePWM(SERVO_TPM_BASEADDR, (tpm_chnl_t)SERVO_TPM_CHANNEL, kTPM_EdgeAlignedPwm, updatedDutycycle);
+		}
+
+}
+
+
 

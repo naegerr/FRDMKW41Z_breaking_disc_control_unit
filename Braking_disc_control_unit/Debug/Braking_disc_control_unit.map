@@ -3237,7 +3237,7 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
  .FlashConfig   0x00000400       0x10 ./startup/startup_MKW41Z4.o
                 0x00000410                . = ALIGN (0x4)
 
-.text           0x00000420    0x3062c
+.text           0x00000420    0x30624
                 0x00000420                . = ALIGN (0x4)
  *(.text)
  .text          0x00000420       0x60 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
@@ -4937,131 +4937,131 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
  .text.InitServoPWM
                 0x0001d268       0x9c ./source/common/PWM_Servo.o
                 0x0001d268                InitServoPWM
- .text.PWM_updateServo
-                0x0001d304       0x48 ./source/common/PWM_Servo.o
-                0x0001d304                PWM_updateServo
  .text.TPM_updatePWM
-                0x0001d34c      0x1b0 ./source/common/PWM_Servo.o
-                0x0001d34c                TPM_updatePWM
+                0x0001d304      0x1b0 ./source/common/PWM_Servo.o
+                0x0001d304                TPM_updatePWM
+ .text.PWM_updateServo
+                0x0001d4b4       0x4c ./source/common/PWM_Servo.o
+                0x0001d4b4                PWM_updateServo
  .text.isUnicodeNumber
-                0x0001d4fc       0x2c ./source/common/ble_Message_Handle.o
-                0x0001d4fc                isUnicodeNumber
- .text.n_pow    0x0001d528       0x6c ./source/common/ble_Message_Handle.o
-                0x0001d528                n_pow
+                0x0001d500       0x2c ./source/common/ble_Message_Handle.o
+                0x0001d500                isUnicodeNumber
+ .text.n_pow    0x0001d52c       0x6c ./source/common/ble_Message_Handle.o
+                0x0001d52c                n_pow
  .text.parseBikeMsg
-                0x0001d594      0x340 ./source/common/ble_Message_Handle.o
-                0x0001d594                parseBikeMsg
+                0x0001d598      0x340 ./source/common/ble_Message_Handle.o
+                0x0001d598                parseBikeMsg
  .text.BleConnManager_GenericEvent
-                0x0001d8d4       0x4c ./source/common/ble_conn_manager.o
-                0x0001d8d4                BleConnManager_GenericEvent
+                0x0001d8d8       0x4c ./source/common/ble_conn_manager.o
+                0x0001d8d8                BleConnManager_GenericEvent
  .text.BleConnManager_GapPeripheralConfig
-                0x0001d920       0x24 ./source/common/ble_conn_manager.o
-                0x0001d920                BleConnManager_GapPeripheralConfig
+                0x0001d924       0x24 ./source/common/ble_conn_manager.o
+                0x0001d924                BleConnManager_GapPeripheralConfig
  .text.BleConnManager_GapPeripheralEvent
-                0x0001d944       0x54 ./source/common/ble_conn_manager.o
-                0x0001d944                BleConnManager_GapPeripheralEvent
+                0x0001d948       0x54 ./source/common/ble_conn_manager.o
+                0x0001d948                BleConnManager_GapPeripheralEvent
  .text.BleConnManager_GapCommonConfig
-                0x0001d998       0x10 ./source/common/ble_conn_manager.o
+                0x0001d99c       0x10 ./source/common/ble_conn_manager.o
  .text.BleConnManager_MCUInfoToSmpKeys
-                0x0001d9a8      0x11c ./source/common/ble_conn_manager.o
+                0x0001d9ac      0x11c ./source/common/ble_conn_manager.o
  .text.NVIC_EnableIRQ
-                0x0001dac4       0x2c ./source/common/ble_controller_task.o
+                0x0001dac8       0x2c ./source/common/ble_controller_task.o
  .text.NVIC_ClearPendingIRQ
-                0x0001daf0       0x30 ./source/common/ble_controller_task.o
+                0x0001daf4       0x30 ./source/common/ble_controller_task.o
  .text.NVIC_SetPriority
-                0x0001db20       0xdc ./source/common/ble_controller_task.o
+                0x0001db24       0xdc ./source/common/ble_controller_task.o
  .text.ControllerTask
-                0x0001dbfc       0x18 ./source/common/ble_controller_task.o
+                0x0001dc00       0x18 ./source/common/ble_controller_task.o
  .text.Controller_TaskInit
-                0x0001dc14       0xac ./source/common/ble_controller_task.o
-                0x0001dc14                Controller_TaskInit
+                0x0001dc18       0xac ./source/common/ble_controller_task.o
+                0x0001dc18                Controller_TaskInit
  .text.Ble_HostTaskInit
-                0x0001dcc0       0x80 ./source/common/ble_host_tasks.o
-                0x0001dcc0                Ble_HostTaskInit
+                0x0001dcc4       0x80 ./source/common/ble_host_tasks.o
+                0x0001dcc4                Ble_HostTaskInit
  .text.Host_Task
-                0x0001dd40       0x18 ./source/common/ble_host_tasks.o
+                0x0001dd44       0x18 ./source/common/ble_host_tasks.o
  .text.Ble_Initialize
-                0x0001dd58       0x94 ./source/common/ble_init.o
-                0x0001dd58                Ble_Initialize
+                0x0001dd5c       0x94 ./source/common/ble_init.o
+                0x0001dd5c                Ble_Initialize
  .text.BleApp_Start
-                0x0001ddec       0x2c ./source/heart_rate_sensor.o
-                0x0001ddec                BleApp_Start
+                0x0001ddf0       0x2c ./source/heart_rate_sensor.o
+                0x0001ddf0                BleApp_Start
  .text.BleApp_HandleKeys
-                0x0001de18       0x94 ./source/heart_rate_sensor.o
-                0x0001de18                BleApp_HandleKeys
+                0x0001de1c       0x94 ./source/heart_rate_sensor.o
+                0x0001de1c                BleApp_HandleKeys
  .text.BleApp_GenericCallback
-                0x0001deac       0x44 ./source/heart_rate_sensor.o
-                0x0001deac                BleApp_GenericCallback
+                0x0001deb0       0x44 ./source/heart_rate_sensor.o
+                0x0001deb0                BleApp_GenericCallback
  .text.BleApp_Config
-                0x0001def0       0xd0 ./source/heart_rate_sensor.o
+                0x0001def4       0xd0 ./source/heart_rate_sensor.o
  .text.BleApp_Advertise
-                0x0001dfc0       0x68 ./source/heart_rate_sensor.o
+                0x0001dfc4       0x68 ./source/heart_rate_sensor.o
  .text.BleApp_AdvertisingCallback
-                0x0001e028       0xac ./source/heart_rate_sensor.o
+                0x0001e02c       0xac ./source/heart_rate_sensor.o
  .text.BleApp_ConnectionCallback
-                0x0001e0d4      0x120 ./source/heart_rate_sensor.o
+                0x0001e0d8      0x120 ./source/heart_rate_sensor.o
  .text.BleApp_GattServerCallback
-                0x0001e1f4       0xec ./source/heart_rate_sensor.o
+                0x0001e1f8       0xec ./source/heart_rate_sensor.o
  .text.AdvertisingTimerCallback
-                0x0001e2e0       0x3c ./source/heart_rate_sensor.o
+                0x0001e2e4       0x3c ./source/heart_rate_sensor.o
  .text.TimerMeasurementCallback
-                0x0001e31c       0xac ./source/heart_rate_sensor.o
+                0x0001e320       0xac ./source/heart_rate_sensor.o
  .text.BatteryMeasurementTimerCallback
-                0x0001e3c8       0x30 ./source/heart_rate_sensor.o
+                0x0001e3cc       0x30 ./source/heart_rate_sensor.o
  .text.xEventGroupCreate
-                0x0001e3f8       0x30 ./freertos/event_groups.o
-                0x0001e3f8                xEventGroupCreate
+                0x0001e3fc       0x30 ./freertos/event_groups.o
+                0x0001e3fc                xEventGroupCreate
  .text.xEventGroupWaitBits
-                0x0001e428      0x148 ./freertos/event_groups.o
-                0x0001e428                xEventGroupWaitBits
+                0x0001e42c      0x148 ./freertos/event_groups.o
+                0x0001e42c                xEventGroupWaitBits
  .text.xEventGroupSetBits
-                0x0001e570       0xf4 ./freertos/event_groups.o
-                0x0001e570                xEventGroupSetBits
+                0x0001e574       0xf4 ./freertos/event_groups.o
+                0x0001e574                xEventGroupSetBits
  .text.vEventGroupSetBitsCallback
-                0x0001e664       0x20 ./freertos/event_groups.o
-                0x0001e664                vEventGroupSetBitsCallback
+                0x0001e668       0x20 ./freertos/event_groups.o
+                0x0001e668                vEventGroupSetBitsCallback
  .text.prvTestWaitCondition
-                0x0001e684       0x40 ./freertos/event_groups.o
+                0x0001e688       0x40 ./freertos/event_groups.o
  .text.xEventGroupSetBitsFromISR
-                0x0001e6c4       0x2c ./freertos/event_groups.o
-                0x0001e6c4                xEventGroupSetBitsFromISR
+                0x0001e6c8       0x2c ./freertos/event_groups.o
+                0x0001e6c8                xEventGroupSetBitsFromISR
  .text.prvSetupTimerInterrupt
-                0x0001e6f0       0x3c ./freertos/fsl_tickless_lptmr.o
-                0x0001e6f0                prvSetupTimerInterrupt
+                0x0001e6f4       0x3c ./freertos/fsl_tickless_lptmr.o
+                0x0001e6f4                prvSetupTimerInterrupt
  .text.pvPortMalloc
-                0x0001e72c      0x14c ./freertos/heap_4.o
-                0x0001e72c                pvPortMalloc
+                0x0001e730      0x14c ./freertos/heap_4.o
+                0x0001e730                pvPortMalloc
  .text.vPortFree
-                0x0001e878       0x90 ./freertos/heap_4.o
-                0x0001e878                vPortFree
+                0x0001e87c       0x90 ./freertos/heap_4.o
+                0x0001e87c                vPortFree
  .text.prvHeapInit
-                0x0001e908       0xc0 ./freertos/heap_4.o
+                0x0001e90c       0xc0 ./freertos/heap_4.o
  .text.prvInsertBlockIntoFreeList
-                0x0001e9c8       0xb0 ./freertos/heap_4.o
+                0x0001e9cc       0xb0 ./freertos/heap_4.o
  .text.vListInitialise
-                0x0001ea78       0x3c ./freertos/list.o
-                0x0001ea78                vListInitialise
+                0x0001ea7c       0x3c ./freertos/list.o
+                0x0001ea7c                vListInitialise
  .text.vListInitialiseItem
-                0x0001eab4       0x18 ./freertos/list.o
-                0x0001eab4                vListInitialiseItem
+                0x0001eab8       0x18 ./freertos/list.o
+                0x0001eab8                vListInitialiseItem
  .text.vListInsertEnd
-                0x0001eacc       0x44 ./freertos/list.o
-                0x0001eacc                vListInsertEnd
+                0x0001ead0       0x44 ./freertos/list.o
+                0x0001ead0                vListInsertEnd
  .text.vListInsert
-                0x0001eb10       0x6c ./freertos/list.o
-                0x0001eb10                vListInsert
+                0x0001eb14       0x6c ./freertos/list.o
+                0x0001eb14                vListInsert
  .text.uxListRemove
-                0x0001eb7c       0x50 ./freertos/list.o
-                0x0001eb7c                uxListRemove
+                0x0001eb80       0x50 ./freertos/list.o
+                0x0001eb80                uxListRemove
  .text.pxPortInitialiseStack
-                0x0001ebcc       0x54 ./freertos/port.o
-                0x0001ebcc                pxPortInitialiseStack
+                0x0001ebd0       0x54 ./freertos/port.o
+                0x0001ebd0                pxPortInitialiseStack
  .text.prvTaskExitError
-                0x0001ec20       0x18 ./freertos/port.o
+                0x0001ec24       0x18 ./freertos/port.o
  .text.SVC_Handler
-                0x0001ec38        0xc ./freertos/port.o
-                0x0001ec38                SVC_Handler
- *fill*         0x0001ec44        0xc 
+                0x0001ec3c        0xc ./freertos/port.o
+                0x0001ec3c                SVC_Handler
+ *fill*         0x0001ec48        0x8 
  .text.vPortStartFirstTask
                 0x0001ec50       0x38 ./freertos/port.o
  .text.xPortStartScheduler
@@ -6299,387 +6299,386 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
  .rodata        0x0002de88       0x83 ./source/common/Accel_Altitude_sensor.o
  *fill*         0x0002df0b        0x1 
  .rodata        0x0002df0c       0x98 ./source/common/Accu_monitor.o
- .rodata        0x0002dfa4       0xa5 ./source/common/PWM_Servo.o
- *fill*         0x0002e049        0x3 
- .rodata        0x0002e04c        0xf ./source/common/ble_controller_task.o
- *fill*         0x0002e05b        0x1 
- .rodata        0x0002e05c        0xa ./source/common/ble_host_tasks.o
- *fill*         0x0002e066        0x2 
- .rodata        0x0002e068        0x8 ./source/app_config.o
- .rodata        0x0002e070       0x18 ./freertos/tasks.o
-                0x0002e078                FreeRTOSDebugConfig
- .rodata        0x0002e088        0xd ./freertos/timers.o
- *fill*         0x0002e095        0x3 
- .rodata        0x0002e098       0x18 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
- .rodata        0x0002e0b0        0xe ./framework/TimersManager/Source/TimersManager.o
- *fill*         0x0002e0be        0x2 
- .rodata        0x0002e0c0        0xd ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
- *fill*         0x0002e0cd        0x3 
- .rodata        0x0002e0d0       0x1e ./framework/ModuleInfo/ModuleInfo.o
- *fill*         0x0002e0ee        0x2 
- .rodata        0x0002e0f0       0x83 ./framework/GPIO/GPIO_Adapter.o
- *fill*         0x0002e173        0x1 
- .rodata        0x0002e174       0x98 ./framework/DCDC/Source/DCDC.o
- .rodata        0x0002e20c      0x13a ./drivers/fsl_adc16.o
- *fill*         0x0002e346        0x2 
- .rodata        0x0002e348       0xd9 ./drivers/fsl_clock.o
- *fill*         0x0002e421        0x3 
- .rodata        0x0002e424      0x46d ./drivers/fsl_dspi.o
- *fill*         0x0002e891        0x3 
- .rodata        0x0002e894       0xc7 ./drivers/fsl_gpio.o
- *fill*         0x0002e95b        0x1 
- .rodata        0x0002e95c      0x2f6 ./drivers/fsl_i2c.o
- *fill*         0x0002ec52        0x2 
- .rodata        0x0002ec54       0x5d ./drivers/fsl_pit.o
- *fill*         0x0002ecb1        0x3 
- .rodata        0x0002ecb4      0x473 ./drivers/fsl_tpm.o
- *fill*         0x0002f127        0x1 
- .rodata        0x0002f128       0x40 ./drivers/fsl_trng.o
- .rodata        0x0002f168       0x98 ./board/board.o
- .rodata        0x0002f200       0x80 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(divsf3.o)
- .rodata        0x0002f280       0x40 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(mulsf3.o)
- .rodata        0x0002f2c0       0x10 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(host_version.o)
- .rodata        0x0002f2d0        0xc C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(sm_states.o)
- .rodata        0x0002f2dc        0x4 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_crypto_m0.a(ecdh.o)
-                0x0002f2dc                gEcP256_MultiplicationBufferSize_c
- .rodata        0x0002f2e0       0x80 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_crypto_m0.a(ec_p_256.o)
-                0x0002f2e0                P256_g_point_x
-                0x0002f300                P256_g_point_y
-                0x0002f320                P256_orderMinusOne
-                0x0002f340                P256_one
+ .rodata        0x0002dfa4       0xa0 ./source/common/PWM_Servo.o
+ .rodata        0x0002e044        0xf ./source/common/ble_controller_task.o
+ *fill*         0x0002e053        0x1 
+ .rodata        0x0002e054        0xa ./source/common/ble_host_tasks.o
+ *fill*         0x0002e05e        0x2 
+ .rodata        0x0002e060        0x8 ./source/app_config.o
+ .rodata        0x0002e068       0x18 ./freertos/tasks.o
+                0x0002e070                FreeRTOSDebugConfig
+ .rodata        0x0002e080        0xd ./freertos/timers.o
+ *fill*         0x0002e08d        0x3 
+ .rodata        0x0002e090       0x18 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
+ .rodata        0x0002e0a8        0xe ./framework/TimersManager/Source/TimersManager.o
+ *fill*         0x0002e0b6        0x2 
+ .rodata        0x0002e0b8        0xd ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
+ *fill*         0x0002e0c5        0x3 
+ .rodata        0x0002e0c8       0x1e ./framework/ModuleInfo/ModuleInfo.o
+ *fill*         0x0002e0e6        0x2 
+ .rodata        0x0002e0e8       0x83 ./framework/GPIO/GPIO_Adapter.o
+ *fill*         0x0002e16b        0x1 
+ .rodata        0x0002e16c       0x98 ./framework/DCDC/Source/DCDC.o
+ .rodata        0x0002e204      0x13a ./drivers/fsl_adc16.o
+ *fill*         0x0002e33e        0x2 
+ .rodata        0x0002e340       0xd9 ./drivers/fsl_clock.o
+ *fill*         0x0002e419        0x3 
+ .rodata        0x0002e41c      0x46d ./drivers/fsl_dspi.o
+ *fill*         0x0002e889        0x3 
+ .rodata        0x0002e88c       0xc7 ./drivers/fsl_gpio.o
+ *fill*         0x0002e953        0x1 
+ .rodata        0x0002e954      0x2f6 ./drivers/fsl_i2c.o
+ *fill*         0x0002ec4a        0x2 
+ .rodata        0x0002ec4c       0x5d ./drivers/fsl_pit.o
+ *fill*         0x0002eca9        0x3 
+ .rodata        0x0002ecac      0x473 ./drivers/fsl_tpm.o
+ *fill*         0x0002f11f        0x1 
+ .rodata        0x0002f120       0x40 ./drivers/fsl_trng.o
+ .rodata        0x0002f160       0x98 ./board/board.o
+ .rodata        0x0002f1f8       0x80 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(divsf3.o)
+ .rodata        0x0002f278       0x40 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(mulsf3.o)
+ .rodata        0x0002f2b8       0x10 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(host_version.o)
+ .rodata        0x0002f2c8        0xc C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(sm_states.o)
+ .rodata        0x0002f2d4        0x4 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_crypto_m0.a(ecdh.o)
+                0x0002f2d4                gEcP256_MultiplicationBufferSize_c
+ .rodata        0x0002f2d8       0x80 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_crypto_m0.a(ec_p_256.o)
+                0x0002f2d8                P256_g_point_x
+                0x0002f2f8                P256_g_point_y
+                0x0002f318                P256_orderMinusOne
+                0x0002f338                P256_one
  *(.rodata*)
  .rodata.slave_address
-                0x0002f360        0x5 ./source/common/Accel_Altitude_sensor.o
-                0x0002f360                slave_address
- *fill*         0x0002f365        0x3 
+                0x0002f358        0x5 ./source/common/Accel_Altitude_sensor.o
+                0x0002f358                slave_address
+ *fill*         0x0002f35d        0x3 
  .rodata.App_HandleHostMessageInput
-                0x0002f368       0x28 ./source/common/ApplMain.o
+                0x0002f360       0x28 ./source/common/ApplMain.o
  .rodata.gRfSysClk26MHz_c
-                0x0002f390        0x1 ./source/common/ble_controller_task.o
-                0x0002f390                gRfSysClk26MHz_c
- *fill*         0x0002f391        0x3 
+                0x0002f388        0x1 ./source/common/ble_controller_task.o
+                0x0002f388                gRfSysClk26MHz_c
+ *fill*         0x0002f389        0x3 
  .rodata.gBDAddress_c
-                0x0002f394        0x6 ./source/common/ble_controller_task.o
-                0x0002f394                gBDAddress_c
+                0x0002f38c        0x6 ./source/common/ble_controller_task.o
+                0x0002f38c                gBDAddress_c
  .rodata.gAdvertisingPacketInterval_c
-                0x0002f39a        0x1 ./source/common/ble_controller_task.o
-                0x0002f39a                gAdvertisingPacketInterval_c
+                0x0002f392        0x1 ./source/common/ble_controller_task.o
+                0x0002f392                gAdvertisingPacketInterval_c
  .rodata.gScanChannelMap_c
-                0x0002f39b        0x1 ./source/common/ble_controller_task.o
-                0x0002f39b                gScanChannelMap_c
+                0x0002f393        0x1 ./source/common/ble_controller_task.o
+                0x0002f393                gScanChannelMap_c
  .rodata.gInitiatorChannelMap_c
-                0x0002f39c        0x1 ./source/common/ble_controller_task.o
-                0x0002f39c                gInitiatorChannelMap_c
- *fill*         0x0002f39d        0x1 
+                0x0002f394        0x1 ./source/common/ble_controller_task.o
+                0x0002f394                gInitiatorChannelMap_c
+ *fill*         0x0002f395        0x1 
  .rodata.gOffsetToFirstInstant_c
-                0x0002f39e        0x2 ./source/common/ble_controller_task.o
-                0x0002f39e                gOffsetToFirstInstant_c
+                0x0002f396        0x2 ./source/common/ble_controller_task.o
+                0x0002f396                gOffsetToFirstInstant_c
  .rodata.adData0
-                0x0002f3a0        0x1 ./source/app_config.o
- *fill*         0x0002f3a1        0x3 
+                0x0002f398        0x1 ./source/app_config.o
+ *fill*         0x0002f399        0x3 
  .rodata.adData1
-                0x0002f3a4        0x2 ./source/app_config.o
- *fill*         0x0002f3a6        0x2 
+                0x0002f39c        0x2 ./source/app_config.o
+ *fill*         0x0002f39e        0x2 
  .rodata.advScanStruct
-                0x0002f3a8       0x18 ./source/app_config.o
+                0x0002f3a0       0x18 ./source/app_config.o
  .rodata.prvProcessReceivedCommands
-                0x0002f3c0       0x28 ./freertos/timers.o
+                0x0002f3b8       0x28 ./freertos/timers.o
  .rodata.ant_mode_config
-                0x0002f3e8       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
-                0x0002f3e8                ant_mode_config
+                0x0002f3e0       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
+                0x0002f3e0                ant_mode_config
  .rodata.xcvr_ANT_1mbps_config
-                0x0002f430       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
-                0x0002f430                xcvr_ANT_1mbps_config
+                0x0002f428       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
+                0x0002f428                xcvr_ANT_1mbps_config
  .rodata.ble_mode_config
-                0x0002f498       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
-                0x0002f498                ble_mode_config
+                0x0002f490       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
+                0x0002f490                ble_mode_config
  .rodata.xcvr_BLE_1mbps_config
-                0x0002f4e0       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
-                0x0002f4e0                xcvr_BLE_1mbps_config
+                0x0002f4d8       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
+                0x0002f4d8                xcvr_BLE_1mbps_config
  .rodata.xcvr_common_config
-                0x0002f548      0x23c ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
-                0x0002f548                xcvr_common_config
+                0x0002f540      0x23c ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
+                0x0002f540                xcvr_common_config
  .rodata.gfsk_bt_0p3_h_0p5_mode_config
-                0x0002f784       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
-                0x0002f784                gfsk_bt_0p3_h_0p5_mode_config
+                0x0002f77c       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+                0x0002f77c                gfsk_bt_0p3_h_0p5_mode_config
  .rodata.xcvr_GFSK_BT_0p3_h_0p5_1mbps_config
-                0x0002f7cc       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
-                0x0002f7cc                xcvr_GFSK_BT_0p3_h_0p5_1mbps_config
+                0x0002f7c4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+                0x0002f7c4                xcvr_GFSK_BT_0p3_h_0p5_1mbps_config
  .rodata.xcvr_GFSK_BT_0p3_h_0p5_500kbps_config
-                0x0002f834       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
-                0x0002f834                xcvr_GFSK_BT_0p3_h_0p5_500kbps_config
+                0x0002f82c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+                0x0002f82c                xcvr_GFSK_BT_0p3_h_0p5_500kbps_config
  .rodata.xcvr_GFSK_BT_0p3_h_0p5_250kbps_config
-                0x0002f89c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
-                0x0002f89c                xcvr_GFSK_BT_0p3_h_0p5_250kbps_config
+                0x0002f894       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+                0x0002f894                xcvr_GFSK_BT_0p3_h_0p5_250kbps_config
  .rodata.gfsk_bt_0p5_h_0p32_mode_config
-                0x0002f904       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
-                0x0002f904                gfsk_bt_0p5_h_0p32_mode_config
+                0x0002f8fc       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+                0x0002f8fc                gfsk_bt_0p5_h_0p32_mode_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p32_1mbps_config
-                0x0002f94c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
-                0x0002f94c                xcvr_GFSK_BT_0p5_h_0p32_1mbps_config
+                0x0002f944       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+                0x0002f944                xcvr_GFSK_BT_0p5_h_0p32_1mbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p32_500kbps_config
-                0x0002f9b4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
-                0x0002f9b4                xcvr_GFSK_BT_0p5_h_0p32_500kbps_config
+                0x0002f9ac       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+                0x0002f9ac                xcvr_GFSK_BT_0p5_h_0p32_500kbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p32_250kbps_config
-                0x0002fa1c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
-                0x0002fa1c                xcvr_GFSK_BT_0p5_h_0p32_250kbps_config
+                0x0002fa14       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+                0x0002fa14                xcvr_GFSK_BT_0p5_h_0p32_250kbps_config
  .rodata.gfsk_bt_0p5_h_0p5_mode_config
-                0x0002fa84       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
-                0x0002fa84                gfsk_bt_0p5_h_0p5_mode_config
+                0x0002fa7c       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+                0x0002fa7c                gfsk_bt_0p5_h_0p5_mode_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p5_1mbps_config
-                0x0002facc       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
-                0x0002facc                xcvr_GFSK_BT_0p5_h_0p5_1mbps_config
+                0x0002fac4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+                0x0002fac4                xcvr_GFSK_BT_0p5_h_0p5_1mbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p5_500kbps_config
-                0x0002fb34       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
-                0x0002fb34                xcvr_GFSK_BT_0p5_h_0p5_500kbps_config
+                0x0002fb2c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+                0x0002fb2c                xcvr_GFSK_BT_0p5_h_0p5_500kbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p5_250kbps_config
-                0x0002fb9c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
-                0x0002fb9c                xcvr_GFSK_BT_0p5_h_0p5_250kbps_config
+                0x0002fb94       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+                0x0002fb94                xcvr_GFSK_BT_0p5_h_0p5_250kbps_config
  .rodata.gfsk_bt_0p5_h_0p7_mode_config
-                0x0002fc04       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
-                0x0002fc04                gfsk_bt_0p5_h_0p7_mode_config
+                0x0002fbfc       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+                0x0002fbfc                gfsk_bt_0p5_h_0p7_mode_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p7_1mbps_config
-                0x0002fc4c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
-                0x0002fc4c                xcvr_GFSK_BT_0p5_h_0p7_1mbps_config
+                0x0002fc44       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+                0x0002fc44                xcvr_GFSK_BT_0p5_h_0p7_1mbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p7_500kbps_config
-                0x0002fcb4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
-                0x0002fcb4                xcvr_GFSK_BT_0p5_h_0p7_500kbps_config
+                0x0002fcac       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+                0x0002fcac                xcvr_GFSK_BT_0p5_h_0p7_500kbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_0p7_250kbps_config
-                0x0002fd1c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
-                0x0002fd1c                xcvr_GFSK_BT_0p5_h_0p7_250kbps_config
+                0x0002fd14       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+                0x0002fd14                xcvr_GFSK_BT_0p5_h_0p7_250kbps_config
  .rodata.gfsk_bt_0p5_h_1p0_mode_config
-                0x0002fd84       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
-                0x0002fd84                gfsk_bt_0p5_h_1p0_mode_config
+                0x0002fd7c       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+                0x0002fd7c                gfsk_bt_0p5_h_1p0_mode_config
  .rodata.xcvr_GFSK_BT_0p5_h_1p0_1mbps_config
-                0x0002fdcc       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
-                0x0002fdcc                xcvr_GFSK_BT_0p5_h_1p0_1mbps_config
+                0x0002fdc4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+                0x0002fdc4                xcvr_GFSK_BT_0p5_h_1p0_1mbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_1p0_500kbps_config
-                0x0002fe34       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
-                0x0002fe34                xcvr_GFSK_BT_0p5_h_1p0_500kbps_config
+                0x0002fe2c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+                0x0002fe2c                xcvr_GFSK_BT_0p5_h_1p0_500kbps_config
  .rodata.xcvr_GFSK_BT_0p5_h_1p0_250kbps_config
-                0x0002fe9c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
-                0x0002fe9c                xcvr_GFSK_BT_0p5_h_1p0_250kbps_config
+                0x0002fe94       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+                0x0002fe94                xcvr_GFSK_BT_0p5_h_1p0_250kbps_config
  .rodata.gfsk_bt_0p7_h_0p5_mode_config
-                0x0002ff04       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
-                0x0002ff04                gfsk_bt_0p7_h_0p5_mode_config
+                0x0002fefc       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+                0x0002fefc                gfsk_bt_0p7_h_0p5_mode_config
  .rodata.xcvr_GFSK_BT_0p7_h_0p5_1mbps_config
-                0x0002ff4c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
-                0x0002ff4c                xcvr_GFSK_BT_0p7_h_0p5_1mbps_config
+                0x0002ff44       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+                0x0002ff44                xcvr_GFSK_BT_0p7_h_0p5_1mbps_config
  .rodata.xcvr_GFSK_BT_0p7_h_0p5_500kbps_config
-                0x0002ffb4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
-                0x0002ffb4                xcvr_GFSK_BT_0p7_h_0p5_500kbps_config
+                0x0002ffac       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+                0x0002ffac                xcvr_GFSK_BT_0p7_h_0p5_500kbps_config
  .rodata.xcvr_GFSK_BT_0p7_h_0p5_250kbps_config
-                0x0003001c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
-                0x0003001c                xcvr_GFSK_BT_0p7_h_0p5_250kbps_config
+                0x00030014       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+                0x00030014                xcvr_GFSK_BT_0p7_h_0p5_250kbps_config
  .rodata.xcvr_1mbps_config
-                0x00030084       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
-                0x00030084                xcvr_1mbps_config
+                0x0003007c       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
+                0x0003007c                xcvr_1mbps_config
  .rodata.xcvr_500kbps_config
-                0x000300c4       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
-                0x000300c4                xcvr_500kbps_config
+                0x000300bc       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
+                0x000300bc                xcvr_500kbps_config
  .rodata.xcvr_250kbps_config
-                0x00030104       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
-                0x00030104                xcvr_250kbps_config
+                0x000300fc       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
+                0x000300fc                xcvr_250kbps_config
  .rodata.msk_mode_config
-                0x00030144       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
-                0x00030144                msk_mode_config
+                0x0003013c       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+                0x0003013c                msk_mode_config
  .rodata.xcvr_MSK_1mbps_config
-                0x0003018c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
-                0x0003018c                xcvr_MSK_1mbps_config
+                0x00030184       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+                0x00030184                xcvr_MSK_1mbps_config
  .rodata.xcvr_MSK_500kbps_config
-                0x000301f4       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
-                0x000301f4                xcvr_MSK_500kbps_config
+                0x000301ec       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+                0x000301ec                xcvr_MSK_500kbps_config
  .rodata.xcvr_MSK_250kbps_config
-                0x0003025c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
-                0x0003025c                xcvr_MSK_250kbps_config
+                0x00030254       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+                0x00030254                xcvr_MSK_250kbps_config
  .rodata.zgbe_mode_config
-                0x000302c4       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
-                0x000302c4                zgbe_mode_config
+                0x000302bc       0x48 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
+                0x000302bc                zgbe_mode_config
  .rodata.xcvr_ZIGBEE_500kbps_config
-                0x0003030c       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
-                0x0003030c                xcvr_ZIGBEE_500kbps_config
+                0x00030304       0x68 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
+                0x00030304                xcvr_ZIGBEE_500kbps_config
  .rodata.xcvr_802_15_4_500kbps_config
-                0x00030374       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
-                0x00030374                xcvr_802_15_4_500kbps_config
+                0x0003036c       0x40 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
+                0x0003036c                xcvr_802_15_4_500kbps_config
  .rodata.mapTable
-                0x000303b4      0x400 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
-                0x000303b4                mapTable
+                0x000303ac      0x400 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
+                0x000303ac                mapTable
  .rodata.XCVR_GetDefaultConfig
-                0x000307b4       0x28 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
+                0x000307ac       0x28 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
  .rodata.rx_bba_dcoc_dac_trim_DCest
-                0x000307dc       0x2c ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
+                0x000307d4       0x2c ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
  .rodata.BLOCK_1_IFR
-                0x00030808       0x10 ./framework/XCVR/MKW41Z4/ifr_radio.o
-                0x00030808                BLOCK_1_IFR
+                0x00030800       0x10 ./framework/XCVR/MKW41Z4/ifr_radio.o
+                0x00030800                BLOCK_1_IFR
  .rodata.mTpmConfig
-                0x00030818        0xa ./framework/TimersManager/Source/TMR_Adapter.o
+                0x00030810        0xa ./framework/TimersManager/Source/TMR_Adapter.o
  .rodata.gUseRtos_c
-                0x00030822        0x1 ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
-                0x00030822                gUseRtos_c
- *fill*         0x00030823        0x1 
+                0x0003081a        0x1 ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
+                0x0003081a                gUseRtos_c
+ *fill*         0x0003081b        0x1 
  .rodata.osEventInfo
-                0x00030824        0xc ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
-                0x00030824                osEventInfo
+                0x0003081c        0xc ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
+                0x0003081c                osEventInfo
  .rodata.maHandleDeepSleep
-                0x00030830       0x1c ./framework/LowPower/Source/MKW41Z/PWR.o
-                0x00030830                maHandleDeepSleep
+                0x00030828       0x1c ./framework/LowPower/Source/MKW41Z/PWR.o
+                0x00030828                maHandleDeepSleep
  .rodata.maBLE_LL_CLOCK_CONFIG_LP
-                0x0003084c        0xe ./framework/LowPower/Source/MKW41Z/PWRLib.o
-                0x0003084c                maBLE_LL_CLOCK_CONFIG_LP
- *fill*         0x0003085a        0x2 
+                0x00030844        0xe ./framework/LowPower/Source/MKW41Z/PWRLib.o
+                0x00030844                maBLE_LL_CLOCK_CONFIG_LP
+ *fill*         0x00030852        0x2 
  .rodata.maLPModeUseLPTMR
-                0x0003085c        0x8 ./framework/LowPower/Source/MKW41Z/PWRLib.o
-                0x0003085c                maLPModeUseLPTMR
+                0x00030854        0x8 ./framework/LowPower/Source/MKW41Z/PWRLib.o
+                0x00030854                maLPModeUseLPTMR
  .rodata.PWRLib_ConfigRSIM
-                0x00030864       0x20 ./framework/LowPower/Source/MKW41Z/PWRLib.o
+                0x0003085c       0x20 ./framework/LowPower/Source/MKW41Z/PWRLib.o
  .rodata.PWRLib_ConfigLLWU
-                0x00030884       0x20 ./framework/LowPower/Source/MKW41Z/PWRLib.o
+                0x0003087c       0x20 ./framework/LowPower/Source/MKW41Z/PWRLib.o
  .rodata.maPortBases
-                0x000308a4        0xc ./framework/GPIO/GPIO_Adapter.o
+                0x0003089c        0xc ./framework/GPIO/GPIO_Adapter.o
  .rodata.maGpioBases
-                0x000308b0        0xc ./framework/GPIO/GPIO_Adapter.o
+                0x000308a8        0xc ./framework/GPIO/GPIO_Adapter.o
  .rodata.mProdDataIdentifier
-                0x000308bc        0xa ./framework/Flash/Internal/Flash_Adapter.o
- *fill*         0x000308c6        0x2 
+                0x000308b4        0xa ./framework/Flash/Internal/Flash_Adapter.o
+ *fill*         0x000308be        0x2 
  .rodata.adcConfig
-                0x000308c8        0x9 ./framework/DCDC/Source/DCDC.o
- *fill*         0x000308d1        0x3 
+                0x000308c0        0x9 ./framework/DCDC/Source/DCDC.o
+ *fill*         0x000308c9        0x3 
  .rodata.vbatChanConfig
-                0x000308d4        0x8 ./framework/DCDC/Source/DCDC.o
-                0x000308d4                vbatChanConfig
+                0x000308cc        0x8 ./framework/DCDC/Source/DCDC.o
+                0x000308cc                vbatChanConfig
  .rodata.bgapChanConfig
-                0x000308dc        0x8 ./framework/DCDC/Source/DCDC.o
-                0x000308dc                bgapChanConfig
+                0x000308d4        0x8 ./framework/DCDC/Source/DCDC.o
+                0x000308d4                bgapChanConfig
  .rodata.CLOCK_GetFreq
-                0x000308e4       0x24 ./drivers/fsl_clock.o
+                0x000308dc       0x24 ./drivers/fsl_clock.o
  .rodata.fllFactorTable.5676
-                0x00030908       0x10 ./drivers/fsl_clock.o
+                0x00030900       0x10 ./drivers/fsl_clock.o
  .rodata.s_i2cDividerTable
-                0x00030918       0x80 ./drivers/fsl_i2c.o
+                0x00030910       0x80 ./drivers/fsl_i2c.o
  .rodata.s_i2cBases
-                0x00030998        0x8 ./drivers/fsl_i2c.o
+                0x00030990        0x8 ./drivers/fsl_i2c.o
  .rodata.s_i2cIrqs
-                0x000309a0        0x2 ./drivers/fsl_i2c.o
- *fill*         0x000309a2        0x2 
+                0x00030998        0x2 ./drivers/fsl_i2c.o
+ *fill*         0x0003099a        0x2 
  .rodata.s_i2cClocks
-                0x000309a4        0x8 ./drivers/fsl_i2c.o
+                0x0003099c        0x8 ./drivers/fsl_i2c.o
  .rodata.s_tpmBases
-                0x000309ac        0xc ./drivers/fsl_tpm.o
+                0x000309a4        0xc ./drivers/fsl_tpm.o
  .rodata.s_tpmClocks
-                0x000309b8        0xc ./drivers/fsl_tpm.o
+                0x000309b0        0xc ./drivers/fsl_tpm.o
  .rodata.trng_SetStatisticalCheckLimit
-                0x000309c4       0x28 ./drivers/fsl_trng.o
+                0x000309bc       0x28 ./drivers/fsl_trng.o
  .rodata.mDcdcDefaultConfig
-                0x000309ec       0x14 ./board/board.o
-                0x000309ec                mDcdcDefaultConfig
+                0x000309e4       0x14 ./board/board.o
+                0x000309e4                mDcdcDefaultConfig
  .rodata.maPinsDisabledInLowPower
-                0x00030a00       0x26 ./board/board.o
-                0x00030a00                maPinsDisabledInLowPower
- *fill*         0x00030a26        0x2 
+                0x000309f8       0x26 ./board/board.o
+                0x000309f8                maPinsDisabledInLowPower
+ *fill*         0x00030a1e        0x2 
  .rodata.simConfig_BOARD_BootClockRUN
-                0x00030a28        0x8 ./board/clock_config.o
-                0x00030a28                simConfig_BOARD_BootClockRUN
+                0x00030a20        0x8 ./board/clock_config.o
+                0x00030a20                simConfig_BOARD_BootClockRUN
  .rodata._global_impure_ptr
-                0x00030a30        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc.a(lib_a-impure.o)
-                0x00030a30                _global_impure_ptr
+                0x00030a28        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc.a(lib_a-impure.o)
+                0x00030a28                _global_impure_ptr
  *(.glue_7)
- .glue_7        0x00030a34        0x0 linker stubs
+ .glue_7        0x00030a2c        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x00030a34        0x0 linker stubs
+ .glue_7t       0x00030a2c        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x00030a34        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .eh_frame      0x00030a2c        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
  *(.init)
- .init          0x00030a34        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
-                0x00030a34                _init
- .init          0x00030a38        0x8 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .init          0x00030a2c        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+                0x00030a2c                _init
+ .init          0x00030a30        0x8 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
  *(.fini)
- .fini          0x00030a40        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
-                0x00030a40                _fini
- .fini          0x00030a44        0x8 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
-                0x00030a4c                . = ALIGN (0x4)
+ .fini          0x00030a38        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+                0x00030a38                _fini
+ .fini          0x00030a3c        0x8 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+                0x00030a44                . = ALIGN (0x4)
 
-.vfp11_veneer   0x00030a4c        0x0
- .vfp11_veneer  0x00030a4c        0x0 linker stubs
+.vfp11_veneer   0x00030a44        0x0
+ .vfp11_veneer  0x00030a44        0x0 linker stubs
 
-.v4_bx          0x00030a4c        0x0
- .v4_bx         0x00030a4c        0x0 linker stubs
+.v4_bx          0x00030a44        0x0
+ .v4_bx         0x00030a44        0x0 linker stubs
 
-.iplt           0x00030a4c        0x0
- .iplt          0x00030a4c        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+.iplt           0x00030a44        0x0
+ .iplt          0x00030a44        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
 
-.NVM_TABLE      0x00030a4c        0x0
-                0x00030a4c                . = ALIGN (0x4)
+.NVM_TABLE      0x00030a44        0x0
+                0x00030a44                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__start_NVM_TABLE, .)
  *(.NVM_TABLE)
                 [!provide]                PROVIDE (__stop_NVM_TABLE, .)
-                0x00030a4c                . = ALIGN (0x4)
+                0x00030a44                . = ALIGN (0x4)
 
-.VERSION_TAGS   0x00030a4c       0x18
-                0x00030a4c                . = ALIGN (0x4)
+.VERSION_TAGS   0x00030a44       0x18
+                0x00030a44                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__start_VERSION_TAGS, .)
  *(.VERSION_TAGS)
- .VERSION_TAGS  0x00030a4c        0xc ./framework/ModuleInfo/ModuleInfo.o
-                0x00030a4c                FWK_VERSION
- .VERSION_TAGS  0x00030a58        0xc C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(host_version.o)
-                0x00030a58                BLE_HOST_VERSION
- .VERSION_TAGS  0x00030a64        0x0 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(host_version.o)
+ .VERSION_TAGS  0x00030a44        0xc ./framework/ModuleInfo/ModuleInfo.o
+                0x00030a44                FWK_VERSION
+ .VERSION_TAGS  0x00030a50        0xc C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(host_version.o)
+                0x00030a50                BLE_HOST_VERSION
+ .VERSION_TAGS  0x00030a5c        0x0 C:\Users\rober_000\Documents\GitHub\FRDMKW41Z_breaking_disc_control_unit\Braking_disc_control_unit\libs\lib_ble_4-2_host_peripheral_cm0p.a(host_version.o)
                 [!provide]                PROVIDE (__stop_VERSION_TAGS, .)
-                0x00030a64                . = ALIGN (0x4)
+                0x00030a5c                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x00030a64        0x8
-                0x00030a64                __exidx_start = .
+.ARM            0x00030a5c        0x8
+                0x00030a5c                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x00030a64        0x8 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
- .ARM.exidx     0x00030a6c        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivmoddi4.o)
+ .ARM.exidx     0x00030a5c        0x8 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.exidx     0x00030a64        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivmoddi4.o)
                                   0x8 (size before relaxing)
-                0x00030a6c                __exidx_end = .
+                0x00030a64                __exidx_end = .
 
-.rel.dyn        0x00030a6c        0x0
- .rel.iplt      0x00030a6c        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+.rel.dyn        0x00030a64        0x0
+ .rel.iplt      0x00030a64        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
 
-.ctors          0x00030a6c        0x0
-                0x00030a6c                __CTOR_LIST__ = .
+.ctors          0x00030a64        0x0
+                0x00030a64                __CTOR_LIST__ = .
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
  *(SORT(.ctors.*))
  *(.ctors)
-                0x00030a6c                __CTOR_END__ = .
+                0x00030a64                __CTOR_END__ = .
 
-.dtors          0x00030a6c        0x0
-                0x00030a6c                __DTOR_LIST__ = .
+.dtors          0x00030a64        0x0
+                0x00030a64                __DTOR_LIST__ = .
  *crtbegin.o(.dtors)
  *crtbegin?.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .dtors)
  *(SORT(.dtors.*))
  *(.dtors)
-                0x00030a6c                __DTOR_END__ = .
+                0x00030a64                __DTOR_END__ = .
 
-.preinit_array  0x00030a6c        0x0
-                0x00030a6c                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x00030a64        0x0
+                0x00030a64                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x00030a6c                PROVIDE (__preinit_array_end, .)
+                0x00030a64                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x00030a6c        0x8
-                0x00030a6c                PROVIDE (__init_array_start, .)
+.init_array     0x00030a64        0x8
+                0x00030a64                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  .init_array.00000
-                0x00030a6c        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc.a(lib_a-__call_atexit.o)
+                0x00030a64        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc.a(lib_a-__call_atexit.o)
  *(.init_array*)
- .init_array    0x00030a70        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
-                0x00030a74                PROVIDE (__init_array_end, .)
+ .init_array    0x00030a68        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+                0x00030a6c                PROVIDE (__init_array_end, .)
 
-.fini_array     0x00030a74        0x4
-                0x00030a74                PROVIDE (__fini_array_start, .)
+.fini_array     0x00030a6c        0x4
+                0x00030a6c                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x00030a74        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
-                0x00030a78                PROVIDE (__fini_array_end, .)
-                0x00030a78                __etext = .
-                0x00030a78                __DATA_ROM = .
+ .fini_array    0x00030a6c        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+                0x00030a70                PROVIDE (__fini_array_end, .)
+                0x00030a70                __etext = .
+                0x00030a70                __DATA_ROM = .
 
 .mtb            0x1fff8000        0x0
                 0x1fff8000                . = ALIGN (0x8)
@@ -6701,7 +6700,7 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
                 0x1fff8000                __VECTOR_RAM = __VECTOR_RAM__
                 0x000000c0                __RAM_VECTOR_TABLE_SIZE_BYTES = (__interrupts_ram_end__ - __interrupts_ram_start__)
 
-.data           0x1fff80c0      0xb44 load address 0x00030a78
+.data           0x1fff80c0      0xb44 load address 0x00030a70
                 0x1fff80c0                . = ALIGN (0x4)
                 0x1fff80c0                __DATA_RAM = .
                 0x1fff80c0                __data_start__ = .
@@ -7004,14 +7003,14 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
  .jcr           0x1fff8c00        0x4 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
                 0x1fff8c04                . = ALIGN (0x4)
                 0x1fff8c04                __data_end__ = .
-                0x000315bc                __DATA_END = (__DATA_ROM + (__data_end__ - __data_start__))
+                0x000315b4                __DATA_END = (__DATA_ROM + (__data_end__ - __data_start__))
                 0x0007d7ff                text_end = (ORIGIN (TEXT_region2) + LENGTH (TEXT_region2))
                 0x00000001                ASSERT ((__DATA_END <= text_end), region m_text overflowed with text and data)
 
-.igot.plt       0x1fff8c04        0x0 load address 0x000315bc
+.igot.plt       0x1fff8c04        0x0 load address 0x000315b4
  .igot.plt      0x1fff8c04        0x0 c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
 
-.bss            0x1fff8c08     0x5f04 load address 0x000315c0
+.bss            0x1fff8c08     0x5f04 load address 0x000315b8
                 0x1fff8c08                . = ALIGN (0x4)
                 0x1fff8c08                __START_BSS = .
                 0x1fff8c08                __bss_start__ = .
@@ -7524,7 +7523,7 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
                 0x1fffeb0c                __bss_end__ = .
                 0x1fffeb0c                __END_BSS = .
 
-.heap           0x1fffeb0c        0x4 load address 0x000374c4
+.heap           0x1fffeb0c        0x4 load address 0x000374bc
                 0x1fffeb10                . = ALIGN (0x8)
  *fill*         0x1fffeb0c        0x4 
                 0x1fffeb10                __end__ = .
@@ -7533,7 +7532,7 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
                 0x1fffeb10                . = (. + 0x0)
                 0x1fffeb10                __HeapLimit = .
 
-.stack          0x1fffeb10      0x180 load address 0x000374c8
+.stack          0x1fffeb10      0x180 load address 0x000374c0
                 0x1fffeb10                . = ALIGN (0x8)
                 0x1fffec90                . = (. + 0x180)
  *fill*         0x1fffeb10      0x180 
@@ -7915,239 +7914,239 @@ LOAD c:/nxp/mcuxpressoide_10.0.2_411/ide/tools/bin/../lib/gcc/arm-none-eabi/5.4.
                 0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region m_data overflowed with stack and heap)
 OUTPUT(Braking_disc_control_unit.axf elf32-littlearm)
 
-.debug_line     0x00000000    0x11a8a
+.debug_line     0x00000000    0x11a92
  .debug_line    0x00000000       0xbf ./startup/startup_MKW41Z4.o
  .debug_line    0x000000bf      0x36a ./source/common/gatt_db/gatt_database.o
  .debug_line    0x00000429      0x4f8 ./source/common/Accel_Altitude_sensor.o
  .debug_line    0x00000921      0x2e3 ./source/common/Accu_monitor.o
  .debug_line    0x00000c04      0xa24 ./source/common/ApplMain.o
  .debug_line    0x00001628      0x1a0 ./source/common/GPIO_Adapter_Board.o
- .debug_line    0x000017c8      0x269 ./source/common/PWM_Servo.o
- .debug_line    0x00001a31      0x2c8 ./source/common/ble_Message_Handle.o
- .debug_line    0x00001cf9      0x39e ./source/common/ble_conn_manager.o
- .debug_line    0x00002097      0x351 ./source/common/ble_controller_task.o
- .debug_line    0x000023e8      0x25e ./source/common/ble_host_tasks.o
- .debug_line    0x00002646      0x3e2 ./source/common/ble_init.o
- .debug_line    0x00002a28      0x22d ./source/app_config.o
- .debug_line    0x00002c55      0x89d ./source/heart_rate_sensor.o
- .debug_line    0x000034f2      0x2ce ./freertos/event_groups.o
- .debug_line    0x000037c0       0xab ./freertos/fsl_tickless_lptmr.o
- .debug_line    0x0000386b      0x1ee ./freertos/heap_4.o
- .debug_line    0x00003a59      0x117 ./freertos/list.o
- .debug_line    0x00003b70      0x1ba ./freertos/port.o
- .debug_line    0x00003d2a      0x739 ./freertos/queue.o
- .debug_line    0x00004463      0xc6b ./freertos/tasks.o
- .debug_line    0x000050ce      0x39b ./freertos/timers.o
- .debug_line    0x00005469      0x12d ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
- .debug_line    0x00005596      0x12d ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
- .debug_line    0x000056c3      0x130 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
- .debug_line    0x000057f3      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
- .debug_line    0x0000592e      0x13c ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
- .debug_line    0x00005a6a      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
- .debug_line    0x00005ba5      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
- .debug_line    0x00005ce0      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
- .debug_line    0x00005e1b      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
- .debug_line    0x00005f56      0x137 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
- .debug_line    0x0000608d      0x12d ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
- .debug_line    0x000061ba      0x12e ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
- .debug_line    0x000062e8      0x680 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
- .debug_line    0x00006968      0x63a ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
- .debug_line    0x00006fa2      0x240 ./framework/XCVR/MKW41Z4/ifr_radio.o
- .debug_line    0x000071e2      0x356 ./framework/TimersManager/Source/TMR_Adapter.o
- .debug_line    0x00007538      0x803 ./framework/TimersManager/Source/TimersManager.o
- .debug_line    0x00007d3b      0x80c ./framework/SecLib/SecLib.o
- .debug_line    0x00008547      0x35b ./framework/RNG/Source/RNG.o
- .debug_line    0x000088a2      0x133 ./framework/Panic/Source/Panic.o
- .debug_line    0x000089d5      0x78b ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
- .debug_line    0x00009160       0x9a ./framework/ModuleInfo/ModuleInfo.o
- .debug_line    0x000091fa      0x244 ./framework/Messaging/Source/Messaging.o
- .debug_line    0x0000943e      0x392 ./framework/MemManager/Source/MemManager.o
- .debug_line    0x000097d0      0x25f ./framework/MWSCoexistence/Source/MWS.o
- .debug_line    0x00009a2f      0x631 ./framework/LowPower/Source/MKW41Z/PWR.o
- .debug_line    0x0000a060      0x6dd ./framework/LowPower/Source/MKW41Z/PWRLib.o
- .debug_line    0x0000a73d      0x11f ./framework/LowPower/Source/MKW41Z/PWR_BLE.o
- .debug_line    0x0000a85c      0x1e3 ./framework/Lists/GenericList.o
- .debug_line    0x0000aa3f      0x599 ./framework/Keyboard/Source/Keyboard.o
- .debug_line    0x0000afd8      0x6b8 ./framework/GPIO/GPIO_Adapter.o
- .debug_line    0x0000b690      0x260 ./framework/FunctionLib/FunctionLib.o
- .debug_line    0x0000b8f0      0x47a ./framework/Flash/Internal/Flash_Adapter.o
- .debug_line    0x0000bd6a      0x6e5 ./framework/DCDC/Source/DCDC.o
- .debug_line    0x0000c44f      0x2e2 ./drivers/fsl_adc16.o
- .debug_line    0x0000c731      0x6a7 ./drivers/fsl_clock.o
- .debug_line    0x0000cdd8      0x1a7 ./drivers/fsl_common.o
- .debug_line    0x0000cf7f      0x990 ./drivers/fsl_dspi.o
- .debug_line    0x0000d90f      0x235 ./drivers/fsl_gpio.o
- .debug_line    0x0000db44      0x9a1 ./drivers/fsl_i2c.o
- .debug_line    0x0000e4e5      0x6c0 ./drivers/fsl_lpuart.o
- .debug_line    0x0000eba5      0xa50 ./drivers/fsl_ltc.o
- .debug_line    0x0000f5f5      0x1ba ./drivers/fsl_pit.o
- .debug_line    0x0000f7af      0x5aa ./drivers/fsl_tpm.o
- .debug_line    0x0000fd59      0x38f ./drivers/fsl_trng.o
- .debug_line    0x000100e8      0x706 ./board/board.o
- .debug_line    0x000107ee      0x345 ./board/clock_config.o
- .debug_line    0x00010b33      0x185 ./board/gpio_pins.o
- .debug_line    0x00010cb8      0x1fe ./board/pin_mux.o
- .debug_line    0x00010eb6      0x36b ./bluetooth/profiles/heart_rate/heart_rate_service.o
- .debug_line    0x00011221      0x2eb ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_line    0x0001150c      0x252 ./bluetooth/profiles/battery/battery_service.o
- .debug_line    0x0001175e      0x238 ./bluetooth/host/config/ble_globals.o
- .debug_line    0x00011996       0xf4 ./CMSIS/system_MKW41Z4.o
+ .debug_line    0x000017c8      0x271 ./source/common/PWM_Servo.o
+ .debug_line    0x00001a39      0x2c8 ./source/common/ble_Message_Handle.o
+ .debug_line    0x00001d01      0x39e ./source/common/ble_conn_manager.o
+ .debug_line    0x0000209f      0x351 ./source/common/ble_controller_task.o
+ .debug_line    0x000023f0      0x25e ./source/common/ble_host_tasks.o
+ .debug_line    0x0000264e      0x3e2 ./source/common/ble_init.o
+ .debug_line    0x00002a30      0x22d ./source/app_config.o
+ .debug_line    0x00002c5d      0x89d ./source/heart_rate_sensor.o
+ .debug_line    0x000034fa      0x2ce ./freertos/event_groups.o
+ .debug_line    0x000037c8       0xab ./freertos/fsl_tickless_lptmr.o
+ .debug_line    0x00003873      0x1ee ./freertos/heap_4.o
+ .debug_line    0x00003a61      0x117 ./freertos/list.o
+ .debug_line    0x00003b78      0x1ba ./freertos/port.o
+ .debug_line    0x00003d32      0x739 ./freertos/queue.o
+ .debug_line    0x0000446b      0xc6b ./freertos/tasks.o
+ .debug_line    0x000050d6      0x39b ./freertos/timers.o
+ .debug_line    0x00005471      0x12d ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
+ .debug_line    0x0000559e      0x12d ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
+ .debug_line    0x000056cb      0x130 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
+ .debug_line    0x000057fb      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+ .debug_line    0x00005936      0x13c ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+ .debug_line    0x00005a72      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+ .debug_line    0x00005bad      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+ .debug_line    0x00005ce8      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+ .debug_line    0x00005e23      0x13b ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+ .debug_line    0x00005f5e      0x137 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
+ .debug_line    0x00006095      0x12d ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+ .debug_line    0x000061c2      0x12e ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
+ .debug_line    0x000062f0      0x680 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
+ .debug_line    0x00006970      0x63a ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
+ .debug_line    0x00006faa      0x240 ./framework/XCVR/MKW41Z4/ifr_radio.o
+ .debug_line    0x000071ea      0x356 ./framework/TimersManager/Source/TMR_Adapter.o
+ .debug_line    0x00007540      0x803 ./framework/TimersManager/Source/TimersManager.o
+ .debug_line    0x00007d43      0x80c ./framework/SecLib/SecLib.o
+ .debug_line    0x0000854f      0x35b ./framework/RNG/Source/RNG.o
+ .debug_line    0x000088aa      0x133 ./framework/Panic/Source/Panic.o
+ .debug_line    0x000089dd      0x78b ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
+ .debug_line    0x00009168       0x9a ./framework/ModuleInfo/ModuleInfo.o
+ .debug_line    0x00009202      0x244 ./framework/Messaging/Source/Messaging.o
+ .debug_line    0x00009446      0x392 ./framework/MemManager/Source/MemManager.o
+ .debug_line    0x000097d8      0x25f ./framework/MWSCoexistence/Source/MWS.o
+ .debug_line    0x00009a37      0x631 ./framework/LowPower/Source/MKW41Z/PWR.o
+ .debug_line    0x0000a068      0x6dd ./framework/LowPower/Source/MKW41Z/PWRLib.o
+ .debug_line    0x0000a745      0x11f ./framework/LowPower/Source/MKW41Z/PWR_BLE.o
+ .debug_line    0x0000a864      0x1e3 ./framework/Lists/GenericList.o
+ .debug_line    0x0000aa47      0x599 ./framework/Keyboard/Source/Keyboard.o
+ .debug_line    0x0000afe0      0x6b8 ./framework/GPIO/GPIO_Adapter.o
+ .debug_line    0x0000b698      0x260 ./framework/FunctionLib/FunctionLib.o
+ .debug_line    0x0000b8f8      0x47a ./framework/Flash/Internal/Flash_Adapter.o
+ .debug_line    0x0000bd72      0x6e5 ./framework/DCDC/Source/DCDC.o
+ .debug_line    0x0000c457      0x2e2 ./drivers/fsl_adc16.o
+ .debug_line    0x0000c739      0x6a7 ./drivers/fsl_clock.o
+ .debug_line    0x0000cde0      0x1a7 ./drivers/fsl_common.o
+ .debug_line    0x0000cf87      0x990 ./drivers/fsl_dspi.o
+ .debug_line    0x0000d917      0x235 ./drivers/fsl_gpio.o
+ .debug_line    0x0000db4c      0x9a1 ./drivers/fsl_i2c.o
+ .debug_line    0x0000e4ed      0x6c0 ./drivers/fsl_lpuart.o
+ .debug_line    0x0000ebad      0xa50 ./drivers/fsl_ltc.o
+ .debug_line    0x0000f5fd      0x1ba ./drivers/fsl_pit.o
+ .debug_line    0x0000f7b7      0x5aa ./drivers/fsl_tpm.o
+ .debug_line    0x0000fd61      0x38f ./drivers/fsl_trng.o
+ .debug_line    0x000100f0      0x706 ./board/board.o
+ .debug_line    0x000107f6      0x345 ./board/clock_config.o
+ .debug_line    0x00010b3b      0x185 ./board/gpio_pins.o
+ .debug_line    0x00010cc0      0x1fe ./board/pin_mux.o
+ .debug_line    0x00010ebe      0x36b ./bluetooth/profiles/heart_rate/heart_rate_service.o
+ .debug_line    0x00011229      0x2eb ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_line    0x00011514      0x252 ./bluetooth/profiles/battery/battery_service.o
+ .debug_line    0x00011766      0x238 ./bluetooth/host/config/ble_globals.o
+ .debug_line    0x0001199e       0xf4 ./CMSIS/system_MKW41Z4.o
 
-.debug_info     0x00000000    0x35940
+.debug_info     0x00000000    0x35929
  .debug_info    0x00000000       0xae ./startup/startup_MKW41Z4.o
  .debug_info    0x000000ae      0xee2 ./source/common/gatt_db/gatt_database.o
  .debug_info    0x00000f90      0xf2e ./source/common/Accel_Altitude_sensor.o
  .debug_info    0x00001ebe      0xcb3 ./source/common/Accu_monitor.o
  .debug_info    0x00002b71     0x2dee ./source/common/ApplMain.o
  .debug_info    0x0000595f      0x189 ./source/common/GPIO_Adapter_Board.o
- .debug_info    0x00005ae8      0x9ab ./source/common/PWM_Servo.o
- .debug_info    0x00006493      0x2bb ./source/common/ble_Message_Handle.o
- .debug_info    0x0000674e     0x15ce ./source/common/ble_conn_manager.o
- .debug_info    0x00007d1c      0x6c2 ./source/common/ble_controller_task.o
- .debug_info    0x000083de      0x2b0 ./source/common/ble_host_tasks.o
- .debug_info    0x0000868e      0xb04 ./source/common/ble_init.o
- .debug_info    0x00009192      0x942 ./source/app_config.o
- .debug_info    0x00009ad4     0x209f ./source/heart_rate_sensor.o
- .debug_info    0x0000bb73      0x6ff ./freertos/event_groups.o
- .debug_info    0x0000c272       0xb3 ./freertos/fsl_tickless_lptmr.o
- .debug_info    0x0000c325      0x2e0 ./freertos/heap_4.o
- .debug_info    0x0000c605      0x292 ./freertos/list.o
- .debug_info    0x0000c897      0x225 ./freertos/port.o
- .debug_info    0x0000cabc      0xe37 ./freertos/queue.o
- .debug_info    0x0000d8f3     0x17c8 ./freertos/tasks.o
- .debug_info    0x0000f0bb      0xac0 ./freertos/timers.o
- .debug_info    0x0000fb7b      0x3f4 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
- .debug_info    0x0000ff6f      0x3f4 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
- .debug_info    0x00010363      0x860 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
- .debug_info    0x00010bc3      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
- .debug_info    0x00010fda      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
- .debug_info    0x000113f1      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
- .debug_info    0x00011808      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
- .debug_info    0x00011c1f      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
- .debug_info    0x00012036      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
- .debug_info    0x0001244d      0x1ce ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
- .debug_info    0x0001261b      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
- .debug_info    0x00012a32      0x4f4 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
- .debug_info    0x00012f26     0x300b ./framework/XCVR/MKW41Z4/fsl_xcvr.o
- .debug_info    0x00015f31     0x1da0 ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
- .debug_info    0x00017cd1      0x6f8 ./framework/XCVR/MKW41Z4/ifr_radio.o
- .debug_info    0x000183c9      0xcf6 ./framework/TimersManager/Source/TMR_Adapter.o
- .debug_info    0x000190bf     0x1372 ./framework/TimersManager/Source/TimersManager.o
- .debug_info    0x0001a431     0x16c7 ./framework/SecLib/SecLib.o
- .debug_info    0x0001baf8      0xb68 ./framework/RNG/Source/RNG.o
- .debug_info    0x0001c660      0x10c ./framework/Panic/Source/Panic.o
- .debug_info    0x0001c76c      0xfa7 ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
- .debug_info    0x0001d713      0x136 ./framework/ModuleInfo/ModuleInfo.o
- .debug_info    0x0001d849      0x385 ./framework/Messaging/Source/Messaging.o
- .debug_info    0x0001dbce      0x507 ./framework/MemManager/Source/MemManager.o
- .debug_info    0x0001e0d5      0x4bd ./framework/MWSCoexistence/Source/MWS.o
- .debug_info    0x0001e592      0xefe ./framework/LowPower/Source/MKW41Z/PWR.o
- .debug_info    0x0001f490     0x11e0 ./framework/LowPower/Source/MKW41Z/PWRLib.o
- .debug_info    0x00020670       0xd4 ./framework/LowPower/Source/MKW41Z/PWR_BLE.o
- .debug_info    0x00020744      0x395 ./framework/Lists/GenericList.o
- .debug_info    0x00020ad9      0x77b ./framework/Keyboard/Source/Keyboard.o
- .debug_info    0x00021254     0x14b4 ./framework/GPIO/GPIO_Adapter.o
- .debug_info    0x00022708      0x45e ./framework/FunctionLib/FunctionLib.o
- .debug_info    0x00022b66      0x939 ./framework/Flash/Internal/Flash_Adapter.o
- .debug_info    0x0002349f     0x16d1 ./framework/DCDC/Source/DCDC.o
- .debug_info    0x00024b70      0xc0a ./drivers/fsl_adc16.o
- .debug_info    0x0002577a     0x131b ./drivers/fsl_clock.o
- .debug_info    0x00026a95      0x3db ./drivers/fsl_common.o
- .debug_info    0x00026e70     0x1db8 ./drivers/fsl_dspi.o
- .debug_info    0x00028c28      0x6d8 ./drivers/fsl_gpio.o
- .debug_info    0x00029300     0x199b ./drivers/fsl_i2c.o
- .debug_info    0x0002ac9b     0x1414 ./drivers/fsl_lpuart.o
- .debug_info    0x0002c0af     0x242e ./drivers/fsl_ltc.o
- .debug_info    0x0002e4dd      0x5f9 ./drivers/fsl_pit.o
- .debug_info    0x0002ead6      0xe7a ./drivers/fsl_tpm.o
- .debug_info    0x0002f950      0xc99 ./drivers/fsl_trng.o
- .debug_info    0x000305e9     0x1992 ./board/board.o
- .debug_info    0x00031f7b     0x10b5 ./board/clock_config.o
- .debug_info    0x00033030      0x2b7 ./board/gpio_pins.o
- .debug_info    0x000332e7      0x3a3 ./board/pin_mux.o
- .debug_info    0x0003368a      0xc2e ./bluetooth/profiles/heart_rate/heart_rate_service.o
- .debug_info    0x000342b8      0x841 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_info    0x00034af9      0x7a4 ./bluetooth/profiles/battery/battery_service.o
- .debug_info    0x0003529d      0x304 ./bluetooth/host/config/ble_globals.o
- .debug_info    0x000355a1      0x39f ./CMSIS/system_MKW41Z4.o
+ .debug_info    0x00005ae8      0x994 ./source/common/PWM_Servo.o
+ .debug_info    0x0000647c      0x2bb ./source/common/ble_Message_Handle.o
+ .debug_info    0x00006737     0x15ce ./source/common/ble_conn_manager.o
+ .debug_info    0x00007d05      0x6c2 ./source/common/ble_controller_task.o
+ .debug_info    0x000083c7      0x2b0 ./source/common/ble_host_tasks.o
+ .debug_info    0x00008677      0xb04 ./source/common/ble_init.o
+ .debug_info    0x0000917b      0x942 ./source/app_config.o
+ .debug_info    0x00009abd     0x209f ./source/heart_rate_sensor.o
+ .debug_info    0x0000bb5c      0x6ff ./freertos/event_groups.o
+ .debug_info    0x0000c25b       0xb3 ./freertos/fsl_tickless_lptmr.o
+ .debug_info    0x0000c30e      0x2e0 ./freertos/heap_4.o
+ .debug_info    0x0000c5ee      0x292 ./freertos/list.o
+ .debug_info    0x0000c880      0x225 ./freertos/port.o
+ .debug_info    0x0000caa5      0xe37 ./freertos/queue.o
+ .debug_info    0x0000d8dc     0x17c8 ./freertos/tasks.o
+ .debug_info    0x0000f0a4      0xac0 ./freertos/timers.o
+ .debug_info    0x0000fb64      0x3f4 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
+ .debug_info    0x0000ff58      0x3f4 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
+ .debug_info    0x0001034c      0x860 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
+ .debug_info    0x00010bac      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+ .debug_info    0x00010fc3      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+ .debug_info    0x000113da      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+ .debug_info    0x000117f1      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+ .debug_info    0x00011c08      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+ .debug_info    0x0001201f      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+ .debug_info    0x00012436      0x1ce ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
+ .debug_info    0x00012604      0x417 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+ .debug_info    0x00012a1b      0x4f4 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
+ .debug_info    0x00012f0f     0x300b ./framework/XCVR/MKW41Z4/fsl_xcvr.o
+ .debug_info    0x00015f1a     0x1da0 ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
+ .debug_info    0x00017cba      0x6f8 ./framework/XCVR/MKW41Z4/ifr_radio.o
+ .debug_info    0x000183b2      0xcf6 ./framework/TimersManager/Source/TMR_Adapter.o
+ .debug_info    0x000190a8     0x1372 ./framework/TimersManager/Source/TimersManager.o
+ .debug_info    0x0001a41a     0x16c7 ./framework/SecLib/SecLib.o
+ .debug_info    0x0001bae1      0xb68 ./framework/RNG/Source/RNG.o
+ .debug_info    0x0001c649      0x10c ./framework/Panic/Source/Panic.o
+ .debug_info    0x0001c755      0xfa7 ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
+ .debug_info    0x0001d6fc      0x136 ./framework/ModuleInfo/ModuleInfo.o
+ .debug_info    0x0001d832      0x385 ./framework/Messaging/Source/Messaging.o
+ .debug_info    0x0001dbb7      0x507 ./framework/MemManager/Source/MemManager.o
+ .debug_info    0x0001e0be      0x4bd ./framework/MWSCoexistence/Source/MWS.o
+ .debug_info    0x0001e57b      0xefe ./framework/LowPower/Source/MKW41Z/PWR.o
+ .debug_info    0x0001f479     0x11e0 ./framework/LowPower/Source/MKW41Z/PWRLib.o
+ .debug_info    0x00020659       0xd4 ./framework/LowPower/Source/MKW41Z/PWR_BLE.o
+ .debug_info    0x0002072d      0x395 ./framework/Lists/GenericList.o
+ .debug_info    0x00020ac2      0x77b ./framework/Keyboard/Source/Keyboard.o
+ .debug_info    0x0002123d     0x14b4 ./framework/GPIO/GPIO_Adapter.o
+ .debug_info    0x000226f1      0x45e ./framework/FunctionLib/FunctionLib.o
+ .debug_info    0x00022b4f      0x939 ./framework/Flash/Internal/Flash_Adapter.o
+ .debug_info    0x00023488     0x16d1 ./framework/DCDC/Source/DCDC.o
+ .debug_info    0x00024b59      0xc0a ./drivers/fsl_adc16.o
+ .debug_info    0x00025763     0x131b ./drivers/fsl_clock.o
+ .debug_info    0x00026a7e      0x3db ./drivers/fsl_common.o
+ .debug_info    0x00026e59     0x1db8 ./drivers/fsl_dspi.o
+ .debug_info    0x00028c11      0x6d8 ./drivers/fsl_gpio.o
+ .debug_info    0x000292e9     0x199b ./drivers/fsl_i2c.o
+ .debug_info    0x0002ac84     0x1414 ./drivers/fsl_lpuart.o
+ .debug_info    0x0002c098     0x242e ./drivers/fsl_ltc.o
+ .debug_info    0x0002e4c6      0x5f9 ./drivers/fsl_pit.o
+ .debug_info    0x0002eabf      0xe7a ./drivers/fsl_tpm.o
+ .debug_info    0x0002f939      0xc99 ./drivers/fsl_trng.o
+ .debug_info    0x000305d2     0x1992 ./board/board.o
+ .debug_info    0x00031f64     0x10b5 ./board/clock_config.o
+ .debug_info    0x00033019      0x2b7 ./board/gpio_pins.o
+ .debug_info    0x000332d0      0x3a3 ./board/pin_mux.o
+ .debug_info    0x00033673      0xc2e ./bluetooth/profiles/heart_rate/heart_rate_service.o
+ .debug_info    0x000342a1      0x841 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_info    0x00034ae2      0x7a4 ./bluetooth/profiles/battery/battery_service.o
+ .debug_info    0x00035286      0x304 ./bluetooth/host/config/ble_globals.o
+ .debug_info    0x0003558a      0x39f ./CMSIS/system_MKW41Z4.o
 
-.debug_abbrev   0x00000000     0x78cd
+.debug_abbrev   0x00000000     0x78ae
  .debug_abbrev  0x00000000       0x14 ./startup/startup_MKW41Z4.o
  .debug_abbrev  0x00000014      0x17d ./source/common/gatt_db/gatt_database.o
  .debug_abbrev  0x00000191      0x2b4 ./source/common/Accel_Altitude_sensor.o
  .debug_abbrev  0x00000445      0x207 ./source/common/Accu_monitor.o
  .debug_abbrev  0x0000064c      0x315 ./source/common/ApplMain.o
  .debug_abbrev  0x00000961       0xe0 ./source/common/GPIO_Adapter_Board.o
- .debug_abbrev  0x00000a41      0x1f2 ./source/common/PWM_Servo.o
- .debug_abbrev  0x00000c33       0xfd ./source/common/ble_Message_Handle.o
- .debug_abbrev  0x00000d30      0x1ce ./source/common/ble_conn_manager.o
- .debug_abbrev  0x00000efe      0x194 ./source/common/ble_controller_task.o
- .debug_abbrev  0x00001092       0xf0 ./source/common/ble_host_tasks.o
- .debug_abbrev  0x00001182      0x16e ./source/common/ble_init.o
- .debug_abbrev  0x000012f0       0xda ./source/app_config.o
- .debug_abbrev  0x000013ca      0x25a ./source/heart_rate_sensor.o
- .debug_abbrev  0x00001624      0x137 ./freertos/event_groups.o
- .debug_abbrev  0x0000175b       0x60 ./freertos/fsl_tickless_lptmr.o
- .debug_abbrev  0x000017bb      0x158 ./freertos/heap_4.o
- .debug_abbrev  0x00001913       0xbe ./freertos/list.o
- .debug_abbrev  0x000019d1      0x15d ./freertos/port.o
- .debug_abbrev  0x00001b2e      0x1a3 ./freertos/queue.o
- .debug_abbrev  0x00001cd1      0x255 ./freertos/tasks.o
- .debug_abbrev  0x00001f26      0x1a9 ./freertos/timers.o
- .debug_abbrev  0x000020cf       0x99 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
- .debug_abbrev  0x00002168       0x99 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
- .debug_abbrev  0x00002201       0x94 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
- .debug_abbrev  0x00002295       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
- .debug_abbrev  0x0000233f       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
- .debug_abbrev  0x000023e9       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
- .debug_abbrev  0x00002493       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
- .debug_abbrev  0x0000253d       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
- .debug_abbrev  0x000025e7       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
- .debug_abbrev  0x00002691       0x90 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
- .debug_abbrev  0x00002721       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
- .debug_abbrev  0x000027cb       0x99 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
- .debug_abbrev  0x00002864      0x292 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
- .debug_abbrev  0x00002af6      0x204 ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
- .debug_abbrev  0x00002cfa      0x16d ./framework/XCVR/MKW41Z4/ifr_radio.o
- .debug_abbrev  0x00002e67      0x251 ./framework/TimersManager/Source/TMR_Adapter.o
- .debug_abbrev  0x000030b8      0x294 ./framework/TimersManager/Source/TimersManager.o
- .debug_abbrev  0x0000334c      0x27a ./framework/SecLib/SecLib.o
- .debug_abbrev  0x000035c6      0x240 ./framework/RNG/Source/RNG.o
- .debug_abbrev  0x00003806       0x78 ./framework/Panic/Source/Panic.o
- .debug_abbrev  0x0000387e      0x2ae ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
- .debug_abbrev  0x00003b2c       0x93 ./framework/ModuleInfo/ModuleInfo.o
- .debug_abbrev  0x00003bbf       0xef ./framework/Messaging/Source/Messaging.o
- .debug_abbrev  0x00003cae      0x14f ./framework/MemManager/Source/MemManager.o
- .debug_abbrev  0x00003dfd      0x14f ./framework/MWSCoexistence/Source/MWS.o
- .debug_abbrev  0x00003f4c      0x2ef ./framework/LowPower/Source/MKW41Z/PWR.o
- .debug_abbrev  0x0000423b      0x2b2 ./framework/LowPower/Source/MKW41Z/PWRLib.o
- .debug_abbrev  0x000044ed       0x7c ./framework/LowPower/Source/MKW41Z/PWR_BLE.o
- .debug_abbrev  0x00004569      0x165 ./framework/Lists/GenericList.o
- .debug_abbrev  0x000046ce      0x1d6 ./framework/Keyboard/Source/Keyboard.o
- .debug_abbrev  0x000048a4      0x32a ./framework/GPIO/GPIO_Adapter.o
- .debug_abbrev  0x00004bce      0x11a ./framework/FunctionLib/FunctionLib.o
- .debug_abbrev  0x00004ce8      0x1ed ./framework/Flash/Internal/Flash_Adapter.o
- .debug_abbrev  0x00004ed5      0x2d4 ./framework/DCDC/Source/DCDC.o
- .debug_abbrev  0x000051a9      0x234 ./drivers/fsl_adc16.o
- .debug_abbrev  0x000053dd      0x307 ./drivers/fsl_clock.o
- .debug_abbrev  0x000056e4      0x207 ./drivers/fsl_common.o
- .debug_abbrev  0x000058eb      0x2e4 ./drivers/fsl_dspi.o
- .debug_abbrev  0x00005bcf      0x1ac ./drivers/fsl_gpio.o
- .debug_abbrev  0x00005d7b      0x306 ./drivers/fsl_i2c.o
- .debug_abbrev  0x00006081      0x284 ./drivers/fsl_lpuart.o
- .debug_abbrev  0x00006305      0x28b ./drivers/fsl_ltc.o
- .debug_abbrev  0x00006590      0x1bb ./drivers/fsl_pit.o
- .debug_abbrev  0x0000674b      0x226 ./drivers/fsl_tpm.o
- .debug_abbrev  0x00006971      0x1f0 ./drivers/fsl_trng.o
- .debug_abbrev  0x00006b61      0x28b ./board/board.o
- .debug_abbrev  0x00006dec      0x29b ./board/clock_config.o
- .debug_abbrev  0x00007087       0x97 ./board/gpio_pins.o
- .debug_abbrev  0x0000711e      0x133 ./board/pin_mux.o
- .debug_abbrev  0x00007251      0x1df ./bluetooth/profiles/heart_rate/heart_rate_service.o
- .debug_abbrev  0x00007430      0x159 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
- .debug_abbrev  0x00007589      0x16f ./bluetooth/profiles/battery/battery_service.o
- .debug_abbrev  0x000076f8       0xcf ./bluetooth/host/config/ble_globals.o
- .debug_abbrev  0x000077c7      0x106 ./CMSIS/system_MKW41Z4.o
+ .debug_abbrev  0x00000a41      0x1d3 ./source/common/PWM_Servo.o
+ .debug_abbrev  0x00000c14       0xfd ./source/common/ble_Message_Handle.o
+ .debug_abbrev  0x00000d11      0x1ce ./source/common/ble_conn_manager.o
+ .debug_abbrev  0x00000edf      0x194 ./source/common/ble_controller_task.o
+ .debug_abbrev  0x00001073       0xf0 ./source/common/ble_host_tasks.o
+ .debug_abbrev  0x00001163      0x16e ./source/common/ble_init.o
+ .debug_abbrev  0x000012d1       0xda ./source/app_config.o
+ .debug_abbrev  0x000013ab      0x25a ./source/heart_rate_sensor.o
+ .debug_abbrev  0x00001605      0x137 ./freertos/event_groups.o
+ .debug_abbrev  0x0000173c       0x60 ./freertos/fsl_tickless_lptmr.o
+ .debug_abbrev  0x0000179c      0x158 ./freertos/heap_4.o
+ .debug_abbrev  0x000018f4       0xbe ./freertos/list.o
+ .debug_abbrev  0x000019b2      0x15d ./freertos/port.o
+ .debug_abbrev  0x00001b0f      0x1a3 ./freertos/queue.o
+ .debug_abbrev  0x00001cb2      0x255 ./freertos/tasks.o
+ .debug_abbrev  0x00001f07      0x1a9 ./freertos/timers.o
+ .debug_abbrev  0x000020b0       0x99 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ant_config.o
+ .debug_abbrev  0x00002149       0x99 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_ble_config.o
+ .debug_abbrev  0x000021e2       0x94 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_common_config.o
+ .debug_abbrev  0x00002276       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p3_h_0p5_config.o
+ .debug_abbrev  0x00002320       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p32_config.o
+ .debug_abbrev  0x000023ca       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p5_config.o
+ .debug_abbrev  0x00002474       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_0p7_config.o
+ .debug_abbrev  0x0000251e       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p5_h_1p0_config.o
+ .debug_abbrev  0x000025c8       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_gfsk_bt_0p7_h_0p5_config.o
+ .debug_abbrev  0x00002672       0x90 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_mode_datarate_config.o
+ .debug_abbrev  0x00002702       0xaa ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_msk_config.o
+ .debug_abbrev  0x000027ac       0x99 ./framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x/fsl_xcvr_zgbe_config.o
+ .debug_abbrev  0x00002845      0x292 ./framework/XCVR/MKW41Z4/fsl_xcvr.o
+ .debug_abbrev  0x00002ad7      0x204 ./framework/XCVR/MKW41Z4/fsl_xcvr_trim.o
+ .debug_abbrev  0x00002cdb      0x16d ./framework/XCVR/MKW41Z4/ifr_radio.o
+ .debug_abbrev  0x00002e48      0x251 ./framework/TimersManager/Source/TMR_Adapter.o
+ .debug_abbrev  0x00003099      0x294 ./framework/TimersManager/Source/TimersManager.o
+ .debug_abbrev  0x0000332d      0x27a ./framework/SecLib/SecLib.o
+ .debug_abbrev  0x000035a7      0x240 ./framework/RNG/Source/RNG.o
+ .debug_abbrev  0x000037e7       0x78 ./framework/Panic/Source/Panic.o
+ .debug_abbrev  0x0000385f      0x2ae ./framework/OSAbstraction/Source/fsl_os_abstraction_free_rtos.o
+ .debug_abbrev  0x00003b0d       0x93 ./framework/ModuleInfo/ModuleInfo.o
+ .debug_abbrev  0x00003ba0       0xef ./framework/Messaging/Source/Messaging.o
+ .debug_abbrev  0x00003c8f      0x14f ./framework/MemManager/Source/MemManager.o
+ .debug_abbrev  0x00003dde      0x14f ./framework/MWSCoexistence/Source/MWS.o
+ .debug_abbrev  0x00003f2d      0x2ef ./framework/LowPower/Source/MKW41Z/PWR.o
+ .debug_abbrev  0x0000421c      0x2b2 ./framework/LowPower/Source/MKW41Z/PWRLib.o
+ .debug_abbrev  0x000044ce       0x7c ./framework/LowPower/Source/MKW41Z/PWR_BLE.o
+ .debug_abbrev  0x0000454a      0x165 ./framework/Lists/GenericList.o
+ .debug_abbrev  0x000046af      0x1d6 ./framework/Keyboard/Source/Keyboard.o
+ .debug_abbrev  0x00004885      0x32a ./framework/GPIO/GPIO_Adapter.o
+ .debug_abbrev  0x00004baf      0x11a ./framework/FunctionLib/FunctionLib.o
+ .debug_abbrev  0x00004cc9      0x1ed ./framework/Flash/Internal/Flash_Adapter.o
+ .debug_abbrev  0x00004eb6      0x2d4 ./framework/DCDC/Source/DCDC.o
+ .debug_abbrev  0x0000518a      0x234 ./drivers/fsl_adc16.o
+ .debug_abbrev  0x000053be      0x307 ./drivers/fsl_clock.o
+ .debug_abbrev  0x000056c5      0x207 ./drivers/fsl_common.o
+ .debug_abbrev  0x000058cc      0x2e4 ./drivers/fsl_dspi.o
+ .debug_abbrev  0x00005bb0      0x1ac ./drivers/fsl_gpio.o
+ .debug_abbrev  0x00005d5c      0x306 ./drivers/fsl_i2c.o
+ .debug_abbrev  0x00006062      0x284 ./drivers/fsl_lpuart.o
+ .debug_abbrev  0x000062e6      0x28b ./drivers/fsl_ltc.o
+ .debug_abbrev  0x00006571      0x1bb ./drivers/fsl_pit.o
+ .debug_abbrev  0x0000672c      0x226 ./drivers/fsl_tpm.o
+ .debug_abbrev  0x00006952      0x1f0 ./drivers/fsl_trng.o
+ .debug_abbrev  0x00006b42      0x28b ./board/board.o
+ .debug_abbrev  0x00006dcd      0x29b ./board/clock_config.o
+ .debug_abbrev  0x00007068       0x97 ./board/gpio_pins.o
+ .debug_abbrev  0x000070ff      0x133 ./board/pin_mux.o
+ .debug_abbrev  0x00007232      0x1df ./bluetooth/profiles/heart_rate/heart_rate_service.o
+ .debug_abbrev  0x00007411      0x159 ./bluetooth/profiles/bike_simulator/bike_simulator_service.o
+ .debug_abbrev  0x0000756a      0x16f ./bluetooth/profiles/battery/battery_service.o
+ .debug_abbrev  0x000076d9       0xcf ./bluetooth/host/config/ble_globals.o
+ .debug_abbrev  0x000077a8      0x106 ./CMSIS/system_MKW41Z4.o
 
 .debug_aranges  0x00000000     0x2738
  .debug_aranges
